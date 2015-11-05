@@ -1,0 +1,2 @@
+# JStyhma
+Ohjelmointitekniikka kurssin dokumentaatio.
