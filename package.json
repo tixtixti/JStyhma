@@ -1,0 +1,22 @@
+{
+  "name": "wiklajs",
+  "version": "1.0.0",
+  "description": "Ohjelmointitekniikka JS kurssin tehtävien palautus",
+  "main": "harkatyksi.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tixtixti/JStyhma.git"
+  },
+  "keywords": [
+    "js"
+  ],
+  "author": "Lesandre,Sieni, insa Thigs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tixtixti/JStyhma/issues"
+  },
+  "homepage": "https://github.com/tixtixti/JStyhma#readme"
+}
