@@ -1,11 +1,9 @@
-'use strict'
-
 var express = require('express');
 var app = express();
+app.use(express.static(__dirname + '/js'));
 
 app.get('/', function (req, res) {
-
-   res.sendfile('./index.html')
+  res.sendFile(__dirname + '/index.html')
 });
 
 var server = app.listen(3000, function () {
