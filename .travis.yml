@@ -5,6 +5,5 @@ node_js:
 
 deploy:
   provider: heroku
-  api_key:
-    secure: "fe1ecaee-a59a-4782-818b-28a166e93b25"
+  api_key: "fe1ecaee-a59a-4782-818b-28a166e93b25"
     app: blooming-ravine-2232
