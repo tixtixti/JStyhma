@@ -1,99 +1,23 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>JSTyhma-ryhmän dokumentaatiosivu</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <hr>
-    <p>Osallistujat</p>
-    <ul>
-      <li>Timo Tuononen</li>
-      <li>Miko Mynttinen</li>
-      <li>Matti Räty</li>
-      <li>Viivi Nissilä</li>
-    <body onload="init()">
-
-        <hr>
-        <h2>Laskarit II</h2>
-        <hr>
-        <h3>Koodit tehtävään</h3>
-
-        <pre>
-        <p><code>function isInt(value) {
-
-            var er = /^-?[0-9]+$/;
-
-            return er.test(value);
-        }
-
-        function isStringOnly(value) { //ei hyväksy välejä
-
-            var er = /^[a-zA-Z]+$/;
-
-            return er.test(value);
-        }
-
-        function isNumeric(n) { //ES6 ainoastaan, ei toimi IE, mut toimii Edge (vähän niin kuin IE nykyään)
-          return !isNaN(parseFloat(n)) && isFinite(n);
-        }
-        function doesTableContainOnlyInt(table){ //ES6 ainoastaan, ei toimi IE, mut toimii Edge (vähän niin kuin IE nykyään)
-            for (a of table) if(!isInt(a)) return false;
-            return true;
-        }
-        function doesTableContainOnlyNumeric(table){ //ES6 ainoastaan, ei toimi IE, mut toimii Edge (vähän niin kuin IE nykyään)
-            for (a of table) if(!isNumeric(a)) return false;
-            return true;
-        }
-
-        function doesTableContainOnlyString(table){ //ES6 ainoastaan, ei toimi IE, mut toimii Edge (vähän niin kuin IE nykyään)
-            for (a of table) if(!isStringOnly(a)) return false;
-            return true;
-        }
-</code></p></pre>
-<h3> Testejä koodille </h3>
-        Testaa syötetystä arvosta seuraavia asioita
+    <body>
+        <h1>Ryhmä Räty</h1>
+        <p>Osallistujat</p>
         <ul>
-            <li>Onko Kokonaisluku (is int)</li>
-            <li>Onko Numero (is numeric)</li>
-            <li>Onko vain String (is String)</li>
+            <li>Timo Tuononen</li>
+            <li>Miko Mynttinen</li>
+            <li>Matti Räty</li>
+            <li>Viivi Nissilä</li>
+            <li>Teemu Koivisto</li>
         </ul>
-        <p></p>
 
-        <input type="text" id="testeri">
-        <input type="submit" id="click5" value="Testaa" >
-        <pre id="myList4">
-        </pre>
-        Testaa seuraavista taulukoista sisältävätkö vain kokonaislukuja, vain numeroita ja vain stringjejä:
-        <pre id="lista">
-        </pre>
-        <br>
-        <input type="submit" id="click6" value="aja">
-        <pre id="myList5">
-        </pre>
-        <h3>Tänne voi kirjoittaa sitten vaikka dokumentaatiota tai sitten tän voi siirtää aiemmas</h3>
-        <pre>
-
-
-
-
-
-
-          <!-- Bloattia että näyttää index fiksumalta, poista kun kirjoitat -->
-
-
-
-
-
-        </pre>
-        <script src="onclickjutu.js"></script>
-        <script src="testitaulukoita.js"></script>
-        <script src="harkatyksi.js"></script>
-        <script src="onneluku.js"></script>
+        <hr>
+        <h2>Laskuharjoitukset viikolle 2</h2>
+        <a href="wk2.html">Linkki laskuharjoituksiin</a>
     </body>
 </html>

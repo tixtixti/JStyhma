@@ -7,13 +7,13 @@ document.getElementById('click6').onclick = function () {
         var textnode = document.createTextNode(taulukoita[i].taulukko + "\n");
         node.appendChild(textnode);
 
-        var intt = doesTableContainOnlyInt(taulukoita[i].taulukko);
-        var numericT = doesTableContainOnlyNumeric(taulukoita[i].taulukko);
-        var StringT = doesTableContainOnlyString(taulukoita[i].taulukko);
+        var intT = containsOnlyIntegers(taulukoita[i].taulukko);
+        var numericT = containsOnlyNumbers(taulukoita[i].taulukko);
+        var StringT = containsOnlyStrings(taulukoita[i].taulukko);
 
 
         try {
-            if (intt === true) {
+            if (intT === true) {
                 var textnode = document.createTextNode("Integer Taulukko ja ");
                 node.appendChild(textnode);
             }
@@ -27,7 +27,7 @@ document.getElementById('click6').onclick = function () {
                 var textnode = document.createTextNode("String taulukko");
                 node.appendChild(textnode);
             }
-            if (!intt && !numericT && !StringT) {
+            if (!intT && !numericT && !StringT) {
                 var textnode = document.createTextNode("Ei kelpo taulukko");
                 node.appendChild(textnode);
             }
@@ -46,40 +46,29 @@ document.getElementById('click6').onclick = function () {
 };
 
 document.getElementById('click5').onclick = function () {
-
     var node = document.createElement("DIV");
     var value = document.getElementById('testeri').value;
-    var isint = isInt(value);
-    var isString = isStringOnly(value);
-    var isnumeric = isNumeric(value);
 
+    var isInt = isValidInteger(value)
+    var isFloat = isValidFloat(value)
 
-    try {
-        if (isint === true) {
-            var textnode = document.createTextNode(value + " is Int AND ");
-            node.appendChild(textnode);
-        }
+    var textnode;
 
-        if (isString === true) {
-            var textnode = document.createTextNode(value +" is String");
-            node.appendChild(textnode);
-        }
-
-        if (isnumeric === true) {
-            var textnode = document.createTextNode(value +" is Numeric");
-            node.appendChild(textnode);
-        }
-        if (!isnumeric && !isint && !isString) {
-            var textnode = document.createTextNode(value + " is Nothing");
-            node.appendChild(textnode);
-        }
-
-    } finally {
+    if (isInt === true) {
+        textnode = document.createTextNode(value + " is Int");
         node.appendChild(textnode);
-        document.getElementById("myList4").appendChild(node);
+    } else if (isFloat === true) {
+        textnode = document.createTextNode(value +" is Float");
+        node.appendChild(textnode);
+    } else {
+        textnode = document.createTextNode(value + " is of unknown type");
     }
 
+    node.appendChild(textnode);
+    document.getElementById("myList4").appendChild(node);
 };
+
+
 function init() {
     var node = document.createElement("DIV");
     var i = 0;
