@@ -8,7 +8,18 @@
     <body onload="init()">
         <h1>Laskuharjoitukset viikolle 2</h1>
 
-        Taulukoiden sisältämien olioiden tyyppiä voidaan tarkastella esimerkiksi seuraavilla funktioilla:
+        <p>Koska JavaScriptin muuttujat ovat tyypittömiä, joudutaan olioiden tyyppi tarkastamaan typeof operaattorilla.</p>
+        <pre>
+        <code>
+typeof(123) // palauttaa "number"
+typeof("test") // palauttaa "string"
+typeof({x: 123}) // palauttaa "object"
+typeof(undefined) // palauttaa "undefined"
+typeof(blabla) // palauttaa "undefined"
+        </code>
+        </pre>
+
+        <p>JavaScriptin taulukot ovat heterogeenisiä, joten myös taulukon sisältämien olioiden tyypit joudutaan tarkastamaan käsin. Jos halutaan rajoittua yhden tyypin taulukoihin, voidaan tyypin määrittämiseen käyttää esimerkiksi seuraavia funktioita.</p>
         <pre>
         <code>
 function containsOnlyIntegers(array) {
@@ -22,7 +33,12 @@ function containsOnlyNumbers(array) {
 function containsOnlyStrings(array) {
     return array.every(elem => typeof(elem) === "string");
 }
+        </code>
+        </pre>
 
+        <p>Etenkin selainohjelmoinnissa iso osa JavaScriptin käsittelemästä tiedosta on merkkijonomuodossa. Tämän vuoksi tietoa joudutaan usein muuntamaan esimerkiksi merkkijonosta kokonaisluvuksi. Tällöin kannattaa tarkistaa syötteen oikeellisuus esimerkiksi säännöllisiä lausekkeita käyttäen.
+        <pre>
+        <code>
 function isValidFloat(value) {
     return /^(\d+\.\d+)$/.test(value);
 }
@@ -32,6 +48,7 @@ function isValidInteger(value) {
 }
         </code>
         </pre>
+
 
         <h2>Testejä syötteille</h2>
         Testaa syötetystä arvosta seuraavia asioita
@@ -52,9 +69,7 @@ function isValidInteger(value) {
 
         <pre id="myList5"></pre>
 
-        <h3>Tänne voi kirjoittaa sitten vaikka dokumentaatiota tai sitten tän voi siirtää aiemmas</h3>
-
-        <script src="js/h1.js"></script>
-        <script src="js/h1_handler.js"></script>
+        <script src="h2.js"></script>
+        <script src="h2_handler.js"></script>
     </body>
 </html>
