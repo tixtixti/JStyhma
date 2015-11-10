@@ -6,57 +6,57 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>JS harkkoja</title>
+        <title>JSTyhma-ryhmän dokumentaatiosivu</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <hr>
-    <p>Laskari I</p>
-    <hr>
+    <p>Osallistujat</p>
+    <ul>
+      <li>Timo Tuononen</li>
+      <li>Miko Mynttinen</li>
+      <li>Matti Räty</li>
+      <li>Viivi Nissilä</li>
     <body onload="init()">
-        nimi 
-        <input type="text" id="etunimi">
-        <br>
-        kenkä  <input type="number" id="kenka">
-        <br>
-        pituus  <input type="number" id="pituus">
-        <br>
-        <input type="submit" id="click" >
-        <p>
 
-        </p>
-        <p></p>
-
-        Luku kuusille 
-        <br><input type='number' id='kuusi'>
-        <input type="submit" id="click2" >
-        <pre id="myList">
-        </pre>
-
-        Luvut vuosille: Palauttaa kaikki karkausvuodet vuosien välissä
-        <br>  <input type="number" id="ensi">
-        <br>
-        <input type="number" id="toinen">
-        <br>
-        <input type="submit" id="click3" >
-        <pre id="myList2">
-        </pre>
-
-        Luvut peliin: Pelaa wiklan hienoa js peliä. 
-        <br>  <input type="number" id="eka">
-        <br>
-        <input type="number" id="toka">
-        <br>
-        <input type="number" id="kolmas">
-        <br>
-        <input type="submit" id="click4" > 
-
-        <pre id="myList3">
-        </pre>
         <hr>
-        Laskarit II
+        <h2>Laskarit II</h2>
         <hr>
-        <p></p>
+        <h3>Koodit tehtävään</h3>
+
+        <pre>
+        <p><code>function isInt(value) {
+
+            var er = /^-?[0-9]+$/;
+
+            return er.test(value);
+        }
+
+        function isStringOnly(value) { //ei hyväksy välejä
+
+            var er = /^[a-zA-Z]+$/;
+
+            return er.test(value);
+        }
+
+        function isNumeric(n) { //ES6 ainoastaan, ei toimi IE, mut toimii Edge (vähän niin kuin IE nykyään)
+          return !isNaN(parseFloat(n)) && isFinite(n);
+        }
+        function doesTableContainOnlyInt(table){ //ES6 ainoastaan, ei toimi IE, mut toimii Edge (vähän niin kuin IE nykyään)
+            for (a of table) if(!isInt(a)) return false;
+            return true;
+        }
+        function doesTableContainOnlyNumeric(table){ //ES6 ainoastaan, ei toimi IE, mut toimii Edge (vähän niin kuin IE nykyään)
+            for (a of table) if(!isNumeric(a)) return false;
+            return true;
+        }
+
+        function doesTableContainOnlyString(table){ //ES6 ainoastaan, ei toimi IE, mut toimii Edge (vähän niin kuin IE nykyään)
+            for (a of table) if(!isStringOnly(a)) return false;
+            return true;
+        }
+</code></p></pre>
+<h3> Testejä koodille </h3>
         Testaa syötetystä arvosta seuraavia asioita
         <ul>
             <li>Onko Kokonaisluku (is int)</li>
@@ -66,7 +66,7 @@ and open the template in the editor.
         <p></p>
 
         <input type="text" id="testeri">
-        <input type="submit" id="click5" value="Testaa" > 
+        <input type="submit" id="click5" value="Testaa" >
         <pre id="myList4">
         </pre>
         Testaa seuraavista taulukoista sisältävätkö vain kokonaislukuja, vain numeroita ja vain stringjejä:
@@ -76,7 +76,21 @@ and open the template in the editor.
         <input type="submit" id="click6" value="aja">
         <pre id="myList5">
         </pre>
+        <h3>Tänne voi kirjoittaa sitten vaikka dokumentaatiota tai sitten tän voi siirtää aiemmas</h3>
+        <pre>
 
+
+
+
+
+
+          <!-- Bloattia että näyttää index fiksumalta, poista kun kirjoitat -->
+
+
+
+
+
+        </pre>
         <script src="onclickjutu.js"></script>
         <script src="testitaulukoita.js"></script>
         <script src="harkatyksi.js"></script>
