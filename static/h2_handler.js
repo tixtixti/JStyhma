@@ -1,81 +1,62 @@
-document.getElementById('click6').onclick = function () {
+
+function init() {
     var node = document.createElement("DIV");
 
-    var i = 0;
-    while (i < taulukoita.length) {
-
-        var textnode = document.createTextNode(taulukoita[i].taulukko + "\n");
-        node.appendChild(textnode);
-
-        var intT = containsOnlyIntegers(taulukoita[i].taulukko);
-        var numericT = containsOnlyNumbers(taulukoita[i].taulukko);
-        var StringT = containsOnlyStrings(taulukoita[i].taulukko);
-
-
-        try {
-            if (intT === true) {
-                var textnode = document.createTextNode("Integer Taulukko ja ");
-                node.appendChild(textnode);
-            }
-
-            if (numericT === true) {
-                var textnode = document.createTextNode("Numeerinen taulukko");
-                node.appendChild(textnode);
-            }
-
-            if (StringT === true) {
-                var textnode = document.createTextNode("String taulukko");
-                node.appendChild(textnode);
-            }
-            if (!intT && !numericT && !StringT) {
-                var textnode = document.createTextNode("Ei kelpo taulukko");
-                node.appendChild(textnode);
-            }
-
-        } finally {
-
-            var textnode = document.createTextNode("\n");
-            node.appendChild(textnode);
-            document.getElementById("myList5").appendChild(node);
-        }
-        var textnode = document.createTextNode("---------------- \n ");
-        node.appendChild(textnode);
-        i++;
+    for(var i = 0; i < taulukoita.length; ++i) {
+        node.appendChild(document.createTextNode(taulukoita[i].toString() + "\n"));
     }
-    document.getElementById("myList5").appendChild(node);
+
+    document.getElementById("arrays_output").appendChild(node);
+}
+
+document.getElementById('run_button').onclick = function () {
+    var node = document.createElement("DIV");
+
+    for(var i = 0; i < taulukoita.length; ++i) {
+        var intT = containsOnlyIntegers(taulukoita[i]);
+        var numericT = containsOnlyNumbers(taulukoita[i]);
+        var StringT = containsOnlyStrings(taulukoita[i]);
+
+        var types = []
+
+        if (intT) {
+            types.push("kokonaisluku taulukko");
+        }
+
+        if (numericT) {
+            types.push("numeerinen taulukko");
+        }
+
+        if (StringT) {
+            types.push("merkkijono taulukko");
+        }
+
+        if (!intT && !numericT && !StringT) {
+            types.push("epäkelpo taulukko");
+        }
+
+        text = taulukoita[i].toString() + ": " + types.join(", ");
+        var textnode = document.createTextNode(text + "\n-----\n");
+        node.appendChild(textnode);
+    }
+
+    document.getElementById("run_output").appendChild(node);
 };
 
-document.getElementById('click5').onclick = function () {
-    var node = document.createElement("DIV");
-    var value = document.getElementById('testeri').value;
-
-    var isInt = isValidInteger(value)
-    var isFloat = isValidFloat(value)
+document.getElementById('test_button').onclick = function () {
+    var value = document.getElementById('textfield').value;
 
     var textnode;
 
-    if (isInt === true) {
+    if (isValidInteger(value)) {
         textnode = document.createTextNode(value + " is Int");
-        node.appendChild(textnode);
-    } else if (isFloat === true) {
+    } else if (isValidFloat(value)) {
         textnode = document.createTextNode(value +" is Float");
-        node.appendChild(textnode);
     } else {
         textnode = document.createTextNode(value + " is of unknown type");
     }
 
-    node.appendChild(textnode);
-    document.getElementById("myList4").appendChild(node);
-};
-
-
-function init() {
     var node = document.createElement("DIV");
-    var i = 0;
-    while (i < taulukoita.length) {
-        var textnode = document.createTextNode(taulukoita[i].taulukko + "\n");
-        node.appendChild(textnode);
-        i++;
-    }
-    document.getElementById("lista").appendChild(node);
-}
+    node.appendChild(textnode);
+    document.getElementById("test_output").appendChild(node);
+};
