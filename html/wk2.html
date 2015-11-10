@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Laskuharjoitukset viikolle 2</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body onload="init()">
+        <h1>Laskuharjoitukset viikolle 2</h1>
+
+        Taulukoiden sisältämien olioiden tyyppiä voidaan tarkastella esimerkiksi seuraavilla funktioilla:
+        <pre>
+        <code>
+function containsOnlyIntegers(array) {
+    return array.every(elem => Number.isInteger(elem));
+}
+
+function containsOnlyNumbers(array) {
+    return array.every(elem => typeof(elem) === "number");
+}
+
+function containsOnlyStrings(array) {
+    return array.every(elem => typeof(elem) === "string");
+}
+
+function isValidFloat(value) {
+    return /^(\d+\.\d+)$/.test(value);
+}
+
+function isValidInteger(value) {
+    return /^(\d+)$/.test(value);
+}
+        </code>
+        </pre>
+
+        <h2>Testejä syötteille</h2>
+        Testaa syötetystä arvosta seuraavia asioita
+        <ul>
+            <li>Onko kokonaisluku</li>
+            <li>Onko liukuluku</li>
+        </ul>
+
+        <input type="text" id="testeri">
+        <input type="submit" id="click5" value="Testaa">
+        <pre id="myList4"></pre>
+
+        Testaa seuraavista taulukoista sisältävätkö vain kokonaislukuja, vain numeroita ja vain merkkijonoja:
+        <pre id="lista"></pre>
+
+        <br>
+        <input type="submit" id="click6" value="aja">
+
+        <pre id="myList5"></pre>
+
+        <h3>Tänne voi kirjoittaa sitten vaikka dokumentaatiota tai sitten tän voi siirtää aiemmas</h3>
+
+        <script src="js/h1.js"></script>
+        <script src="js/h1_handler.js"></script>
+    </body>
+</html>
