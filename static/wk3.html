@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Laskuharjoitukset viikolle 3</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <h1>Laskuharjoitukset viikolle 3</h1>
+
+  <h2>Algoritmien kirjoittaminen javascriptillä</h2>
+
+        <p>Algoritmien kirjoittaminen javascriptillä, ei ole oikeastaan sen kummempaa kuin muullakaan ohjelmointikielellä,
+          mutta JS:n käyttö algoritmiikassa ei ole aloittijoille. <br>
+          Kuten viikon 2. laskuharjoituksissa todettiin, on tyyppiturvallisuus javascriptissä huonolla tasolla.
+          Tämä voi aiheuttaa onglemia, mikäli ohjelmoija ei voi olla varma annetun datan tyypistä. Mikäli algoritmi vaatii
+          tiettyä datatyyppiä tai tiettyä muotoa on tärkeää validoida syöte ennen sen ajamista algoritmin läpi.
+          Tämä toki lisää ylimääräistä boilerplate koodia ohjelmaan. </p>
+          <p>Huomattavasti edellistä suurempi riski aloittelevalle JS ohjelmoijalle on tyyppioperaatiot.
+            Javascriptissa '5 + 1' voi olla tulkintatavasta liittyen joko '51' tai 6. Tämä aiheuttaa varsinkin aloittelevalle ohjelmoijille
+            harmaita hiuksia. </p>
+            <p> Tyyppittömyydellä on tietysti myös hyötynsä. Koska kaikki asiat ovat pohjimmiltaann objecteja. Voidaan asioita esimerkiski sortata
+              miettimättä sen enempää mitä arvoja ollaan sorttaamassa. Kätevää on myös esimerkiksi compare function toteuttaminen lukuarvoille: </p>
+              <code>function compareNumbers(a, b) {
+                return a - b; }</code>
+                Tämä vertailee tehokkaasti niin tauloita joissa on numeroita, kuin StringNumeroita.
+                <code></p>
+                  var numericStringArray = ['80', '9', '700'];
+                  <br>
+                  var numberArray = [40, 1, 5, 200];
+                  <br>
+                  var mixedNumericArray = ['80', '9', '700', 40, 1, 5, 200];
+                </p>
+                <p>
+                  numberArray: 40,1,5,
+                  <br>
+                  Sorted without a compare function: 1,200,40,5
+                  <br>
+                  Sorted with compareNumbers: 1,5,40,200
+                </p>
+                numericStringArray: 80,9,700
+                <br>
+                Sorted without a compare function: 700,80,9
+                <br>
+                Sorted with compareNumbers: 9,80,700
+                <p>
+                  mixedNumericArray: 80,9,700,40,1,5,200
+                  <br>
+                  Sorted without a compare function: 1,200,40,5,700,80,9
+                  <br>
+                  Sorted with compareNumbers: 1,5,9,40,80,200,700
+                </p>
+              </code>
+                <p>Kuten ylhäällä kuitenkin huomataan normaali Javascriptin <code> Array.sort()</code> ei myöskään aina toimi.</p>
+              <p>Javascriptin käyttö myöskin haasteellista, tarkkaa liukulukujakäyttävässä laskennassa, jossa javascriptissä toisinaan tapahtuviin
+                pyöristelyvirheisiin ei ole varaa. <p>
+                  <p><b>En oo varma tästä kappaleetas
+                    nopee googlailu kertoi näin, mutta en uskalla väittää varmaksi</b><br>
+                    Javascriptin suoritusnopeudet eivät myöskään ole lähelläkään C:n tai C++:n luokkaa, mutta JS voitaa varsinkin NodeJS:llä ajettuna
+                    yleensä useita ohjelmointikieliä, kuten esimerkiksi Rubyn, PHP:n ja Pythonin. Tässä kohdin on hyvä muistaa, että algoritmien suoritusnopeus
+                    kullakin kielellä riippuu myös paljon suoritettavasta algoritmistä.</p>
+                    <p>Lopuksi:<br>
+                      JS:n vahvuus algoritmiikassa on kielen monimuotoisuus ja tyypittömyys, mutta sen käyttö vaatii osaamista ja JavaScriptin hyvää ymmärtämistä.
+                      
+              </body>
+              </html>
