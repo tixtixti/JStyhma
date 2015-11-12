@@ -10,18 +10,20 @@
 
         <p>Koska JavaScriptin muuttujat ovat tyypittömiä, joudutaan olioiden tyyppi tarkastamaan typeof operaattorilla.</p>
         <pre>
-        <code>
+            <code>
 typeof(123) // palauttaa "number"
 typeof("test") // palauttaa "string"
 typeof({x: 123}) // palauttaa "object"
 typeof(undefined) // palauttaa "undefined"
 typeof(blabla) // palauttaa "undefined"
-        </code>
+            </code>
         </pre>
+
+        <hr>
 
         <p>JavaScriptin taulukot ovat heterogeenisiä, joten myös taulukon sisältämien olioiden tyypit joudutaan tarkastamaan käsin. Jos halutaan rajoittua yhden tyypin taulukoihin, voidaan tyypin määrittämiseen käyttää esimerkiksi seuraavia funktioita.</p>
         <pre>
-        <code>
+            <code>
 function containsOnlyIntegers(array) {
     return array.every(elem => Number.isInteger(elem));
 }
@@ -33,12 +35,14 @@ function containsOnlyNumbers(array) {
 function containsOnlyStrings(array) {
     return array.every(elem => typeof(elem) === "string");
 }
-        </code>
+            </code>
         </pre>
+
+        <hr>
 
         <p>Etenkin selainohjelmoinnissa iso osa JavaScriptin käsittelemästä tiedosta on merkkijonomuodossa. Tämän vuoksi tietoa joudutaan usein muuntamaan esimerkiksi merkkijonosta kokonaisluvuksi. Tällöin kannattaa tarkastaa syötteen oikeellisuus esimerkiksi säännöllisiä lausekkeita käyttäen.
         <pre>
-        <code>
+            <code>
 function isValidFloat(value) {
     return /^(\d+\.\d+)$/.test(value);
 }
@@ -46,25 +50,52 @@ function isValidFloat(value) {
 function isValidInteger(value) {
     return /^(\d+)$/.test(value);
 }
-        </code>
+            </code>
         </pre>
+
+        <hr>
+
         <p>Liiallinen tarkastusten laittaminen koodiin venyttää koodin pituutta ja saattaa hidastaa ohjelman suoritusta. JavaScript-ohjelmaan kannattaa sijoittaa tyyppitarkistukset vain ohjelman uloimmalle rajapinnalle, jossa funktioihin syötetään uusia arvoja.Esimerkki tällaisesta ohjelmanpätkästä:</p>
         <pre>
-        <code>
-function compareAndSort(array){
- if(!containsOnlyNumbers(array)) throw "Taulukossa saa olla vain numeroita!"
+            <code>
+function compareAndSort(array) {
+    if(!containsOnlyNumbers(array))
+        throw "Taulukossa saa olla vain numeroita!"
  
- var compare = function(a,b){
-	return b-a 
- }
- array.sort(compare)
- return array
-
+    var compare = function(a, b) {
+        return b - a 
+    }
+ 
+    array.sort(compare)
+    return array
 }
-        </code>
+            </code>
         </pre>
-        <p>Compare- funktiossa ei enää tarvitse tarkistaa ovatko a ja b lukuja, sillä se on jo tehty ennen sitä if-lausekkeessa.</p>
+        <p>Compare-funktiossa ei enää tarvitse tarkistaa ovatko a ja b lukuja, sillä se on jo tehty ennen sitä if-lausekkeessa.</p>
+        <hr>
 
+        <p>JavaScriptin tyypittömyyden vuoksi rajapintojen dokumentointi ja näihin liittyvien muuttujien nimeäminen oikein tärkeää. Alla oleva esimerkki näyttää miten paljon kommentit selkeyttävät funktion toimintaa.</p>
+        <pre>
+            <code>
+function count(x, y) {
+    ...
+}
+
+
+/**
+ * Counts the occurrences of str in the given list of strings.
+ * @param {list} list - The string list to be searched.
+ * @param {string} str - The string to find.
+ * @returns The count of how many times str occurs in the list.
+ */
+function count(list, str) {
+    ...
+}
+            </code>
+        </pre>
+
+
+        <hr>
         <h2>Testejä syötteille</h2>
         <p>Testaa syötetystä arvosta seuraavia asioita</p>
         <ul>
@@ -76,13 +107,12 @@ function compareAndSort(array){
         <input type="submit" id="test_button" value="Testaa">
         <pre id="test_output"></pre>
 
+        <hr>
 
         <p>Suorita-painikkeella tarkastetaan sisältävätkö seuraavat taulukot ainoastaan kokonaislukuja, numeroita tai merkkijonoja.</p>
         <pre id="arrays_output"></pre>
 
-        <br>
         <input type="submit" id="run_button" value="Suorita">
-
         <pre id="run_output"></pre>
 
         <script src="h2.js"></script>
