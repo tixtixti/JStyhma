@@ -96,10 +96,13 @@
 		Funktionaalisella ohjelmoinnilla on käyttönsä ja hyötynsä koodin rakenteen parantamiseksi. Imperatiivinen ohjelmointi on kuitenkin monelle intuitiivisempaa ja usein luettavampaa. Tämän ja edellä mainituista syistä imperatiivinen ohjelmointi jossa hyödynnetään JavaScriptin funktionaalisia ominaisuuksia, lienee JS:n parhaimpia käyttötapoja.
 		</p>
 	<h2>Poikkeustenkäsittely</h2>
-		<p>JavaScriptissä poikkeukset tyypillisimmin käsitellään Javasta tutulla try-catch-finally- tavalla sekä heittämällä komento "throw". Try-catch-finally- tapa tarkoittaa, että sen voi toteuttaa kolmella tapaa:</p>
-                 <li>try...catch</li>
-                 <li>try...finally</li>
-                 <li>try..catch...finally</li>
+		<p>JavaScriptissä poikkeukset tyypillisimmin käsitellään Javasta tutulla try-catch-finally- tavalla sekä heittämällä komento throw. Try-catch-finally- tavan voi toteuttaa kolmella eri tapaa:</p>
+					<ol>
+						<li>try...catch</li>
+                 	<li>try...finally</li>
+                	<li>try..catch...finally</li>
+               </ol>                 
+                 
       <p>Throw- komentoa voi heittää JavaScriptissä paljon vapaammin, kuin Javassa. Tässä esimerkki perus try-catch- lauseessa:</p>
 			<code>
 			try{ <br>
@@ -109,8 +112,25 @@
 			alert(e.message) // Virheviesti <br>
 			}<br>
 				</code>              
-      <p>Tämä esimerkki on myös ehdoton catch- käsittely, missä throw ohjaa poikkeuksen suoraan catch:ille. JavaScriptissä on myös mahdollisuus tehdä ehdollinen try-catch-käsittely, missä voi olla useampi catch-lause tai catch-lauseen sisälle syöttää useampi else if- vaihtoehto poikkeukselle. Tämä ei ole EcmaScript 6:n mukainen menettelytapa ja muutenkin monimutkaistaa sekä pidentää JavScript- koodia huomattavasti, 
+      <p>Esimerkissä throw ohjaa poikkeuksen suoraan catch:ille. Tämä esimerkki on myös ehdoton try-catch- käsittely, missä catch-lauseita on vain yksi. JavaScriptissä on myös mahdollisuus tehdä ehdollinen try-catch-käsittely, missä voi olla useampi catch-lause tai catch-lauseen sisälle syöttää useampi else if- vaihtoehto poikkeukselle. Tämä ei ole EcmaScript 6:n mukainen menettelytapa ja muutenkin monimutkaistaa sekä pidentää JavScript- koodia huomattavasti, 
       joten emme suosittele käyttämään ehdollisia try-catch- käsittelyjä.  </p>
-              
+      <p>Mitä Throw-komentoon tulee, voi sillä vapaasti heitellä erityyppisiä attribuutteja. Yksi vaihtoehto on heittää funktio: </p>
+      <code>
+			try{ <br>
+				throw function(){alert("Nyt meni pieleen")}	<br>		
+			}<br>
+			catch(e){<br>
+			e // Nyt meni pieleen <br>
+			}<br>
+				</code>   
+				<p>Paras tapa olisi kuitenkin käyttää Error- konstruktorifunktion luomaa oliota, jolloin sekä heitetyt että JavScriptin omat poikkeukset toimivat samalla tavalla. Tästä esimerkki: </p>
+		<code>
+			try{ <br>
+				throw new Error("Nyt meni pieleen")	<br>		
+			}<br>
+			catch(e){<br>
+			alert(e.message) // Viesti: Nyt meni pieleen <br>
+			}<br>
+				</code>                 
               </body>
               </html>
