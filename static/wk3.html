@@ -61,6 +61,40 @@
                     kullakin kielellä riippuu myös paljon suoritettavasta algoritmistä.</p>
                     <p>Lopuksi:<br>
                       JS:n vahvuus algoritmiikassa on kielen monimuotoisuus ja tyypittömyys, mutta sen käyttö vaatii osaamista ja JavaScriptin hyvää ymmärtämistä.
+        
+        <!-- Matin osuus. Palautetta ja ehdotuksia sekä lisäyksiä kiitos :p -->      
+	<h2>Imperatiivinen- ja funktionaalinen ohjelmointi JavaScriptissä</h2>
+	        
+		<p>Aloittelevat JavaScript ohjelmoijat useimmiten tukeutuvat imperatiiviseen ohjelmointiin. Imperatiivinen ohjelmointi on varsin toimiva sellaisenaan, mutta saa oivia lisätyökaluja funktionaalisesta ohjelmoinnista. Esimerkkinä imperatiivisesta ohjelmointikielestä on esimerkiksi Java, C sekä python. Funktionaalisia edustaa esimerkiksi Scala tai Clojure.
+		</p>
+		<p>JavaScriptillä on valmiina monia funktioita ja työkaluja.  Esimerkkinä:<br> 
+			<code>eval("koodia") <br>
+			isFinite(arvo) <br>
+			parseInt("tekstiä") <br>
+			</code> <br>
+		Funktioita, niin valmiita kuin omiakin, voi halutessaan muokata esimerkiksi bind-metodilla. Tätä kutsutaan funktion osittain soveltamiseksi. Funktioita voi lennosta asettaa, muokata ja kopioida eri muuttujiin varsin lennokkaasti ilman suuria muutoksia koodiin. Esimerkiksi: <br>
+			<code>var summa = function (a,b) {return a + b}; <br>
+			var summa_5 = summa.bind(null, 5); <br>
+			</code> <br>
+		Funktionaalinen ohjelmointi perustuu suurimmilta osin rekursioon joka lyhentää koodia. Viimeisimpiä uudistuksia on myös lamda-syntaksi. Näiden kautta funktionaalinen ohjelmointi on lyhyempää, tuoden vähemmän rivejä testattavaksi.
+		</p>
+		<p>Funktioilla pystyy osan JavaScriptin muuttujen ja näkyvyys ongelmista poistaa. Se ei ole riippuvainen sen ulkoisista muuttujista, enintään parametreistaan. Imperatiivinen ohjelmointi voi huolimattomuudessaan muuttaa joitakin olennaisia muuttujia ylikirjoittamalla, esimerkiksi saman nimisiä muuttujia. Ilmiötä kutsutaan sivuvaikutuksiksi (side effects). Funktiolla ei samaa ongelmaa ole sillä sen näkyvyysaluetta, funktion sisäpuolella olevia muuttujia eivät muut ylikirjoita jollei niihin implisiittisesti viitata funktion kutsuvaiheessa. Tämäkin vaikutus on vain kyseiselle yksittäiselle funktion kutsukerralle. Esimerkiksi:
+			<code> <br>
+			var a = 9002; <br>
+			write(a); //tulostaa 9002 <br>
+			<br>
+			function puolita(x) { <br>
+				var a = x/2; <br>
+				write(a); <br>
+			}; <br>
+			
+			write(puolita(a)); //4501 <br>
+			write(a); //9002 <br>
+			</code> <br>
+		</p>
+		<p>Lopuksi:<br>
+		Funktionaalisella ohjelmoinnilla on käyttönsä ja hyötynsä koodin rakenteen parantamiseksi. Imperatiivinen ohjelmointi on kuitenkin monelle intuitiivisempaa ja usein luettavampaa. Tämän ja edellä mainituista syistä imperatiivinen ohjelmointi jossa hyödynnetään JavaScriptin funktionaalisia ominaisuuksia, lienee JS:n parhaimpia käyttötapoja.
+		</p>
                       
               </body>
               </html>
