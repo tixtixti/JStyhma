@@ -111,23 +111,6 @@
 				</code>              
       <p>Tämä esimerkki on myös ehdoton catch- käsittely, missä throw ohjaa poikkeuksen suoraan catch:ille. JavaScriptissä on myös mahdollisuus tehdä ehdollinen try-catch-käsittely, missä voi olla useampi catch-lause tai catch-lauseen sisälle syöttää useampi else if- vaihtoehto poikkeukselle. Tämä ei ole EcmaScript 6:n mukainen menettelytapa ja muutenkin monimutkaistaa sekä pidentää JavScript- koodia huomattavasti, 
       joten emme suosittele käyttämään ehdollisia try-catch- käsittelyjä.  </p>
-      <p>Mitä Throw-komentoon tulee, voi sillä vapaasti heitellä erityyppisiä attribuutteja. Yksi vaihtoehto on heittää funktio: </p>
-      <code>
-			try{ <br>
-				throw function(){alert(Nyt meni pieleen)}	<br>		
-			}<br>
-			catch(e){<br>
-			e // Nyt meni pieleen <br>
-			}<br>
-				</code>   
-				<p>Paras tapa olisi kuitenkin käyttää Error- konstruktorifunktion luomaa oliota, jolloin sekä heitetyt että JavScriptin omat poikkeukset toimivat samalla tavalla. Tästä esimerkki: </p>
-		<code>
-			try{ <br>
-				throw new Error("Nyt meni pieleen")	<br>		
-			}<br>
-			catch(e){<br>
-			alert(e.message) // Viesti: Nyt meni pieleen <br>
-			}<br>
-				</code>                 
+              
               </body>
               </html>
