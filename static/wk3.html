@@ -114,6 +114,20 @@
 				</code>              
       <p>Esimerkissä throw ohjaa poikkeuksen suoraan catch:ille. Tämä esimerkki on myös ehdoton try-catch- käsittely, missä catch-lauseita on vain yksi. JavaScriptissä on myös mahdollisuus tehdä ehdollinen try-catch-käsittely, missä voi olla useampi catch-lause tai catch-lauseen sisälle syöttää useampi else if- vaihtoehto poikkeukselle. Tämä ei ole EcmaScript 6:n mukainen menettelytapa ja muutenkin monimutkaistaa sekä pidentää JavScript- koodia huomattavasti, 
       joten emme suosittele käyttämään ehdollisia try-catch- käsittelyjä.  </p>
+      <p>Finally- lausetta voidaan käyttää, jos halutaan poikkeuksen päättyvän kunniakkaasti, esimerkiksi jos on tarve vapauttaa resursseja, 
+      joita try-catch- komento on varannut käyttöönsä. </p>
+      	<code>
+      	avaaTiedosto()<br>
+			try{ <br>
+				kirjoitaTiedostoon(data)	<br>		
+			}<br>
+			catch(e){<br>
+			käsittelePoikkeus(e) // Virheviesti <br>
+			}<br>
+			finally{<br>
+			suljeTiedosto()<br>
+			}<br>
+				</code>   
       <p>Mitä Throw-komentoon tulee, voi sillä vapaasti heitellä erityyppisiä attribuutteja. Yksi vaihtoehto on heittää funktio: </p>
       <code>
 			try{ <br>
