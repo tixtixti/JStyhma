@@ -157,5 +157,153 @@ catch(e) {
 }
     </code>
   </pre>
+  <div>
+	<h2>Sulkeuma</h2>
+	
+	<p>
+		Sulkeumalla (eng. closure) tarkoitetaan funktion sisäänsä sulkemaa aluetta ja muuttujia, jota javascriptissä rajataan aaltosulkeilla {}.
+	</p>
+	<p>
+		Yleisesti funktion sisäisessä näkyvyysalueessa luodut muuttujat eivät vaikuta globaaliin näkyvyysalueeseen kuten normaalilta ohjelmointikieleltä voi olettaa. Javascriptissa kuitenkin näkyvyysalueiden kapselointi on vähän niin sun näin eikä aina ole niin selvää mikä voi muuttaa mitäkin.
+	</p>
+	
+	<pre>
+		<code>
+function tyhmaFunktio() {
+	var hah = 1;
+	var lol =  function() { hah++; return hah; } // lol voi hiplata tyhmanFunktion muuttujaa
+	lol()
+	lol()
+	return lol()
+}
+console.log(tyhmaFunktio())
+		</code>
+	</pre>
+	
+	<p>
+		Myöskin funktion sisäinen näkyvyysalue javascriptissa säilyy vielä funktion suorituksen jälkeenkin eli jos funktio tallennetaan muuttujaan ja sitä vähän käytellään niin se ei alusta itseään. 
+	</p>
+	
+	<pre>
+		<code>
+function asdf() {
+	var x = 0;
+	return function() { x++; return x; };
+}
+
+var hei = asdf();
+hei();
+hei();
+console.log(hei());
+		</code>
+	</pre>
+	
+	<p>
+		Eli tuossa x:n arvo pysyy muistissa eli kasvaa ja ulos tulostuu 3.
+	</p>
+	<p>
+		Onko tuo nyt niin ihmeellistä, empä tiedä. Funktiot vähän korvaavat luokkia javascriptissa ja on kiva että ne eivät toimi samalla tavalla kuin esim. Javassa. Tuo on vähän kuin loisi instanssin asdf-funktiosta jota sitten pyörittelisi kuin luokkaa konsanaan. 
+	</p>
+	<p>
+		Suoraan luentokalvoista otettuna:
+	</p>
+	
+	<pre>
+		<code>
+function randomTurhaFunktio(funktioni) {
+  var a=111, b=222;
+  funktioni(); // täällä parametrina saadun sulkeuman suoritus käynnistetään
+  a=1234; b=5678;
+}
+
+function g() {
+  var a=10, b=20;
+  randomTurhaFunktio(function() {a=77; b=99;}); // funktioparametri, jossa vapaita muuttujia
+  console.log(a+" "+b);
+}
+g();    // tulostus 77 99
+		</code>
+	</pre>
+	
+	<p>
+		Ja tuossa siis hienosti nimetyt muuttujat a ja b eivät pääsekään sörkkimään toisiaan kolmannen osapuolen randomTurhaFunktion sisällä. Mikä on hyvä juttu. Jos arvoja haluaisi muuttaa tulisi muuttujien olla yleisessä näkyvyysalueessa tai vain saatavissa parametrina annetusta funktiosta. 
+	</p>
+	<p>
+		Tässä vähän yksinkertaisempi ja tyhmempi esimerkki:
+	</p>
+	
+	<pre>
+		<code>
+function taysinEri(lokaaliFunktio) {
+	lokaaliFunktio(); // täällä vain kutsutaan parametrina saatua funktiota jolla on jo oma määrätty näkyvyysalueensa joka ei koske tätä funktiota
+}
+
+function outoFunktio() {
+	var sinep = 1;
+	taysinEri(function() { sinep++; }); // eli kun funktio luodaan oudonFunktion sisällä sillä on näkyvyys sen muuttujiin
+	console.log('sinep on kaksi omg ' + sinep);
+}
+
+outoFunktio()
+		</code>
+	</pre>
+
+	<p>
+		Mihin sitten tälläistä kieroilua tarvitsee? Kyllä vähän vaikuttaa että kun sulkeumasta puhutaan halutaan vain sekoittaa javascript-ohjelmoijan pää ja lannistaa kaikki aloittelijat koko kielestä. Asia ei vaikuta hirveästi normaaliin koodaamiseen ja vähällä koodauksellakin pääsee jo siitä jyvälle. Omituisten termien käyttökään ei ainakaan helpota.
+	</p>
+	<p>
+		Suuremmat murheet näkyvyysalueiden kanssa ovat syntyneet this:in kanssa sähläämisestä asynkronisten funktioiden kanssa. Kun this ei enää olekaan sama kuin funktion alkaessa alkaa päähän sattua.
+	</p>
+	
+	<pre>
+		<code>
+'use strict'
+var luokka = class test {
+	constructor() {
+		this.jee = 'heivain'
+	}	
+	metodi() {
+		console.log('jee on ' + this.jee) // toimii
+		new Promise(function(resolve, reject) {
+			console.log('tulostuuko?');
+			console.log(this.jee) // ei toimi
+		})
+	}
+}
+var luokka1 = new luokka();
+luokka1.metodi()
+		</code>
+	</pre>
+
+	<p>
+		Onneksi on olemassa nopea fiksi eli tallennetaan viittaus näkyvyysalueeseen muuttujan sisälle:
+	</p>
+		
+	<pre>
+		<code>
+'use strict'
+var luokka = class test {
+	constructor() {
+		this.jee = 'heivain'
+	}	
+	metodi() {
+		var context = this;
+		console.log('jee on ' + this.jee) // toimii
+		new Promise(function(resolve, reject) {
+			console.log('tulostuuko?');
+			console.log(context.jee) // toimii
+		})
+	}
+}
+var luokka1 = new luokka();
+luokka1.metodi()
+		</code>
+	</pre>
+
+	<p>
+		Ja omien luokkakyhäilyn luomisen voi lopettaa EcmaScript6:n tullessa paitsi jos on ihan pakko eikä luota niiden tehokkuuteen.
+	</p>
+  </div>
+  
 </body>
 </html>
