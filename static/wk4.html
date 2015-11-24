@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Laskuharjoitukset viikolle 4</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <h1>Laskuharjoitukset viikolle 4</h1>
+
+  <div><h2>Oliot</h2>
+    Olioiden luontiin on JavaScriptissä kielelle tyypillisesti useita erilaisa
+    tapoja, joista ei suoranaisesti voida sanoa toisen olevan toista parempi.
+    Kaikilla tavoilla on omat vahvuutensa ja heikkoutensa. Käydää tässä läpi
+    muutamia erilaisia tapoja luoda olioita JavaScriptissä.</div>
+    <div>Yksinkertaisin tapa on luoda objecti literaali sanomalla
+      <pre><code>  var person = {
+        name : "Anssi",
+        getName : function (){
+            return this.name
+        }
+    }</pre></code>
+    Tämä luo yhden olion, jolla on yksi arvo ja yksi funktiokutus. Tälle oliolle
+     ei juurikaan voi luoda uusia instansseja. Tämä on nopea ja yksinkertainen tapa
+     luoda olioita, joita ei tarvitse luoda useita.
+
+    </div>
+    <div> Javamaisesti olioiden luominen konstruktorin kautta tapahtuu JavaScriptissä
+      itseasiassa functio kutsulla.
+      <pre><code>function Person(name){
+      this.name = name
+      this.getName = function(){
+        return this.name
+      }
+    }</pre></code>
+    Luomme function, jolle annamme tässä tapauksessa parametriksi nimen ja saamme
+    return arvona uuden olion annetuilla parametreillä. Tällä tyylillä on javamainen
+    hyöty ja kyky luoda uusia samankaltaisia oloita erilaisilla arvoilla.
+    </div>
+    <div>Entäs sitten ne sekavat prototyypit?
+    <pre><code> function Person(){};
+    Person.prototype.name = "Anssi";</pre></code>
+    Tässä luomme vain function Person(), aivan kuten loimme javamaisella konstruktorillamme
+  mutta jätämmä kaikki kentät tyhjiksi! Koska JavaScriptin oliot ja functiot perivät kaikki
+kenttänsä ylemmiltä Object functioilta, niin tyhjänki olion luominen luo meille object ominaisuudet
+täyttävän Olion. Nyt voimme tähän "olemattomaan" olioomme lisätä kenttiä prototype ominaisuuden avulla
+Tämä lisää halutun ominaisuuden kaikkiin tällä konstruktorilla luotuihin olioihin.
+</div>
+<div>Protypeä ja javamaista konstruktoria voi tietenkin JavaScriptmäiseen tyyliin yhdistellä
+<pre><code>function Person(name){
+      this.name = name;
+    }
+    Person.prototype.getName = function(){
+      return this.name
+    }</pre></code>
+    Tässä luomme function Person ja annamme sille parametrillä nimen ja lisäämme myöhemmin
+    lennosta jokaiselle luotavalle oliolle myös oman function "getName".
+  </div>
+  <div>Tänne voisi varmaan lisäillä olioiden arvojen muokkauksesta, lisää luonnista
+    tai private/public näkymästä, tai mitä nyt ikinä keksittekään! Ja insa voi taas tulla refaktroimaan
+    kaiken mitä mä oon tehnyt.
+    -Lesandre</div>
+</body>
+</html>
