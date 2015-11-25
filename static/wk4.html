@@ -56,9 +56,58 @@ Tämä lisää halutun ominaisuuden kaikkiin tällä konstruktorilla luotuihin o
     Tässä luomme function Person ja annamme sille parametrillä nimen ja lisäämme myöhemmin
     lennosta jokaiselle luotavalle oliolle myös oman function "getName".
   </div>
+  <br/>
+  <div>Olioiden arvojen muokkaaminen tapahtuu varsin dynaamisesti. Tämä tuo niin uhkia kuin
+    mahdollisuuksia olioiden käsittelyyn. Olioiden arvoja voidaan kutsua yksinkertaisuudessaan pistesyntaksilla.
+    <pre><code>olio.name = "Matti" // olio.name = Matti
+      olio.name = "Esko" // olio.name = Esko
+      olio.neim = "Kalle" // olio.name = Esko, olio.neim = "Kalle"
+    </pre></code>
+    Jos attribuutti-name on olemassa, muokataan sitä. Päinvastaisessa tapauksessa luodaan uusi attribuutti oliolle
+    kyseisellä nimellä. Tämä altistaa monille kirjoitusvirheille, sillä koodin ohjelman voi suorittaa vaikka nimesitkin
+    antamasi attribuutin väärin.
+  </div>
+  <div>
+    Tietysti tämän välttämiseksi voi määrittää oliolle get- ja set-metodit. Käytännössä se onnistuu määrittelemällä
+    oliolle kyseiset funktiot, kuten ylemmässä Person-esimerkissä mainittiin. Tällöin voidaan tarkemmin määrittää
+    ehdot esimerkiksi muuttujan muuttamiselle. Kuitenkaan näiden määrittely ei sulje suoraan olion attribuuttien
+    suoraan muuttamista.
+    Oletetaan esimerkissä että setterissämme on tarkastus, että syöte on merkkijono.
+    <pre><code>olio.setName("Harri") // name = Harri
+      olio.setName(39) // name = Harri, Syöte ei ole merkkijono!
+      olio.name = 42 // name = 42</pre></code>
+  </div>
+  <div>
+    Osittain tämä voidaan korjata määrittämällä prototyypin tai luokan käyttäytymistä kyseisen attribuutin kohdalla.
+    Esimerkiksi voitaisiin antaa attribuutille ikä ainoastaan positiivisia lukuja funktion avulla.
+    <pre><code><b>Object.defineProperties(olio {
+      "ikä": { set: asetaPositiivinenLuku (this, x) }
+      });</b>
+
+      olio.ikä = 51 // ikä on 51
+      olio.ikä = "kirahvi" //ikä on edelleen 51 tarkastusfunktiomme vuoksi
+      olio.ikä = 52 // ikä on 52
+    </pre></code>
+  </div>
+  <div>
+    Arvoja voidaan tarvittaessa määrittää muokkaamattomaksi jos on tärkeää jonkin attribuutin pysyvyys.
+    <pre><code>function Person(name, id){
+        this.id = id;
+        <b>Object.defineProperty(this, 'id', {writable: false});</b>
+        this.name = name
+        this.getName = function(){
+        return this.name
+        }
+      }</pre></code>
+    Nyt attribuutti id on suojattu. Ratkaisuna tämäkin on osittainen, sillä id on voidaan määrittää taas muokattavaksi
+    vastaavalla metodilla.
+  </div>
+  <br/>
   <div>Tänne voisi varmaan lisäillä olioiden arvojen muokkauksesta, lisää luonnista
     tai private/public näkymästä, tai mitä nyt ikinä keksittekään! Ja insa voi taas tulla refaktroimaan
     kaiken mitä mä oon tehnyt.
-    -Lesandre</div>
+    -Lesandre
+      Hue! Kirjottelin olioiden muokkaamisesta. Muuttaa saa wapaasti. -Sieni
+  </div>
 </body>
 </html>
