@@ -114,7 +114,9 @@ Tämä lisää halutun ominaisuuden kaikkiin tällä konstruktorilla luotuihin o
   koodin ulkopuolella, kuten edellisessä esimerkissä this.getName on tällainen.</div>
   <pre><code>function Person(name){
         var id = 0000
-        var salaisuus = "Olen kala"
+        var secret = function(){
+          return "Olen kala."
+        }
         this.name = name
         this.getName = function(){
           return this.name
