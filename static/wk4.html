@@ -109,6 +109,19 @@ Tämä lisää halutun ominaisuuden kaikkiin tällä konstruktorilla luotuihin o
     vastaavalla metodilla.
   </div>
   <br/>
+  <div>Private- attribuutit määritellään funktion sisälle var- nimikkeellä. Tällöin niihin pääsee käsiksi vain private- funktioilla 
+  ja priviledge- metodeilla.Private- funktiot määritellään funktion nimessä laittamalle function sanan eteen var. Priviledge- metodit voidaan herättää
+  koodin ulkopuolella, kuten edellisessä esimerkissä this.getName on tällainen.</div>
+  <pre><code>function Person(name){
+        var id = 0000
+        var salaisuus = "Olen kala"
+        this.name = name
+        this.getName = function(){
+          return this.name
+        }
+        }
+      }</pre></code>
+  
   <div>Tänne voisi varmaan lisäillä olioiden arvojen muokkauksesta, lisää luonnista
     tai private/public näkymästä, tai mitä nyt ikinä keksittekään! Ja insa voi taas tulla refaktroimaan
     kaiken mitä mä oon tehnyt.
