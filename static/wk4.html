@@ -15,7 +15,7 @@
     Kaikilla tavoilla on omat vahvuutensa ja heikkoutensa. Tässä käydään läpi muutamia erilaisia tapoja luoda olioita JavaScriptissä.
   </div>
 
-  <div>Yksinkertaisin tapa luoda instanssi oliosta on määritellä olioliteraalin kentät suoraan</div>
+  <div>Yksinkertaisin tapa luoda instanssi oliosta on määritellä olioliteraalin kentät suoraan seuraavasti:</div>
   <pre><code>
 var person = {
   name : "Anssi",
@@ -32,8 +32,9 @@ var person = {
   <div>
     Oliosta josta olioliteraali on luotu ei voi suoraan luoda uusia instansseja, vaan se joudutaan tarvittaessa tekemään kloonaamalla jo luotu instanssi.
     Kloonaaminen ei kuitenkaan ole suositeltavaa, koska kloonattua instanssia ei voida enää muokata täysin vapaasti.
-    Parempi tapa luoda useita olioita onkin Javasta tuttu konstruktorien käyttö
-<pre><code>
+    Parempi tapa luoda useita olioita onkin Javasta tuttu konstruktorien käyttö seuraavaan tapaan:
+  </div>
+  <pre><code>
 function Person(name) {
   this.name = name
   this.getName = function() {
@@ -43,51 +44,56 @@ function Person(name) {
 
 var person = new Person("Timo")
 var person = new Person("Matti")
-</pre></code>
-    <div>
+  </pre></code>
+  <div>
     Tässä funktio <code>Person()</code> on konstruktori, joka ottaa parametriksi muuttujan <code>name</code> ja asettaa sen (nykyisen funktiokontekstin) <code>this</code>-olion kentäksi.
     Samalla tavoin <code>this</code>-oliolle määritetään funktio <code>getName</code>.
     Kun konstruktoria kutsutaan avainsanan <code>new</code> avulla, tapahtuu kaksi asiaa:<br>
     1) konstruktorille välitetään implisiittisesti uusi tyhjä olio <code>this</code>-parametrina, jolloin siitä tulee uusi funktiokonteksti.
     <br>
     2) Mikäli konstruktorilla ei ole eksplisiittistä palautusarvoa, palautetaan aiemmin luotu olio.
-    </div>
+  </div>
 
-    <br>
-    <div>Entäs sitten ne sekavat prototyypit?
-    <pre><code> function Person(){};
-    Person.prototype.name = "Anssi";</pre></code>
-    Tässä luomme vain function Person() samalla tavalla kuin javamaisella konstruktorillamme,
-  mutta jätämme kaikki kentät tyhjiksi! Koska JavaScriptin oliot ja functiot perivät kaikki
-kenttänsä ylemmiltä Object functioilta, niin tyhjänki olion luominen luo meille object- ominaisuudet
-täyttävän olion. Nyt voimme tähän "olemattomaan" olioomme lisätä kenttiä prototype- ominaisuuden avulla.
-Tämä lisää halutun ominaisuuden kaikkiin tällä konstruktorilla luotuihin olioihin.
-</div>
-<div>Protypeä ja javamaista konstruktoria voi tietenkin JavaScriptmäiseen tyyliin yhdistellä
-<pre><code>function Person(name){
-      this.name = name;
-    }
-    Person.prototype.getName = function(){
-      return this.name
-    }</pre></code>
-    Tässä luomme function:in Person ja annamme sille parametrillä nimen ja lisäämme myöhemmin
-    lennosta jokaiselle luotavalle oliolle myös oman function:in "getName".
-    
-    <p>
-      Etuna erillisillä prototyypeillä verrattuna siihen, että kaikki olisi funktion sisällä sidottuna this:llä on, että this:llä kaikki metodit luodaan jokaiselle oliolle erikseen. Prototyypeillä vuorostaan ne viittaavat vain samoihin muistipaikkoihin. Muistin hallinnan kannalta on siis pientä etua käyttää prototype:ä metodien luomiseen. En tiedä, onko oikein käyttää sanaa metodia viitattaessa JavaScript funktio-luokkien omiin funktioihin, mutta käytän silti.
-    </p>
+  <br>
+  <div>Entäs sitten ne sekavat prototyypit?</div>
+  <pre><code>
+function Person(){};
+Person.prototype.name = "Anssi";
+  </pre></code>
+  <div>
+    Tässä esittelemme funktion <code>Person()</code> samalla tavalla kuten aikaisemminkin, mutta jätämme kaikki kentät tyhjiksi!
+    Koska JavaScriptin oliot ja funktiot perivät kaikki kenttänsä Object-funktiolta, niin tyhjänki olion luominen luo meille Object-ominaisuudet täyttävän olion.
+    Nyt voimme lisätä tähän olioon kenttiä prototyyppien avulla. Prototyyppiin lisätty kenttä liitetään kaikkiin tällä konstruktorilla luotaviin/luotuihin olioihin.
+  </div>
+  <br>
+  <div>Protypeä ja javamaista konstruktoria voi tietenkin JavaScript-tyyliin yhdistellä:</div>
+  <pre><code>
+function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.getName = function() {
+  return this.name
+}
+  </pre></code>
+  <div>
+    Tässä luomme function:in Person ja annamme sille parametrillä nimen ja lisäämme myöhemmin lennosta jokaiselle luotavalle oliolle myös oman function:in "getName".
+  </div>
+  <br>
+  <div>
+    Etuna erillisillä prototyypeillä verrattuna siihen, että kaikki olisi funktion sisällä sidottuna this:llä on, että this:llä kaikki metodit luodaan jokaiselle oliolle erikseen. Prototyypeillä vuorostaan ne viittaavat vain samoihin muistipaikkoihin. Muistin hallinnan kannalta on siis pientä etua käyttää prototype:ä metodien luomiseen. En tiedä, onko oikein käyttää sanaa metodia viitattaessa JavaScript funktio-luokkien omiin funktioihin, mutta käytän silti.
   </div>
   <div>
     <h3>Olioiden attribuuteista</h3>
     Olioiden arvojen muokkaaminen tapahtuu varsin dynaamisesti. Tämä tuo niin uhkia kuin
     mahdollisuuksia olioiden käsittelyyn. Olioiden arvoja voidaan kutsua yksinkertaisuudessaan pistesyntaksilla.
-    <pre><code> olio.name = "Matti" // olio.name = Matti
-      olio.name = "Esko" // olio.name = Esko
-      olio.neim = "Kalle" // olio.name = Esko, olio.neim = "Kalle"
+    <pre><code>
+olio.name = "Matti" // olio.name = Matti
+olio.name = "Esko" // olio.name = Esko
+olio.neim = "Kalle" // olio.name = Esko, olio.neim = "Kalle"
     </pre></code>
-    Jos name- attribuutti on olemassa, muokataan sitä. Päinvastaisessa tapauksessa luodaan uusi attribuutti oliolle
-    kyseisellä nimellä. Tämä altistaa monille kirjoitusvirheille, sillä ohjelman voi suorittaa vaikka nimeäisitkin
-    antamasi attribuutin väärin.
+    Jos name-attribuutti on olemassa, muokataan sitä. Muussa tapauksessa luodaan uusi attribuutti oliolle kyseisellä nimellä.
+    Tämä altistaa monille kirjoitusvirheille, sillä ohjelman voi suorittaa vaikka nimeäisitkin antamasi attribuutin väärin.
   </div>
   <div>
     Tietysti tämän välttämiseksi voi määrittää oliolle get- ja set-metodit. Käytännössä se onnistuu määrittelemällä
@@ -95,78 +101,77 @@ Tämä lisää halutun ominaisuuden kaikkiin tällä konstruktorilla luotuihin o
     ehdot esimerkiksi muuttujan muuttamiselle. Kuitenkaan näiden määrittely ei sulje suoraan olion attribuuttien
     suoraan muuttamista.
     Oletetaan esimerkissä että setterissämme on tarkastus, että syöte on merkkijono.
-    <pre><code> olio.setName("Harri") // name = Harri
-      olio.setName(39) // name = Harri, Syöte ei ole merkkijono!
-      olio.name = 42 // name = 42</pre></code>
   </div>
+  <pre><code>
+olio.setName("Harri") // name = Harri
+olio.setName(39) // name = Harri, Syöte ei ole merkkijono!
+olio.name = 42 // name = 42
+  </pre></code>
   <div>
     Osittain tämä voidaan korjata määrittämällä prototyypin tai luokan käyttäytymistä kyseisen attribuutin kohdalla.
     Esimerkiksi voitaisiin antaa attribuutille ikä ainoastaan positiivisia lukuja funktion avulla.
-    <pre><code><b>Object.defineProperties(olio {
-      "ikä": { set: asetaPositiivinenLuku (this, x) }
-      });</b>
-
-      olio.ikä = 51 // ikä on 51
-      olio.ikä = "kirahvi" //ikä on edelleen 51 tarkastusfunktiomme vuoksi
-      olio.ikä = 52 // ikä on 52
-    </pre></code>
   </div>
+  <pre><code>
+<b>
+Object.defineProperties(olio, {
+  'ikä': {
+    set: asetaPositiivinenLuku(this, x)
+  }</b>
+});
+olio.ikä = 51 // ikä on 51
+olio.ikä = 'kirahvi' //ikä on edelleen 51 tarkastusfunktiomme vuoksi
+olio.ikä = 52 // ikä on 52
+  </pre></code>
   <div>
     Arvoja voidaan tarvittaessa määrittää muokkaamattomaksi, jos on tärkeää jonkin attribuutin pysyvyys.
-    <pre><code>function Person(name, id){
+    <pre><code>function Person(name, id) {
         this.id = id;
         <b>Object.defineProperty(this, 'id', {writable: false});</b>
         this.name = name
-        this.getName = function(){
+        this.getName = function() {
           return this.name
         }
       }</pre></code>
-    Nyt attribuutti id on suojattu. Ratkaisuna tämäkin on osittainen, sillä id voidaan määrittää taas muokattavaksi
-    vastaavalla metodilla.
+    Nyt attribuutti id on suojattu. Ratkaisuna tämäkin on osittainen, sillä id voidaan määrittää taas muokattavaksi vastaavalla metodilla.
   </div>
   <br/>
   <div>Private- attribuutit määritellään funktion sisälle var- nimikkeellä. Tällöin niihin pääsee käsiksi vain private- funktioilla 
   ja priviledge- metodeilla.Private- funktiot määritellään funktion nimessä laittamalle function sanan eteen var. Priviledge- metodit voidaan herättää
   koodin ulkopuolella, kuten edellisessä esimerkissä this.getName on tällainen.</div>
-  <pre><code>function Person(name){
-        var id = 0000
-        var secret = function(){
-          return "Olen kala."
-        }
-        this.name = name
-        this.getName = function(){
-          return this.name
-        }
-        }
-      }</pre></code>
+  <pre><code>
+function Person(name) {
+  var id = 0;
+  var secret = function () {
+    return 'Olen kala.';
+  };
   
-  <div>Tänne voisi varmaan lisäillä olioiden arvojen muokkauksesta, lisää luonnista
-    tai private/public näkymästä, tai mitä nyt ikinä keksittekään! Ja insa voi taas tulla refaktroimaan
-    kaiken mitä mä oon tehnyt.
-    -Lesandre
-      Hue! Kirjottelin olioiden muokkaamisesta. Muuttaa saa wapaasti. -Sieni
-  </div>
+  this.name = name;
+  this.getName = function () {
+    return this.name;
+  };
+}
+  </pre></code>
   
   <div>
     <h3>Luokka-luokat</h3>
     <p>
-    EcmaScript 6:ssa esitellään valmiit 'luokka-luokat'. Ne eivät ole vielä natiivisti tuettuja selaimissa, mutta back-endissä ne saa käyttöön uusimmissa node-versioissa käyttämällä 'use strict'-avainsanaa tiedoston alussa. Front:in puolella on käytettävä erillistä kirjastoa, kuten Babelia tai Traceuria koodin muuttamiseen takaisin ES5:ksi.
+      EcmaScript 6:ssa esitellään valmiit 'luokka-luokat'. Ne eivät ole vielä natiivisti tuettuja selaimissa, mutta back-endissä ne saa käyttöön uusimmissa node-versioissa käyttämällä 'use strict'-avainsanaa tiedoston alussa. Front:in puolella on käytettävä erillistä kirjastoa, kuten Babelia tai Traceuria koodin muuttamiseen takaisin ES5:ksi.
     </p>
     
     <pre>
       <code>
 'use strict'
 class Luokanperkele {
-	constructor(nimi) {
-		this.nimi = nimi;
-		this.heimo = 'jotainhyvingeneeristä';
-	}
+  constructor(nimi) {
+    this.nimi = nimi;
+    this.heimo = 'jotainhyvingeneeristä';
+  }
 	
-	tassapahienometodi() {
-		console.log('olen ' + nimi + ' ja kuulun heimoon ' + this.heimo);
-	}
+  tassapahienometodi() {
+    console.log('olen ' + nimi + ' ja kuulun heimoon ' + this.heimo);
+  }
 
-	_olenyksityinen() { }
+  _olenyksityinen() { }
 } 
       </code>
     </pre>
