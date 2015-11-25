@@ -9,6 +9,7 @@
   <h1>Laskuharjoitukset viikolle 4</h1>
 
   <div><h2>Oliot</h2>
+    <h3>Olioista ja niiden luonnista yleisesti</h3>
     Olioiden luontiin on JavaScriptissä kielelle tyypillisesti useita erilaisa
     tapoja, joista ei suoranaisesti voida sanoa toisen olevan toista parempi.
     Kaikilla tavoilla on omat vahvuutensa ja heikkoutensa. Käydää tässä läpi
@@ -55,9 +56,14 @@ Tämä lisää halutun ominaisuuden kaikkiin tällä konstruktorilla luotuihin o
     }</pre></code>
     Tässä luomme function Person ja annamme sille parametrillä nimen ja lisäämme myöhemmin
     lennosta jokaiselle luotavalle oliolle myös oman function "getName".
+    
+    <p>
+      Etuna erillisillä prototypeillä verrattuna että kaikki olisi funktion sisällä sidottuna this:llä on, että this:llä kaikki metodit luodaan jokaiselle oliolle erikseen kun taas prototypellä ne viittaavat vain samoihin muistipaikkoihin. Eli muistin hallinnan kannalta on pientä etua käyttää prototypeä metodien luomiseen. Onko oikein käyttää sanaa metodi viitattaessa javascript funktio-luokkien omiin funktioihin en tiedä, mutta käytän silti.
+    </p>
   </div>
-  <br/>
-  <div>Olioiden arvojen muokkaaminen tapahtuu varsin dynaamisesti. Tämä tuo niin uhkia kuin
+  <div>
+    <h3>Olioiden attribuuteista</h3>
+    Olioiden arvojen muokkaaminen tapahtuu varsin dynaamisesti. Tämä tuo niin uhkia kuin
     mahdollisuuksia olioiden käsittelyyn. Olioiden arvoja voidaan kutsua yksinkertaisuudessaan pistesyntaksilla.
     <pre><code> olio.name = "Matti" // olio.name = Matti
       olio.name = "Esko" // olio.name = Esko
@@ -108,6 +114,43 @@ Tämä lisää halutun ominaisuuden kaikkiin tällä konstruktorilla luotuihin o
     kaiken mitä mä oon tehnyt.
     -Lesandre
       Hue! Kirjottelin olioiden muokkaamisesta. Muuttaa saa wapaasti. -Sieni
+  </div>
+  
+  <div>
+    <h3>Luokka-luokat</h3>
+    <p>
+    EcmaScript 6:ssa esitellään valmiit 'luokka-Luokat'. Ne eivät ole vielä natiivisti tuettuja selaimissa, mutta back-endissä ne saa käyttöön uusimmissa node-versioissa käyttämällä 'use strict'-avainsanaa tiedoston alussa. Frontin puolella on käytettävä erillistä kirjastoa kuten Babelia tai Traceuria koodin muuttamiseen takaisin ES5:ksi.
+    </p>
+    
+    <pre>
+      <code>
+'use strict'
+class Luokanperkele {
+	constructor(nimi) {
+		this.nimi = nimi;
+		this.heimo = 'jotainhyvingeneeristä';
+	}
+	
+	tassapahienometodi() {
+		console.log('olen ' + nimi + ' ja kuulun heimoon ' + this.heimo);
+	}
+
+	_olenyksityinen() { }
+} 
+      </code>
+    </pre>
+    
+    <p>
+      Ja kuten voi nähdä ne koostuvat normaaleista luokan elementeistä kuten konstruktorista ja metodeista. Huomioitavaa on että kaikki metodit ovat publiceja ja kaikki muuttujat ja metodit ovat aina käytettävissä luokan ulkopuolelta. Private-metodien tai muuttujien luomiseen on käytettävä duck-typingia eli lisättävä vaikkapa alaviiva _ nimen eteen.
+    </p>
+    
+    <p>
+      Javascript sinänsä on ollut vähän kumma kieli ettei luokkia ole toteuttu aikaisemmin kuin edellä mainituilla hieman 'häx'-tavoilla. Siinä saa aloittelija hieman raapia päätään kun haluaa tehdä luokkia javascriptissa ja jotka ovat maksimaalisen suorituskykyisiä. Valmiit luokat lopettavat tuon ylimääräisen miettimisen ja antavat valmiin aihion, jota voidaan käyttää nykyisten funktio-hässäköiden sijasta. Tämä tuo koheesiota koko javascript koodaukseen, koska käytännöt luokkien luomiseen tuntuvat vaihtelevan jokaisessa projektissa. Koko luokka sinänsä on pelkkää syntactic sugaria ja sisäisesti ne ovat edelleen samaa prototype-funktioiden ja Objectien sotkua jota olemme tottuneet näkemään.
+    </p>
+    
+    <p>
+      Valmiit luokat luovat paljon eriäviä mielipiteitä javascript-yhteisössä ja ne tuovat omat murheensa koodiin. Onkin siis ohjelmoijan itse tiedettävä milloin olisi pitäydyttyvä funktioissa ja milloin taas luokkien käyttö on suotavaa. Mutta kyllä ne ovat ihan jees.
+    </p>
   </div>
 </body>
 </html>
