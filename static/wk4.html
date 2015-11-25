@@ -8,36 +8,52 @@
 <body>
   <h1>Laskuharjoitukset viikolle 4</h1>
 
-  <div><h2>Oliot</h2>
-    <h3>Olioista ja niiden luonnista yleisesti</h3>
-    Olioiden luontiin on JavaScriptissä kielelle tyypillisesti useita erilaisia
-    tapoja, joista ei suoranaisesti voida sanoa toisen olevan toista parempi.
-    Kaikilla tavoilla on omat vahvuutensa ja heikkoutensa. Tässä käydään läpi
-    muutamia erilaisia tapoja luoda olioita JavaScriptissä.</div>
-    <div>Yksinkertaisin tapa on luoda objecti literaali sanomalla
-      <pre><code>  var person = {
-        name : "Anssi",
-        getName : function (){
-            return this.name
-        }
-    }</pre></code>
-    Tämä luo yhden olion, jolla on yksi arvo ja yksi funktiokutsu. Tälle oliolle
-     ei juurikaan voi luoda uusia instansseja. Tämä on nopea ja yksinkertainen tapa
-     luoda olioita, joita ei tarvitse luoda useita.
+  <h2>Oliot</h2>
+  <h3>Olioista ja niiden luonnista yleisesti</h3>
+  <div>
+    Olioiden luontiin on JavaScriptissä kielelle tyypillisesti useita erilaisia tapoja, joista ei suoranaisesti voida sanoa toisen olevan toista parempi.
+    Kaikilla tavoilla on omat vahvuutensa ja heikkoutensa. Tässä käydään läpi muutamia erilaisia tapoja luoda olioita JavaScriptissä.
+  </div>
 
+  <div>Yksinkertaisin tapa luoda instanssi oliosta on määritellä olioliteraalin kentät suoraan</div>
+  <pre><code>
+var person = {
+  name : "Anssi",
+  getName : function () {
+    return this.name
+  }
+}
+  </pre></code>
+  <div>
+    Yllä oleva koodi luo nimettömästä oliosta instanssin, jolla on yksi julkinen muuttuja <code>name</code> ja yksi julkinen funktiokutsu <code>getName</code>.
+    Olioliteraalit ovat käteviä, kun oliosta tarvitaan vain yksi instanssi. Tälläisiä tapauksia ovat usein esimerkiksi JSON-muotoisten viestien luonti WWW-sovelluksissa.
+  </div>
+  <br>
+  <div>
+    Oliosta josta olioliteraali on luotu ei voi suoraan luoda uusia instansseja, vaan se joudutaan tarvittaessa tekemään kloonaamalla jo luotu instanssi.
+    Kloonaaminen ei kuitenkaan ole suositeltavaa, koska kloonattua instanssia ei voida enää muokata täysin vapaasti.
+    Parempi tapa luoda useita olioita onkin Javasta tuttu konstruktorien käyttö
+<pre><code>
+function Person(name) {
+  this.name = name
+  this.getName = function() {
+    return this.name
+  }
+}
+
+var person = new Person("Timo")
+var person = new Person("Matti")
+</pre></code>
+    <div>
+    Tässä funktio <code>Person()</code> on konstruktori, joka ottaa parametriksi muuttujan <code>name</code> ja asettaa sen (nykyisen funktiokontekstin) <code>this</code>-olion kentäksi.
+    Samalla tavoin <code>this</code>-oliolle määritetään funktio <code>getName</code>.
+    Kun konstruktoria kutsutaan avainsanan <code>new</code> avulla, tapahtuu kaksi asiaa:<br>
+    1) konstruktorille välitetään implisiittisesti uusi tyhjä olio <code>this</code>-parametrina, jolloin siitä tulee uusi funktiokonteksti.
+    <br>
+    2) Mikäli konstruktorilla ei ole eksplisiittistä palautusarvoa, palautetaan aiemmin luotu olio.
     </div>
-    <div> Javamaisesti olioiden luominen konstruktorin kautta tapahtuu JavaScriptissä
-      itseasiassa functio kutsulla.
-      <pre><code>function Person(name){
-      this.name = name
-      this.getName = function(){
-        return this.name
-      }
-    }</pre></code>
-    Luomme function:in, jolle annamme tässä tapauksessa parametriksi nimen ja saamme
-    return- arvona uuden olion annetuilla parametreillä. Tällä tyylillä on javamainen
-    hyöty ja kyky luoda uusia samankaltaisia olioita erilaisilla arvoilla.
-    </div>
+
+    <br>
     <div>Entäs sitten ne sekavat prototyypit?
     <pre><code> function Person(){};
     Person.prototype.name = "Anssi";</pre></code>
