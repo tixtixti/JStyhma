@@ -63,7 +63,7 @@ Person.prototype.name = "Anssi";
   <div>
     Tässä esittelemme funktion <code>Person()</code> samalla tavalla kuten aikaisemminkin, mutta jätämme kaikki kentät tyhjiksi!
     Koska JavaScriptin oliot ja funktiot perivät kaikki kenttänsä Object-funktiolta, niin tyhjänki olion luominen luo meille Object-ominaisuudet täyttävän olion.
-    Nyt voimme lisätä tähän olioon kenttiä prototyyppien avulla. Prototyyppiin lisätty kenttä liitetään kaikkiin tällä konstruktorilla luotaviin/luotuihin olioihin.
+    Voimme lisätä tähän olioon kenttiä prototyyppien avulla. Prototyyppiin lisätty kenttä liitetään kaikkiin tällä konstruktorilla luotaviin/luotuihin olioihin.
   </div>
   <br>
   <div>Protypeä ja javamaista konstruktoria voi tietenkin JavaScript-tyyliin yhdistellä:</div>
@@ -77,12 +77,35 @@ Person.prototype.getName = function() {
 }
   </pre></code>
   <div>
-    Tässä luomme function:in Person ja annamme sille parametrillä nimen ja lisäämme myöhemmin lennosta jokaiselle luotavalle oliolle myös oman function:in "getName".
+    Tässä luomme funktion <code>Person()</code> ja annamme sille parametrinä nimen. Lisäämme myöhemmin lennosta jokaiselle oliosta luotavalle instanssille myös funktion <code>getName()</code>.
+    Prototyyppinä esiteltyjen kenttien etu on se, että oliosta luodut instanssit jakavat ne. Konstruktorin sisällä esiteltävät kentät luodaan jokaiselle oliolle erikseen.
+    Prototyypin käyttö on siis tehokkaampaa ja säästää muistia.
   </div>
   <br>
   <div>
-    Etuna erillisillä prototyypeillä verrattuna siihen, että kaikki olisi funktion sisällä sidottuna this:llä on, että this:llä kaikki metodit luodaan jokaiselle oliolle erikseen. Prototyypeillä vuorostaan ne viittaavat vain samoihin muistipaikkoihin. Muistin hallinnan kannalta on siis pientä etua käyttää prototype:ä metodien luomiseen. En tiedä, onko oikein käyttää sanaa metodia viitattaessa JavaScript funktio-luokkien omiin funktioihin, mutta käytän silti.
+    Tärkeä ero prototyyppi-kenttien ja konstruktor-kenttien välillä on se, että mikäli toteutusta halutaan myöhemmin muuttaa, joudutaan konstruktorissa esitetyt kentät korvaamaan jokaisesta olion instanssista erikseen. Tätä selvennetään seuraavassa esimerkissä:
   </div>
+  <pre><code>
+function foobar() {
+  this.foo = "foo";
+};
+
+foobar.prototype.bar = "bar";
+
+var a = new foobar();
+var b = new foobar();
+console.log(a.foo); // = "foo"
+console.log(a.bar); // = "bar"
+
+a.foo = "notfoo";
+foobar.prototype.bar = "notbar";
+
+console.log(a.foo); // = "notfoo"
+console.log(a.bar); // = "notbar"
+
+console.log(b.foo); // = "foo"
+console.log(b.bar); // = "notbar"
+  </code></pre>
   <div>
     <h3>Olioiden attribuuteista</h3>
     Olioiden arvojen muokkaaminen tapahtuu varsin dynaamisesti. Tämä tuo niin uhkia kuin
