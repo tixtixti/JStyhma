@@ -114,6 +114,9 @@ console.log(b.bar); // = "notbar"
 olio.name = "Matti" // olio.name = Matti
 olio.name = "Esko" // olio.name = Esko
 olio.neim = "Kalle" // olio.name = Esko, olio.neim = "Kalle"
+
+// Seuraava tapa on pakollinen, mikäli olion kentän nimi sisältää erikoismerkkejä tai kielen varattuja sanoja.
+olio["name[]"] = "Pekka" // name[] = Pekka
     </pre></code>
     Jos name-attribuutti on olemassa, muokataan sitä. Muussa tapauksessa luodaan uusi attribuutti oliolle kyseisellä nimellä.
     Tämä altistaa monille kirjoitusvirheille, sillä ohjelman voi suorittaa vaikka nimeäisitkin antamasi attribuutin väärin.
