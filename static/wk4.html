@@ -96,7 +96,7 @@ Tämä lisää halutun ominaisuuden kaikkiin tällä konstruktorilla luotuihin o
         <b>Object.defineProperty(this, 'id', {writable: false});</b>
         this.name = name
         this.getName = function(){
-        return this.name
+          return this.name
         }
       }</pre></code>
     Nyt attribuutti id on suojattu. Ratkaisuna tämäkin on osittainen, sillä id on voidaan määrittää taas muokattavaksi
