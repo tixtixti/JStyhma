@@ -10,9 +10,9 @@
 
   <div><h2>Oliot</h2>
     <h3>Olioista ja niiden luonnista yleisesti</h3>
-    Olioiden luontiin on JavaScriptissä kielelle tyypillisesti useita erilaisa
+    Olioiden luontiin on JavaScriptissä kielelle tyypillisesti useita erilaisia
     tapoja, joista ei suoranaisesti voida sanoa toisen olevan toista parempi.
-    Kaikilla tavoilla on omat vahvuutensa ja heikkoutensa. Käydää tässä läpi
+    Kaikilla tavoilla on omat vahvuutensa ja heikkoutensa. Tässä käydään läpi
     muutamia erilaisia tapoja luoda olioita JavaScriptissä.</div>
     <div>Yksinkertaisin tapa on luoda objecti literaali sanomalla
       <pre><code>  var person = {
@@ -21,7 +21,7 @@
             return this.name
         }
     }</pre></code>
-    Tämä luo yhden olion, jolla on yksi arvo ja yksi funktiokutus. Tälle oliolle
+    Tämä luo yhden olion, jolla on yksi arvo ja yksi funktiokutsu. Tälle oliolle
      ei juurikaan voi luoda uusia instansseja. Tämä on nopea ja yksinkertainen tapa
      luoda olioita, joita ei tarvitse luoda useita.
 
@@ -34,17 +34,17 @@
         return this.name
       }
     }</pre></code>
-    Luomme function, jolle annamme tässä tapauksessa parametriksi nimen ja saamme
-    return arvona uuden olion annetuilla parametreillä. Tällä tyylillä on javamainen
-    hyöty ja kyky luoda uusia samankaltaisia oloita erilaisilla arvoilla.
+    Luomme function:in, jolle annamme tässä tapauksessa parametriksi nimen ja saamme
+    return- arvona uuden olion annetuilla parametreillä. Tällä tyylillä on javamainen
+    hyöty ja kyky luoda uusia samankaltaisia olioita erilaisilla arvoilla.
     </div>
     <div>Entäs sitten ne sekavat prototyypit?
     <pre><code> function Person(){};
     Person.prototype.name = "Anssi";</pre></code>
-    Tässä luomme vain function Person(), aivan kuten loimme javamaisella konstruktorillamme
-  mutta jätämmä kaikki kentät tyhjiksi! Koska JavaScriptin oliot ja functiot perivät kaikki
-kenttänsä ylemmiltä Object functioilta, niin tyhjänki olion luominen luo meille object ominaisuudet
-täyttävän Olion. Nyt voimme tähän "olemattomaan" olioomme lisätä kenttiä prototype ominaisuuden avulla
+    Tässä luomme vain function Person() samalla tavalla kuin javamaisella konstruktorillamme,
+  mutta jätämme kaikki kentät tyhjiksi! Koska JavaScriptin oliot ja functiot perivät kaikki
+kenttänsä ylemmiltä Object functioilta, niin tyhjänki olion luominen luo meille object- ominaisuudet
+täyttävän olion. Nyt voimme tähän "olemattomaan" olioomme lisätä kenttiä prototype- ominaisuuden avulla.
 Tämä lisää halutun ominaisuuden kaikkiin tällä konstruktorilla luotuihin olioihin.
 </div>
 <div>Protypeä ja javamaista konstruktoria voi tietenkin JavaScriptmäiseen tyyliin yhdistellä
@@ -54,11 +54,11 @@ Tämä lisää halutun ominaisuuden kaikkiin tällä konstruktorilla luotuihin o
     Person.prototype.getName = function(){
       return this.name
     }</pre></code>
-    Tässä luomme function Person ja annamme sille parametrillä nimen ja lisäämme myöhemmin
-    lennosta jokaiselle luotavalle oliolle myös oman function "getName".
+    Tässä luomme function:in Person ja annamme sille parametrillä nimen ja lisäämme myöhemmin
+    lennosta jokaiselle luotavalle oliolle myös oman function:in "getName".
     
     <p>
-      Etuna erillisillä prototypeillä verrattuna että kaikki olisi funktion sisällä sidottuna this:llä on, että this:llä kaikki metodit luodaan jokaiselle oliolle erikseen kun taas prototypellä ne viittaavat vain samoihin muistipaikkoihin. Eli muistin hallinnan kannalta on pientä etua käyttää prototypeä metodien luomiseen. Onko oikein käyttää sanaa metodi viitattaessa javascript funktio-luokkien omiin funktioihin en tiedä, mutta käytän silti.
+      Etuna erillisillä prototyypeillä verrattuna siihen, että kaikki olisi funktion sisällä sidottuna this:llä on, että this:llä kaikki metodit luodaan jokaiselle oliolle erikseen. Prototyypeillä vuorostaan ne viittaavat vain samoihin muistipaikkoihin. Muistin hallinnan kannalta on siis pientä etua käyttää prototype:ä metodien luomiseen. En tiedä, onko oikein käyttää sanaa metodia viitattaessa JavaScript funktio-luokkien omiin funktioihin, mutta käytän silti.
     </p>
   </div>
   <div>
@@ -69,8 +69,8 @@ Tämä lisää halutun ominaisuuden kaikkiin tällä konstruktorilla luotuihin o
       olio.name = "Esko" // olio.name = Esko
       olio.neim = "Kalle" // olio.name = Esko, olio.neim = "Kalle"
     </pre></code>
-    Jos attribuutti-name on olemassa, muokataan sitä. Päinvastaisessa tapauksessa luodaan uusi attribuutti oliolle
-    kyseisellä nimellä. Tämä altistaa monille kirjoitusvirheille, sillä koodin ohjelman voi suorittaa vaikka nimesitkin
+    Jos name- attribuutti on olemassa, muokataan sitä. Päinvastaisessa tapauksessa luodaan uusi attribuutti oliolle
+    kyseisellä nimellä. Tämä altistaa monille kirjoitusvirheille, sillä ohjelman voi suorittaa vaikka nimeäisitkin
     antamasi attribuutin väärin.
   </div>
   <div>
@@ -96,7 +96,7 @@ Tämä lisää halutun ominaisuuden kaikkiin tällä konstruktorilla luotuihin o
     </pre></code>
   </div>
   <div>
-    Arvoja voidaan tarvittaessa määrittää muokkaamattomaksi jos on tärkeää jonkin attribuutin pysyvyys.
+    Arvoja voidaan tarvittaessa määrittää muokkaamattomaksi, jos on tärkeää jonkin attribuutin pysyvyys.
     <pre><code>function Person(name, id){
         this.id = id;
         <b>Object.defineProperty(this, 'id', {writable: false});</b>
@@ -105,7 +105,7 @@ Tämä lisää halutun ominaisuuden kaikkiin tällä konstruktorilla luotuihin o
           return this.name
         }
       }</pre></code>
-    Nyt attribuutti id on suojattu. Ratkaisuna tämäkin on osittainen, sillä id on voidaan määrittää taas muokattavaksi
+    Nyt attribuutti id on suojattu. Ratkaisuna tämäkin on osittainen, sillä id voidaan määrittää taas muokattavaksi
     vastaavalla metodilla.
   </div>
   <br/>
@@ -119,7 +119,7 @@ Tämä lisää halutun ominaisuuden kaikkiin tällä konstruktorilla luotuihin o
   <div>
     <h3>Luokka-luokat</h3>
     <p>
-    EcmaScript 6:ssa esitellään valmiit 'luokka-Luokat'. Ne eivät ole vielä natiivisti tuettuja selaimissa, mutta back-endissä ne saa käyttöön uusimmissa node-versioissa käyttämällä 'use strict'-avainsanaa tiedoston alussa. Frontin puolella on käytettävä erillistä kirjastoa kuten Babelia tai Traceuria koodin muuttamiseen takaisin ES5:ksi.
+    EcmaScript 6:ssa esitellään valmiit 'luokka-luokat'. Ne eivät ole vielä natiivisti tuettuja selaimissa, mutta back-endissä ne saa käyttöön uusimmissa node-versioissa käyttämällä 'use strict'-avainsanaa tiedoston alussa. Front:in puolella on käytettävä erillistä kirjastoa, kuten Babelia tai Traceuria koodin muuttamiseen takaisin ES5:ksi.
     </p>
     
     <pre>
@@ -141,7 +141,7 @@ class Luokanperkele {
     </pre>
     
     <p>
-      Ja kuten voi nähdä ne koostuvat normaaleista luokan elementeistä kuten konstruktorista ja metodeista. Huomioitavaa on että kaikki metodit ovat publiceja ja kaikki muuttujat ja metodit ovat aina käytettävissä luokan ulkopuolelta. Private-metodien tai muuttujien luomiseen on käytettävä duck-typingia eli lisättävä vaikkapa alaviiva _ nimen eteen.
+      Ja kuten voi nähdä ne koostuvat normaaleista luokan elementeistä, kuten konstruktorista ja metodeista. Huomioitavaa on että kaikki metodit ovat public:eja ja kaikki muuttujat ja metodit ovat aina käytettävissä luokan ulkopuolelta. Private-metodien tai muuttujien luomiseen on käytettävä duck-typingia eli lisättävä vaikkapa alaviiva _ nimen eteen.
     </p>
     
     <p>
