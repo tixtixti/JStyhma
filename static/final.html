@@ -457,8 +457,8 @@
   Tietysti tämän välttämiseksi voi määrittää oliolle get- ja set-metodit. Käytännössä se onnistuu määrittelemällä
   oliolle kyseiset funktiot, kuten ylemmässä Person-esimerkissä mainittiin. Tällöin voidaan tarkemmin määrittää
   ehdot esimerkiksi muuttujan muuttamiselle. Kuitenkaan näiden määrittely ei sulje suoraan olion attribuuttien
-  suoraan muuttamista.
-  Oletetaan esimerkissä että setterissämme on tarkastus, että syöte on merkkijono.
+  suoraan muuttamista.</p>
+  <p>Oletetaan esimerkissä että setterissämme on tarkastus, että syöte on merkkijono.
 </p>
 <pre>
   <code>
@@ -484,13 +484,11 @@
       olio.ikä = 52 // ikä on 52
     </code>
   </pre>
-
-  <p>
-  Object.defineProperty- metodilla voidaan muokata useaa eri attribuuttien ominaisuutta. Enumerable- arvon muuttaminen falseksi piilottaa attribuutin for-loopeista, kun kyseistä attribuuttia ei siellä tarvita.
-    Attribuutteja voidaan tarvittaessa määrittää muokkaamattomaksi antamalla samalle metodille writable- arvoksi false, jos on tärkeää ettei attribuutin arvoa ylikirjoiteta. Ja myös attribuuttien käyttäytymistä voidaan hallita asettamalla
-    configurable- arvoksi false, jolloin ei voi missä tahansa kohtaa määritellä onko arvo enumerable-, writable- tai jopa itse configurable- tyyppinen. Ainoa tapa millä configurable:n saa muutettua on käyttämällä delete- käskyä.
-    Otetaan esimerkki writable:n käytöstä</p>
-    <pre>
+   
+   <p> Object.defineProperty- metodilla voidaan muokata useaa eri attribuuttien ominaisuutta. Enumerable- arvon muuttaminen falseksi piilottaa attribuutin for-loopeista, kun kyseistä attribuuttia ei siellä tarvita.
+   Attribuutteja voidaan tarvittaessa määrittää muokkaamattomaksi antamalla samalle metodille writable- arvoksi false, 
+   jos on tärkeää ettei attribuutin arvoa ylikirjoiteta. </p>
+	<pre>      
       <code>
         function Person(name, id) {
           this.id = id;
@@ -502,8 +500,26 @@
         }
       </code>
     </pre>
-    <p>
-      Nyt attribuutti id on suojattu. Ratkaisuna tämäkin on osittainen, sillä id voidaan määrittää taas muokattavaksi vastaavalla metodilla.
+    <p>Nyt attribuutti id on suojattu kirjoittamiselta. Ratkaisuna tämäkin on osittainen, sillä id voidaan määrittää taas muokattavaksi vastaavalla metodilla.</p>
+    <p> 
+    Myös attribuuttien käyttäytymistä voidaan hallita asettamalla configurable- arvoksi false, jolloin ei voi missä tahansa kohtaa määritellä enumerable-, writable- tai jopa itse configurable- arvojen true tai false- arvoja. </p>
+    <p>On myös mahdollista määritellä useampia arvoja kerrallaan</p>
+      <code>
+        function Person(name, id) {
+          this.id = id;
+          <b>Object.defineProperty(this, 'id', {
+          writable: false
+          enumerable: false
+          configurable: false
+          });</b>
+          this.name = name
+          this.getName = function() {
+            return this.name
+          }
+        }
+      </code>
+    </pre>
+    <p>Ainoa tapa millä configurable- arvon saa muutettua on käyttämällä delete- käskyä.
     </p>
       <p> </p>
     <br>
