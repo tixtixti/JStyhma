@@ -468,8 +468,8 @@
   </code>
 </pre>
 <p>
-  Osittain tämä voidaan korjata määrittämällä prototyypin tai luokan käyttäytymistä kyseisen attribuutin kohdalla.
-  Esimerkiksi voitaisiin antaa attribuutille ikä ainoastaan positiivisia lukuja funktion avulla.
+  Osittain tämä voidaan korjata määrittämällä prototyypin tai luokan käyttäytymistä kyseisen attribuutin kohdalla käyttämällä object.defineProperties/
+  defineProperty- metodia. Esimerkiksi voitaisiin antaa attribuutille ikä ainoastaan positiivisia lukuja funktion avulla.
 </p>
 <pre>
   <code>
@@ -484,8 +484,12 @@
       olio.ikä = 52 // ikä on 52
     </code>
   </pre>
+
   <p>
-    Arvoja voidaan tarvittaessa määrittää muokkaamattomaksi, jos on tärkeää jonkin attribuutin pysyvyys.
+  Object.defineProperty- metodilla voidaan muokata useaa eri attribuuttien ominaisuutta. Enumerable- arvon muuttaminen falseksi piilottaa attribuutin for-loopeista, kun kyseistä attribuuttia ei siellä tarvita.
+    Attribuutteja voidaan tarvittaessa määrittää muokkaamattomaksi antamalla samalle metodille writable- arvoksi false, jos on tärkeää ettei attribuutin arvoa ylikirjoiteta. Ja myös attribuuttien käyttäytymistä voidaan hallita asettamalla
+    configurable- arvoksi false, jolloin ei voi missä tahansa kohtaa määritellä onko arvo enumerable-, writable- tai jopa itse configurable- tyyppinen. Ainoa tapa millä configurable:n saa muutettua on käyttämällä delete- käskyä.
+    Otetaan esimerkki writable:n käytöstä</p>
     <pre>
       <code>
         function Person(name, id) {
@@ -501,9 +505,29 @@
     <p>
       Nyt attribuutti id on suojattu. Ratkaisuna tämäkin on osittainen, sillä id voidaan määrittää taas muokattavaksi vastaavalla metodilla.
     </p>
+      <p> </p>
     <br>
     <p>
-      Private- attribuutit määritellään funktion sisälle var- nimikkeellä. Tällöin niihin pääsee käsiksi vain private- funktioilla ja priviledge- metodeilla.Private- funktiot määritellään funktion nimessä laittamalle function sanan eteen var. Priviledge- metodit voidaan herättää koodin ulkopuolella, kuten edellisessä esimerkissä this.getName on tällainen.
+      Mitään erillistä sisäänrakennettua tapaa tehdä attribuuteista yksityisiä, esim. lisäämällä private- sana eteen, ei JavaScript:issä ole. Yksi tapa on lisätä etuliite jokaisen attribuutin eteen,
+      tarkemmin sanottuna alaviivan.
+      </p>
+      <pre>
+      <code>
+        function Person(name, id) {
+          this._id = id;
+          this._name = name
+          this.getName = function() {
+            return this._name
+          }
+        }
+      </code>
+    </pre>
+    
+    <p>Kuitenkin, tämä ei ole mitenkään kielessä tuettu ominaisuus, vaan pikemminkin nimeämistapa, jolla erotetaan attribuutit toisistaan.
+    Yksityisiin attribuutteihin pääsee silti käsiksi, jos käyttää alaviivaa attribuutin edessä funktion ulkopuolella.</p>
+      
+      <p>Toinen tapa piilottaa attribuutit muilta ulkopuolisilta funktioilta, on tämä mahdollista tehdä laittamalla funktion attribuutin eteen var. Tällöin niihin pääsee käsiksi vain private- funktioilla ja priviledge- metodeilla.
+      Piilotetut, yksityiset funktiot määritellään funktion nimessä samalla tavalla laittamalla funktion nimen eteen var. Priviledge- metodit voidaan herättää koodin ulkopuolella, kuten edellisessä esimerkissä this.getName on tällainen.
     </p>
     <pre>
       <code>
