@@ -504,12 +504,13 @@
     <p> 
     Myös attribuuttien käyttäytymistä voidaan hallita asettamalla configurable- arvoksi false, jolloin ei voi missä tahansa kohtaa määritellä enumerable-, writable- tai jopa itse configurable- arvojen true tai false- arvoja. </p>
     <p>On myös mahdollista määritellä useampia arvoja kerrallaan</p>
+	<pre>      
       <code>
         function Person(name, id) {
           this.id = id;
           <b>Object.defineProperty(this, 'id', {
-          writable: false
-          enumerable: false
+          writable: false,
+          enumerable: false,
           configurable: false
           });</b>
           this.name = name
