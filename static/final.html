@@ -10,11 +10,12 @@
 </head>
 
 <body>
-  <nav class="fixed-nav-bar">
+  <nav class="fixed-nav-bar" style="border-bottom: 1px solid #CCCCCC;">
     <a class="eteen" href="final.html">Ryhmä Räty</a>
     <a class="eteen" href="#aluksi">Aluksi</a>
     <a class="eteen" href="#oliot">Oliot</a>
     <a class="eteen" href="#luokat">Luokat</a>
+    <a class="eteen" href="#moduulit">Moduulit</a>
     <a class="eteen" href="#muuta">Muuta</a>
   </nav>
   <section class="content"><!-- lisää 60px tyhjää sivun yläreunaan niin ei mene nav baari piloille. Insa plz no nerf--></section>
@@ -24,7 +25,7 @@
     <li>Asioiden looginen järjestely otsikoiden alle -Doneish, Lesandre</li>
     <li>Ulkoasu (CSS) -Done,Lesandre</li>
     <li>Lisää tekstiä</li>
-      <li>insan refaktorointi</li>
+    <li>insan refaktorointi</li>
   </ol>
 
   <a name="aluksi"></a>
@@ -614,7 +615,86 @@
     <p>
       Valmiit luokat luovat paljon eriäviä mielipiteitä javascript-yhteisössä ja ne tuovat omat murheensa koodiin. Onkin siis ohjelmoijan itse tiedettävä milloin olisi pitäydyttyvä funktioissa ja milloin taas luokkien käyttö on suotavaa. Mutta kyllä ne ovat ihan jees.
     </p>
-
+    
+    <section>
+        <a name="moduulit"></a>
+        <h2>Moduulit</h2>
+        <p>Perusfaktat: moduuleista ohjelmoinnissa puhuttaessa tarkoitetaan erillisiä ohjelman osia, jotka toteuttavat tarkasti määritellyn yhden asian. Modularisaatio tarkoittaa ohjelman rakennetta, joka koostuu näistä itsenäisistä moduuleista, jotka voidaan irroittaa tarvittaessa ja vaihtaa toisiin.</p>
+        <p>Javascriptissa moduulit useimmiten toteutaan anonyymeina funktioina eli funktioilla sulkujen sisällä:</p>
+        <pre>
+            <code>
+(function() { console.log('hei'); )
+            </code>
+        </pre>
+        
+        <p>Näillä anonyymeilla funktioilla on oma itsenäinen näkyvyysalue, joka on täysin suljettu muusta eli funktion ulkopuoliset eivät pääse siihen käsiksi oli parametrit sidottuna this:llä tai ei.</p>
+        <p>Saadakseen anonyymit funktiot muualla käytettäväksi on ne sijoitettava johonkin muuttujaan:</p>
+        <pre>
+            <code>
+var moduuli = (function () {
+	this.hei = function() {
+		console.log('hei');
+	}
+})
+            </code>
+        </pre>
+        
+        <p>Useimmiten vielä haluamme, että moduuli kutsuu itseään eli moduulin sisältämä koodi ajetaan heti suorituksen yhteydessä, jolloin kaikki moduulin vaatima alustus tapahtuu eli lisätään sulut sen loppuun:</p>
+        <pre>
+            <code>
+var moduuli = (function () {
+	this.hei = function() {
+		console.log('hei');
+	}
+})()            
+            </code>
+        </pre>
+        
+        <p>Nytkin moduulissamme on pieni ongelma: emme pääse käsiksi funktioon hei. Kuten sanottua kaikki moduulin sisältämät funktiot ovat yksityisiä jos emme erikseen aukaise niitä ulospäin 'revealing-module-patternilla':</p>
+        <pre>
+            <code>
+var moduuli = (function () {
+	this.hei = function() {
+		console.log('hei');
+	}
+	return {
+		julkinenMetodi: hei
+	}
+})()            
+            </code>
+        </pre>
+        
+        <p>Näin saimme tiukasti rajatun ja toimivan olion, jonka yksityiset muuttujat ovat turvallisesti toisten olioiden näppien ulottumattomissa. Voimme myös antaa moduulille parametrina riippuvuuksia eli siis injektoida ne dependency injection -mallin mukaisesti:</p>
+        <pre>
+            <code>
+var moduuli = (function (olenJquery) {
+	this.hei = function() {
+		console.log('hei');
+	}
+	return {
+		julkinenMetodi: hei
+	}
+})(jQuery)            
+            </code>
+        </pre>
+        
+        <p>Nyt voimme käyttää moduulin sisällä jQueryä ja riippuvuus siitä on suhteellisen näkyvillä. Eli viimeisellä rivillä me kutsumme anonyymiä funktiota parametrina jQuery ja itse funktion sisällä sitten voimme käyttää parametrien niminä mitä huvittaa.</p>
+        <p>Node.js kehitysympäristö keskittyy vahvasti juuri moduuleihin (muistanet node_modules) ja niiden lataamiseen npm:llä ja käyttämiseen require-funktiolla ja tuomiseen module.exports -avainsanalla.</p>
+        <pre>
+            <code>
+// tiedosto moduuli.js
+var muuttuja = 'olen yksityinen';
+module.exports.jokinModuulinOsa = function() {
+	return muuttuja;
+}
+// aukaistaan tiedosto jossain muualla ja käytetään funktiota
+var moduulini = require('./moduuli');
+console.log(moduulini.jokinModuulinOsa());            
+            </code>
+        </pre>
+        
+        <p>Mutta jos palataan takaisin anonyymi funktio -hässäkkään, miten se sitten eroaa prototyyppi olioista? Ei välttämättä juuri mitenkään, moduuleissa vain näkyvyysalue on tarkemmin suojeltu ja sen pitäisi estää (toivottavasti) suurempien mogailujen tekemisen. Onko sitä sitten pakko käyttää? Riippuen minkälaista sovellusta on rakentamassa eivät anonyymi funktioilla toimivat moduulit tietenkään ole välttämättömiä. Alussa varsinkin on hyvä pitää rakenne avoinna mahdollisia isoja muutoksia varten. Myöhemmin moduulit saattavat parantaa ylläpidettävyyttä ja kaunistaa koodia. Ja modularisaatiota voi tehdä ihan ilman tuota anonyymiä funktiota. Pitää vain ohjelman yhden toiminnallisuuden toteuttavissa osissa ja järjestyksessä niin sen pitäisi riittää.</p>
+    </section>
     <a name="muuta"></a>
     <h2>Algoritmien kirjoittaminen JavaScriptillä</h2>
 
