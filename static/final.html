@@ -137,6 +137,42 @@
     </code>
   </pre>
 
+  <h2>Taulukot JavaScriptissä</h2>
+  <p>Taulukoiden käyttäytyminen eroaa muutamassa kohdassa "perinteisten" ohjelmointikielien taulukoiden toiminasta. Taulukon luominen toimii seuraavasti.</p>
+  <pre>
+    <code>
+      var t1 = [1, 2, 3]
+      var t2 = new Array(4, 5, 6)
+      var t3 = Array(7, 8, 9)
+    </code>
+  </pre>
+  <p>Käytännössä <code>new Array()</code> ja <code>Array()</code> ovat sama asia. Arvon lisääminen taulukon määrittelemättömään indeksiin dynaamisesti kasvattaa taulukon kokoa. JS:n taulukoille ei siis tarvitse tehdä tilavarausta. Luonnollisesti määrittelemätön kenttä palauttaa <code>undefined</code>.</p>
+  <pre>
+    <code>
+      var taulukko = [1, 2 ,3] // taulukko.length = 3
+      taulukko[7] = 42 // asetetaan indeksiin 7 uusi arvo. taulukko.length = 8;
+      taulukko[5] // undefined
+    </code>
+  </pre>
+  <p>Taulukot voidaan myös indeksoida negatiiviseen suuntaan!</p>
+  <pre>
+    <code>
+      taulukko[-1] = 8
+      taulukko[0] // 1
+      taulukko[-1] // 8
+    </code>
+  </pre>
+  <p>Taulukon koon muuttaminen tapahtuu määrittelemällä taulukon <code>length</code>-arvo. Taulukon uudet tyhjät paikat ovat <code>undefined</code>. Jos taulukon kokoa pienentää, putoavat taulukon loppupään arvot.</p>
+  <p>Taulukoiden käsittelyyn löytyy useita <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">työkaluja</a>. Viimeisimpiä lisäyksiä kalustoon on "Array-conprehension". Sen syntaksi on karkeasti seuraava: <code>var comprehension = [arvo for (arvo of taulukko) if boolean-funktio]</code>. Esimerkiksi:</p>
+  <pre>
+    <code>
+      var taulukko = [1, 2, 3, 4]
+      var tupla = [i * 2 for (i of taulukko)] // [2, 4, 6, 8]
+      var parilliset = [i for (i of taulukko) if (i % 2 === 0)]
+    </code>
+  </pre>
+  <p>Vastaava voitaisiin toteuttaa esimerkiksi taulukoiden <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map">map</a>- tai <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter">filter</a>-funktioilla, mutta ominaisuus on hyvä lisä kalustoon.</p>
+
   <h2>Poikkeustenkäsittely</h2>
   <p>JavaScript:ssä poikkeukset tyypillisimmin käsitellään Java:sta tutulla <code>try-catch-finally</code> -tavalla sekä heittämällä komento <code>throw</code>. <code>try-catch-finally</code>  voidaan toteuttaa kolmella eri tapaa:</p>
   <ol>
