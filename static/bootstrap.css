@@ -10,6 +10,8 @@ html {
       -ms-text-size-adjust: 100%;
 }
 body {
+  padding-top: 60px;
+  padding-right: 2%;
   margin: 0;
   padding-left: 2%;
 }

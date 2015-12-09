@@ -1,32 +1,45 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Lopullinen dokumentaatio</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="bootstrap.css">
-    <link rel="stylesheet" href="insailoveyou.css">
+  <title>Lopullinen dokumentaatio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="bootstrap.css">
+<!--  <link rel="stylesheet" href="insailoveyou.css"> -->
+
 </head>
 
 <body>
-    <nav class="fixed-nav-bar" style="border-bottom: 1px solid #CCCCCC;">
-        <a class="eteen" href="final.html">Ryhmä Räty</a>
-        <a class="eteen" href="#aluksi">Aluksi</a>
-        <a class="eteen" href="#oliot">Oliot</a>
-        <a class="eteen" href="#luokat">Luokat</a>
-        <a class="eteen" href="#moduulit">Moduulit</a>
-        <a class="eteen" href="#muuta">Muuta</a>
-    </nav>
-    <section class="content">
-        <!-- lisää 60px tyhjää sivun yläreunaan niin ei mene nav baari piloille. Insa plz no nerf-->
-    </section>
+
+
+  <!--- -->
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="final.html">Ryhmä Räty</a></a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li>  <a href="#aluksi">Aluksi</a></li>
+            <li>  <a href="#oliot">Oliot</a></li>
+            <li>  <a href="#proto">Funktiot</a></li>
+        <!--    <li>  <a href="#luokat">Luokat</a></li> onko tarpeen? -->
+            <li>  <a href="#moduulit">Moduulit</a></li>
+            <li>  <a href="#muuta">Muuta</a></li>
+        </ul>
+      </div>
+      </div>
+    </nav><a name="aluksi"></a>
     <h1>Ryhmä Räty: JavaScript best practices</h1>
-    <h1>TODO:</h1>
-    <ol>
-        <li>Asioiden looginen järjestely otsikoiden alle</li>
-    </ol>
-    <a name="aluksi"></a>
     <h2>Muuttujista ja tyyppiturvallisuudesta</h2>
     <p>Muuttujia voidaan JavaScript:ssä merkitä kahdella tapaa.</p>
     <pre>
@@ -108,6 +121,7 @@ function compareAndSort(array) {
         JavaScript:n tyypittömyyden vuoksi rajapintojen dokumentointi ja näihin liittyvien muuttujien nimeäminen oikein on tärkeää. Alla oleva esimerkki näyttää miten paljon kommentit selkeyttävät funktion toimintaa.
     </p>
     <pre>
+
 <code>
 function count(x, y) {
 ...
@@ -122,10 +136,10 @@ Counts the occurrences of str in the given list of strings.
 function count(list, str) {
 ...
 }
-</code>
+</code>  <a name="oliot"></a>
 </pre>
     <h2>Oliot</h2>
-    <a name="oliot"></a>
+
     <h3>Olioista ja niiden luonnista yleisesti</h3>
     <p>
         Olioiden luontiin on JavaScript:ssä kielelle tyypillisesti useita erilaisia tapoja, joista ei suoranaisesti voida sanoa toisen olevan toista parempi. Kaikilla tavoilla on omat vahvuutensa ja heikkoutensa. Tässä käydään läpi muutamia erilaisia tapoja luoda olioita JavaScript:ssä.
@@ -305,6 +319,46 @@ function Person(name) {
 }
 </code>
 </pre>
+<!-- taulukot -->
+
+
+<h3>Taulukot JavaScriptissä</h3>
+<p>Taulukoiden käyttäytyminen eroaa muutamassa kohdassa "perinteisten" ohjelmointikielien taulukoiden toiminasta. Taulukon luominen toimii seuraavasti.</p>
+<pre>
+<code>
+var t1 = [1, 2, 3]
+var t2 = new Array(4, 5, 6)
+var t3 = Array(7, 8, 9)
+</code>
+</pre>
+<p>Käytännössä <code>new Array()</code> ja <code>Array()</code> ovat sama asia. Arvon lisääminen taulukon määrittelemättömään indeksiin dynaamisesti kasvattaa taulukon kokoa. JS:n taulukoille ei siis tarvitse tehdä tilavarausta. Luonnollisesti määrittelemätön kenttä palauttaa <code>undefined</code>.</p>
+<pre>
+<code>
+var taulukko = [1, 2 ,3] // taulukko.length = 3
+taulukko[7] = 42 // asetetaan indeksiin 7 uusi arvo. taulukko.length = 8;
+taulukko[5] // undefined
+</code>
+</pre>
+<p>Taulukot voidaan myös indeksoida negatiiviseen suuntaan!</p>
+<pre>
+<code>
+taulukko[-1] = 8
+taulukko[0] // 1
+taulukko[-1] // 8
+</code>
+</pre>
+<p>Taulukon koon muuttaminen tapahtuu määrittelemällä taulukon <code>length</code>-arvo. Taulukon uudet tyhjät paikat ovat <code>undefined</code>. Jos taulukon kokoa pienentää, putoavat taulukon loppupään arvot.</p>
+<p>Taulukoiden käsittelyyn löytyy useita <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">työkaluja</a>. Viimeisimpiä lisäyksiä kalustoon on "Array-conprehension". Sen syntaksi on karkeasti seuraava: <code>var comprehension = [arvo for (arvo of taulukko) if boolean-funktio]</code>. Esimerkiksi:</p>
+<pre>
+<code>
+var taulukko = [1, 2, 3, 4]
+var tupla = [i * 2 for (i of taulukko)] // [2, 4, 6, 8]
+var parilliset = [i for (i of taulukko) if (i % 2 === 0)]
+</code><a name="proto"></a>
+</pre>
+<p>Vastaava voitaisiin toteuttaa esimerkiksi taulukoiden <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map">map</a>- tai <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter">filter</a>-funktioilla, mutta ominaisuus on hyvä lisä kalustoon.</p>
+
+<!-- Funktio -->
     <h2>Funktioiden ja olioiden prototyypit</h2>
     <p>JavaScriptin prototyypit ja prototyyppiketju ovat kenties eräitä kurssin keskeisimpiä ja samalla myös vaikeimpia asioita ymmärtää kunnolla. Seuraavat esimerkit pyrkivät selventämään prototyyppien ja prototyyppiketjun toimintaa. JavaScriptissä funktiot ovat olioita. Kun JavaScriptissä esitellään funktio, luodaan ympäröivään näkyvyysalueeseen uusi foo-niminen Funktio-olio.</p>
     <pre>
@@ -332,8 +386,11 @@ foo = {}
 foo = new Object()
 </code>
 </pre>
+
+
+<a name="luokat"></a>
     <p>Tämä näyttää jo tutulta. Luodaan siis uusi olio <code>foo</code>, jonka prototyypiksi asetetaan <code>Object</code>-funktion prototyyppiolio <code>Object.prototype</code>.</p>
-    <a name="luokat"></a>
+
     <h3>Luokka-luokat</h3>
     <p>EcmaScript 6:ssa esitellään valmiit 'luokka-luokat'. Ne eivät ole vielä natiivisti tuettuja selaimissa, mutta back-endissä ne saa käyttöön uusimmissa node-versioissa käyttämällä <code>'use strict'</code>-avainsanaa tiedoston alussa. Front:in puolella on käytettävä erillistä kirjastoa, kuten Babelia tai Traceuria koodin muuttamiseen takaisin ES5:ksi.</p>
     <pre>
@@ -356,94 +413,10 @@ class Luokanperkele {
     <p>Ja kuten voi nähdä ne koostuvat normaaleista luokan elementeistä, kuten konstruktorista ja metodeista. Huomioitavaa on että kaikki metodit ovat public:eja ja kaikki muuttujat ja metodit ovat aina käytettävissä luokan ulkopuolelta. Private-metodien tai muuttujien luomiseen on käytettävä duck-typingia eli lisättävä vaikkapa alaviiva _ nimen eteen.</p>
     <p>Javascript sinänsä on ollut vähän kumma kieli ettei luokkia ole toteuttu aikaisemmin kuin edellä mainituilla hieman 'häx'-tavoilla. Siinä saa aloittelija hieman raapia päätään kun haluaa tehdä luokkia javascriptissa ja jotka ovat maksimaalisen suorituskykyisiä. Valmiit luokat lopettavat tuon ylimääräisen miettimisen ja antavat valmiin aihion, jota voidaan käyttää nykyisten funktio-hässäköiden sijasta. Tämä tuo koheesiota koko javascript koodaukseen, koska käytännöt luokkien luomiseen tuntuvat vaihtelevan jokaisessa projektissa. Koko luokka sinänsä on pelkkää syntactic sugaria ja sisäisesti ne ovat edelleen samaa prototype-funktioiden ja Objectien sotkua jota olemme tottuneet näkemään.</p>
     <p>Valmiit luokat luovat paljon eriäviä mielipiteitä javascript-yhteisössä ja ne tuovat omat murheensa koodiin. Onkin siis ohjelmoijan itse tiedettävä milloin olisi pitäydyttyvä funktioissa ja milloin taas luokkien käyttö on suotavaa. Mutta kyllä ne ovat ihan jees.</p>
-    <h2>Taulukot JavaScriptissä</h2>
-    <p>Taulukoiden käyttäytyminen eroaa muutamassa kohdassa "perinteisten" ohjelmointikielien taulukoiden toiminasta. Taulukon luominen toimii seuraavasti.</p>
-    <pre>
-<code>
-var t1 = [1, 2, 3]
-var t2 = new Array(4, 5, 6)
-var t3 = Array(7, 8, 9)
-</code>
-</pre>
-    <p>Käytännössä <code>new Array()</code> ja <code>Array()</code> ovat sama asia. Arvon lisääminen taulukon määrittelemättömään indeksiin dynaamisesti kasvattaa taulukon kokoa. JS:n taulukoille ei siis tarvitse tehdä tilavarausta. Luonnollisesti määrittelemätön kenttä palauttaa <code>undefined</code>.</p>
-    <pre>
-<code>
-var taulukko = [1, 2 ,3] // taulukko.length = 3
-taulukko[7] = 42 // asetetaan indeksiin 7 uusi arvo. taulukko.length = 8;
-taulukko[5] // undefined
-</code>
-</pre>
-    <p>Taulukot voidaan myös indeksoida negatiiviseen suuntaan!</p>
-    <pre>
-<code>
-taulukko[-1] = 8
-taulukko[0] // 1
-taulukko[-1] // 8
-</code>
-</pre>
-    <p>Taulukon koon muuttaminen tapahtuu määrittelemällä taulukon <code>length</code>-arvo. Taulukon uudet tyhjät paikat ovat <code>undefined</code>. Jos taulukon kokoa pienentää, putoavat taulukon loppupään arvot.</p>
-    <p>Taulukoiden käsittelyyn löytyy useita <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">työkaluja</a>. Viimeisimpiä lisäyksiä kalustoon on "Array-conprehension". Sen syntaksi on karkeasti seuraava: <code>var comprehension = [arvo for (arvo of taulukko) if boolean-funktio]</code>. Esimerkiksi:</p>
-    <pre>
-<code>
-var taulukko = [1, 2, 3, 4]
-var tupla = [i * 2 for (i of taulukko)] // [2, 4, 6, 8]
-var parilliset = [i for (i of taulukko) if (i % 2 === 0)]
-</code>
-</pre>
-    <p>Vastaava voitaisiin toteuttaa esimerkiksi taulukoiden <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map">map</a>- tai <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter">filter</a>-funktioilla, mutta ominaisuus on hyvä lisä kalustoon.</p>
-    <h2>Poikkeustenkäsittely</h2>
-    <p>JavaScript:ssä poikkeukset tyypillisimmin käsitellään Java:sta tutulla <code>try-catch-finally</code> -tavalla sekä heittämällä komento <code>throw</code>. <code>try-catch-finally</code> voidaan toteuttaa kolmella eri tapaa:</p>
-    <ol>
-        <li><code>try...catch</code></li>
-        <li><code>try...finally</code></li>
-        <li><code>try..catch...finally</code></li>
-    </ol>
-    <p><code>throw</code> -komentoa voi heittää JavaScript:ssä paljon vapaammin, kuin Java:ssa. Tässä esimerkki perus <code>try-catch</code> -lauseessa:</p>
-    <pre>
-<code>
-try {
-  throw "Poikkeus"
-}
-catch (e) {
-  alert(e.message) // Virheviesti
-}
-</code>
-</pre>
-    <p>Esimerkissä <code>throw</code> ohjaa poikkeuksen suoraan <code>catch</code>:ille. Tämä esimerkki on myös ehdoton <code>try-catch</code> -käsittely, missä <code>catch</code> -lauseita on vain yksi. JavaScript:ssä on myös mahdollisuus tehdä ehdollinen <code>try-catch</code> -käsittely, missä voi olla useampi <code>catch</code> -lause tai -lauseen sisälle voidaan syöttää useampi <code>else if</code> -vaihtoehto poikkeukselle. Tämä ei ole EcmaScript 6:n mukainen menettelytapa ja muutenkin monimutkaistaa sekä pidentää JavaScript- koodia huomattavasti, joten emme suosittele käyttämään ehdollisia <code>try-catch</code> -käsittelyjä.</p>
-    <p><code>finally</code> -lausetta voidaan käyttää, jos halutaan poikkeuksen päättyvän kunniakkaasti, esimerkiksi jos on tarve vapauttaa resursseja, joita <code>try-catch</code> -komento on varannut käyttöönsä.</p>
-    <pre>
-<code>
-avaaTiedosto() {
-  try {
-    kirjoitaTiedostoon(data)
-  } catch(e) {
-    käsittelePoikkeus(e) // Virheviesti
-  } finally {
-    suljeTiedosto()
-  }
-}
-</code>
-</pre>
-    <p>Mitä <code>throw</code>-komentoon tulee, voi sillä vapaasti heitellä erityyppisiä attribuutteja. Yksi vaihtoehto on heittää funktio: </p>
-    <pre>
-<code>
-try {
-  throw function() { alert("Nyt meni pieleen") }
-} catch(e) {
-  e // Nyt meni pieleen
-}
-</code>
-</pre>
-    <p>Paras tapa olisi kuitenkin käyttää <code>Error</code> -konstruktorifunktion luomaa oliota, jolloin sekä heitetyt että JavaScript:n omat poikkeukset toimivat samalla tavalla. Tästä esimerkki: </p>
-    <pre>
-<code>
-try {
-  throw new Error("Nyt meni pieleen")
-} catch(e) {
-  alert(e.message) // Viesti: Nyt meni pieleen
-}
-</code>
-</pre>
+
+
+<!--- Sulkeumat -->
+
     <h2>Sulkeuma</h2>
     <p>Sulkeumalla (eng. closure) tarkoitetaan funktion sisäänsä sulkemaa aluetta ja muuttujia, jota JavaScript:ssä rajataan aaltosulkeilla {}.</p>
     <p>Yleisesti funktion sisäisessä näkyvyysalueessa luodut muuttujat eivät vaikuta globaaliin näkyvyysalueeseen kuten normaalilta ohjelmointikieleltä voi olettaa. JavaScript:ssa kuitenkin näkyvyysalueiden kapselointi on vähän niin sun näin eikä aina ole niin selvää mikä voi muuttaa mitäkin.</p>
@@ -556,13 +529,15 @@ var luokka = class test {
 }
 var luokka1 = new luokka();
 luokka1.metodi()
-</code>
+</code><a name="moduulit"></a>
 </pre>
+
     <p>
         Ja omien luokkakyhäilyn luomisen voi lopettaa EcmaScript6:n tullessa paitsi jos on ihan pakko eikä luota niiden tehokkuuteen.
     </p>
-    <section>
-        <a name="moduulit"></a>
+
+<!--Moduulit-->
+
         <h2>Moduulit</h2>
         <p>Perusfaktat: moduuleista ohjelmoinnissa puhuttaessa tarkoitetaan erillisiä ohjelman osia, jotka toteuttavat tarkasti määritellyn yhden asian. Modularisaatio tarkoittaa ohjelman rakennetta, joka koostuu näistä itsenäisistä moduuleista, jotka voidaan irroittaa tarvittaessa ja vaihtaa toisiin.</p>
         <p>Javascriptissa moduulit useimmiten toteutaan anonyymeina funktioina eli funktioilla sulkujen sisällä:</p>
@@ -634,9 +609,11 @@ var moduulini = require('./moduuli');
 console.log(moduulini.jokinModuulinOsa());
 </code>
 </pre>
-        <p>Mutta jos palataan takaisin anonyymi funktio -hässäkkään, miten se sitten eroaa prototyyppi olioista? Ei välttämättä juuri mitenkään, moduuleissa vain näkyvyysalue on tarkemmin suojeltu ja sen pitäisi estää (toivottavasti) suurempien mogailujen tekemisen. Onko sitä sitten pakko käyttää? Riippuen minkälaista sovellusta on rakentamassa eivät anonyymi funktioilla toimivat moduulit tietenkään ole välttämättömiä. Alussa varsinkin on hyvä pitää rakenne avoinna mahdollisia isoja muutoksia varten. Myöhemmin moduulit saattavat parantaa ylläpidettävyyttä ja kaunistaa koodia. Ja modularisaatiota voi tehdä ihan ilman tuota anonyymiä funktiota. Pitää vain ohjelman yhden toiminnallisuuden toteuttavissa osissa ja järjestyksessä niin sen pitäisi riittää.</p>
+        <p>Mutta jos palataan takaisin anonyymi funktio -hässäkkään, miten se sitten eroaa prototyyppi olioista? Ei välttämättä juuri mitenkään, moduuleissa vain näkyvyysalue on tarkemmin suojeltu ja sen pitäisi estää (toivottavasti) suurempien mogailujen tekemisen. Onko sitä sitten pakko käyttää?  Riippuen minkälaista sovellusta on rakentamassa eivät anonyymi funktioilla toimivat moduulit tietenkään ole välttämättömiä. Alussa varsinkin on hyvä pitää rakenne avoinna mahdollisia isoja muutoksia varten. <a name="muuta"></a> Myöhemmin moduulit saattavat parantaa ylläpidettävyyttä ja kaunistaa koodia. Ja modularisaatiota voi tehdä ihan ilman tuota anonyymiä funktiota. Pitää vain ohjelman yhden toiminnallisuuden toteuttavissa osissa ja järjestyksessä niin sen pitäisi riittää.</p>
     </section>
-    <a name="muuta"></a>
+
+<!-- Algot -->
+
     <h2>Algoritmien kirjoittaminen JavaScriptillä</h2>
     <p>
         Algoritmien kirjoittaminen Javascriptillä ei ole oikeastaan sen kummempaa kuin muullakaan ohjelmointikielellä, mutta JS:n dynaaminen tyypitys voi tuottaa ongelmia aloittelijoille. JavaScriptin tyyppiturvallisuuden alhainen taso lisää virhemahdollisuuksia ja tekee etenkin monimutkaisemman algoritmin toteuttamisesta vaikeampaa. Mikäli algoritmi vaatii tiettyä datatyyppiä tai tiettyä muotoa on tärkeää validoida syöte ennen sen ajamista algoritmin läpi. Tämä toki lisää ylimääräistä boilerplate koodia ohjelmaan. Myös dynaamisesti tyypitetyn kielen tyyppioperaatiot voivat laskutoimituksia tehdessä aiheuttaa ylimääräistä vaivaa. JavaScriptissa '5 + 1' voi olla tulkintatavasta liittyen joko '51' tai 6.
@@ -679,6 +656,9 @@ function callQuack(o) {
 </pre>
     <p>Hybridiparadigmansa puolesta JavaScript sopii hyvin erilaisten algoritmien toteuttamiseen. JavaScriptin funktionaalinen tuki toimii hyvin esimerkiksi rekursiivisten algoritmien kirjoittamiseen, mutta esimerkiksi Clojuresta poiketen JavaScript tarjoaa myös "oikean" for-loopin, mikä helpottaa iteratiivisten algoritmien luontevaa toteuttamista.</p>
     <p>JavaScript kuitenkin sisältää suuria ongelmia algoritmien kirjoituksessa, joista ilmeisimpiä ovat hidas suoritusnopeus, hidas IO sekä huono kirjastotuki. Kieltä käytetään usein tulkattuna, jolloin algoritmien ajoaika voi olla jopa satakertainen natiivikoodiksi kääntyvään toteutukseen verrattuna. JavaScriptiä ei ole suunniteltu algoritmien toteuttamiseen (tai edes yleiskäyttöiseksi ohjelmointikieleksi), minkä vuoksi kieli ei tarjoa standardikirjastossa esimerkiksi IO-ominaisuuksia tai tietorakenteita. Myös esimerkiksi muistiosoitukset tai manuaalinen muistinhallinta puuttuvat.</p>
+
+<!-- Iteratiivinen vs funktionaalinen -->
+
     <h2>Imperatiivinen- ja funktionaalinen ohjelmointi JavaScriptissä</h2>
     <p>Aloittelevat JavaScript ohjelmoijat useimmiten tukeutuvat imperatiiviseen ohjelmointiin. Imperatiivinen ohjelmointi on varsin toimiva sellaisenaan, mutta saa oivia lisätyökaluja funktionaalisesta ohjelmoinnista. Esimerkkinä imperatiivisesta ohjelmointikielestä ovat esimerkiksi Java, C sekä Python. Funktionaalisia edustavat esimerkiksi Scala tai Clojure.</p>
     <p>JavaScriptillä on valmiina monia funktioita ja työkaluja. Esimerkkinä:</p>
@@ -713,8 +693,63 @@ write(a); //9002
 </code>
 </pre>
     <p>Lopuksi:<br> Funktionaalisella ohjelmoinnilla on käyttönsä ja hyötynsä koodin rakenteen parantamiseksi. Imperatiivinen ohjelmointi on kuitenkin monelle intuitiivisempaa ja usein luettavampaa. Tämän ja edellä mainituista syistä imperatiivinen ohjelmointi jossa hyödynnetään JavaScript:n funktionaalisia ominaisuuksia, lienee JS:n parhaimpia käyttötapoja.</p>
-    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <!-- Poikkeukset -->
+
+        <h2>Poikkeustenkäsittely</h2>
+        <p>JavaScript:ssä poikkeukset tyypillisimmin käsitellään Java:sta tutulla <code>try-catch-finally</code> -tavalla sekä heittämällä komento <code>throw</code>. <code>try-catch-finally</code> voidaan toteuttaa kolmella eri tapaa:</p>
+        <ol>
+            <li><code>try...catch</code></li>
+            <li><code>try...finally</code></li>
+            <li><code>try..catch...finally</code></li>
+        </ol>
+        <p><code>throw</code> -komentoa voi heittää JavaScript:ssä paljon vapaammin, kuin Java:ssa. Tässä esimerkki perus <code>try-catch</code> -lauseessa:</p>
+        <pre>
+    <code>
+    try {
+      throw "Poikkeus"
+    }
+    catch (e) {
+      alert(e.message) // Virheviesti
+    }
+    </code></pre>
+        <p>Esimerkissä <code>throw</code> ohjaa poikkeuksen suoraan <code>catch</code>:ille. Tämä esimerkki on myös ehdoton <code>try-catch</code> -käsittely, missä <code>catch</code> -lauseita on vain yksi. JavaScript:ssä on myös mahdollisuus tehdä ehdollinen <code>try-catch</code> -käsittely, missä voi olla useampi <code>catch</code> -lause tai -lauseen sisälle voidaan syöttää useampi <code>else if</code> -vaihtoehto poikkeukselle. Tämä ei ole EcmaScript 6:n mukainen menettelytapa ja muutenkin monimutkaistaa sekä pidentää JavaScript- koodia huomattavasti, joten emme suosittele käyttämään ehdollisia <code>try-catch</code> -käsittelyjä.</p>
+        <p><code>finally</code> -lausetta voidaan käyttää, jos halutaan poikkeuksen päättyvän kunniakkaasti, esimerkiksi jos on tarve vapauttaa resursseja, joita <code>try-catch</code> -komento on varannut käyttöönsä.</p>
+        <pre>
+    <code>
+    avaaTiedosto() {
+      try {
+        kirjoitaTiedostoon(data)
+      } catch(e) {
+        käsittelePoikkeus(e) // Virheviesti
+      } finally {
+        suljeTiedosto()
+      }
+    }
+    </code></pre>
+        <p>Mitä <code>throw</code>-komentoon tulee, voi sillä vapaasti heitellä erityyppisiä attribuutteja. Yksi vaihtoehto on heittää funktio: </p>
+        <pre>
+    <code>
+    try {
+      throw function() { alert("Nyt meni pieleen") }
+    } catch(e) {
+      e // Nyt meni pieleen
+    }
+    </code></pre>
+        <p>Paras tapa olisi kuitenkin käyttää <code>Error</code> -konstruktorifunktion luomaa oliota, jolloin sekä heitetyt että JavaScript:n omat poikkeukset toimivat samalla tavalla. Tästä esimerkki: </p>
+        <pre>
+    <code>
+    try {
+      throw new Error("Nyt meni pieleen")
+    } catch(e) {
+      alert(e.message) // Viesti: Nyt meni pieleen
+    }</code></pre>
+
+
+    <script src="jquery-1.11.13.min.js"></script>
+    <script src="collapse.js"></script>
+      <script src="transition.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.2.1/jquery-migrate.js"></script>
 </body>
 
 </html>
