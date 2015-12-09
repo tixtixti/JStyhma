@@ -37,7 +37,7 @@
       var koira = "hau"
     </code>
   </pre>
-  <p>Ainut ero näillä kahdella tavalla on, että <code>var</code> -etuliitteellä varustetun muuttujan näkyvyysalue on funktio. Muuttujien tekeminen "koskemattomiksi" onnistuu const:illa.</p>
+  <p>Ainut ero näillä kahdella tavalla on, että <code>var</code> -etuliitteellä varustetun muuttujan näkyvyysalue on funktio. Muuttujien tekeminen "koskemattomiksi" onnistuu <code>const</code>:illa.</p>
    <pre>
     <code>
       const kissa = "mau"
@@ -176,9 +176,9 @@
   <h2>Poikkeustenkäsittely</h2>
   <p>JavaScript:ssä poikkeukset tyypillisimmin käsitellään Java:sta tutulla <code>try-catch-finally</code> -tavalla sekä heittämällä komento <code>throw</code>. <code>try-catch-finally</code>  voidaan toteuttaa kolmella eri tapaa:</p>
   <ol>
-    <li>try...catch</li>
-    <li>try...finally</li>
-    <li>try..catch...finally</li>
+    <li><code>try...catch</code></li>
+    <li><code>try...finally</code></li>
+    <li><code>try..catch...finally</code></li>
   </ol>
 
   <p><code>throw</code> -komentoa voi heittää JavaScript:ssä paljon vapaammin, kuin Java:ssa. Tässä esimerkki perus <code>try-catch</code> -lauseessa:</p>
@@ -392,16 +392,16 @@
   <p>Yksinkertaisin tapa luoda instanssi oliosta on määritellä olioliteraalin kentät suoraan seuraavasti:</p>
   <pre>
     <code>
-      var person = {
+      var person = <b>{
         name : "Anssi",
         getName : function () {
           return this.name
         }
-      }
+      }</b>
     </code>
   </pre>
   <p>
-    Yllä oleva koodi luo nimettömästä oliosta instanssin, jolla on yksi julkinen muuttuja <code>name</code> ja yksi julkinen funktiokutsu <code>getName</code>.
+    Olioliteraali on tällä tavalla aaltosulkeissa esitetty olio, jonka sisältä löytyy funktioliteraali <code>getName</code>. Yllä oleva koodi luo nimettömästä oliosta instanssin, jolla on yksi julkinen muuttuja <code>name</code> ja yksi julkinen funktiokutsu <code>getName</code>.
     Olioliteraalit ovat käteviä, kun oliosta tarvitaan vain yksi instanssi. Tälläisiä tapauksia ovat usein esimerkiksi JSON-muotoisten viestien luonti WWW-sovelluksissa.
   </p>
   <br>
