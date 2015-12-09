@@ -1,838 +1,720 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Lopullinen dokumentaatio</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="bootstrap.css">
-  <link rel="stylesheet" href="insailoveyou.css">
 
+<head>
+    <title>Lopullinen dokumentaatio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="insailoveyou.css">
 </head>
 
 <body>
-  <nav class="fixed-nav-bar" style="border-bottom: 1px solid #CCCCCC;">
-    <a class="eteen" href="final.html">Ryhmä Räty</a>
-    <a class="eteen" href="#aluksi">Aluksi</a>
-    <a class="eteen" href="#oliot">Oliot</a>
-    <a class="eteen" href="#luokat">Luokat</a>
-    <a class="eteen" href="#moduulit">Moduulit</a>
-    <a class="eteen" href="#muuta">Muuta</a>
-  </nav>
-  <section class="content"><!-- lisää 60px tyhjää sivun yläreunaan niin ei mene nav baari piloille. Insa plz no nerf--></section>
-  <h1>Ryhmä Räty: JavaScript best practices</h1>
-  <h1>TODO:</h1>
-  <ol>
-    <li>Asioiden looginen järjestely otsikoiden alle -Doneish, Lesandre</li>
-    <li>Ulkoasu (CSS) -Done,Lesandre</li>
-    <li>Lisää tekstiä -Tekstiä listoista, Sieni</li>
-    <li>insan refaktorointi</li>
-  </ol>
+    <nav class="fixed-nav-bar" style="border-bottom: 1px solid #CCCCCC;">
+        <a class="eteen" href="final.html">Ryhmä Räty</a>
+        <a class="eteen" href="#aluksi">Aluksi</a>
+        <a class="eteen" href="#oliot">Oliot</a>
+        <a class="eteen" href="#luokat">Luokat</a>
+        <a class="eteen" href="#moduulit">Moduulit</a>
+        <a class="eteen" href="#muuta">Muuta</a>
+    </nav>
+    <section class="content">
+        <!-- lisää 60px tyhjää sivun yläreunaan niin ei mene nav baari piloille. Insa plz no nerf-->
+    </section>
+    <h1>Ryhmä Räty: JavaScript best practices</h1>
+    <h1>TODO:</h1>
+    <ol>
+        <li>Asioiden looginen järjestely otsikoiden alle</li>
+    </ol>
+    <a name="aluksi"></a>
+    <h2>Muuttujista ja tyyppiturvallisuudesta</h2>
+    <p>Muuttujia voidaan JavaScript:ssä merkitä kahdella tapaa.</p>
+    <pre>
+<code>
+kissa = "mau"
+var koira = "hau"
+</code>
+</pre>
+    <p>Ainut ero näillä kahdella tavalla on, että <code>var</code> -etuliitteellä varustetun muuttujan näkyvyysalue on funktio. Muuttujien tekeminen "koskemattomiksi" onnistuu <code>const</code>:illa.</p>
+    <pre>
+<code>
+const kissa = "mau"
+var koira = "hau"
+kissa = "bää" // ei onnistu
+koira = "mooo" // onnistuu
+</code>
+</pre>
+    <p>Jos <code>const</code> -tyyppinen muuttuja osoittaa olioon, on sen sisältö kuitenkin muutettavissa. Parempia tapoja olioiden ja funktioiden sisäisten muuttujien piilottamiseen löytyy kappaleesta Oliot.</p>
+    <p>Koska JavaScriptin muuttujat ovat tyypittömiä, joudutaan olioiden tyyppi tarkastamaan <code>typeof</code> -operaattorilla.</p>
+    <pre>
+<code>
+typeof(123) // palauttaa "number"
+typeof("test") // palauttaa "string"
+typeof({x: 123}) // palauttaa "object"
+typeof(undefined) // palauttaa "undefined"
+typeof(blabla) // palauttaa "undefined"
+</code>
+</pre>
+    <hr>
+    <p>JavaScript:n taulukot ovat heterogeenisiä, joten myös taulukon sisältämien olioiden tyypit joudutaan tarkastamaan käsin. Jos halutaan rajoittua yhden tyypin taulukoihin, voidaan tyypin määrittämiseen käyttää esimerkiksi seuraavia funktioita.</p>
+    <pre>
+<code>
+function containsOnlyIntegers(array) {
+  return array.every(elem => Number.isInteger(elem));
+}
 
-  <a name="aluksi"></a>
-  <h2>Muuttujista ja tyyppiturvallisuudesta</h2>
-  <p>Muuttujia voidaan JavaScript:ssä merkitä kahdella tapaa.</p>
-   <pre>
-    <code>
-      kissa = "mau"
-      var koira = "hau"
-    </code>
-  </pre>
-  <p>Ainut ero näillä kahdella tavalla on, että <code>var</code> -etuliitteellä varustetun muuttujan näkyvyysalue on funktio. Muuttujien tekeminen "koskemattomiksi" onnistuu <code>const</code>:illa.</p>
-   <pre>
-    <code>
-      const kissa = "mau"
-      var koira = "hau"
-      kissa = "bää" // ei onnistu
-      koira = "mooo" // onnistuu
-    </code>
-  </pre>
-  <p>Jos <code>const</code> -tyyppinen muuttuja osoittaa olioon, on sen sisältö kuitenkin muutettavissa. Parempia tapoja olioiden ja funktioiden sisäisten muuttujien
-   piilottamiseen löytyy kappaleesta Oliot.</p>
-  <p>Koska JavaScriptin muuttujat ovat tyypittömiä, joudutaan olioiden tyyppi tarkastamaan <code>typeof</code> -operaattorilla.</p>
-  <pre>
-    <code>
-      typeof(123) // palauttaa "number"
-      typeof("test") // palauttaa "string"
-      typeof({x: 123}) // palauttaa "object"
-      typeof(undefined) // palauttaa "undefined"
-      typeof(blabla) // palauttaa "undefined"
-    </code>
-  </pre>
+function containsOnlyNumbers(array) {
+  return array.every(elem => typeof(elem) === "number");
+}
 
-  <hr>
+function containsOnlyStrings(array) {
+  return array.every(elem => typeof(elem) === "string");
+}
+</code>
+</pre>
+    <hr>
+    <p>Etenkin selainohjelmoinnissa iso osa JavaScriptin käsittelemästä tiedosta on merkkijonomuodossa. Tämän vuoksi tietoa joudutaan usein muuntamaan esimerkiksi merkkijonosta kokonaisluvuksi. Tällöin kannattaa tarkastaa syötteen oikeellisuus esimerkiksi säännöllisiä lausekkeita käyttäen.</p>
+    <pre>
+<code>
+function isValidFloat(value) {
+  return /^(\d+\.\d+)$/.test(value);
+}
 
-  <p>JavaScript:n taulukot ovat heterogeenisiä, joten myös taulukon sisältämien olioiden tyypit joudutaan tarkastamaan käsin. Jos halutaan rajoittua yhden tyypin taulukoihin, voidaan tyypin määrittämiseen käyttää esimerkiksi seuraavia funktioita.</p>
-  <pre>
-    <code>
-      function containsOnlyIntegers(array) {
-        return array.every(elem => Number.isInteger(elem));
-      }
+function isValidInteger(value) {
+  return /^(\d+)$/.test(value);
+}
+</code>
+</pre>
+    <hr>
+    <p>Liiallinen tarkastusten laittaminen koodiin venyttää koodin pituutta ja saattaa hidastaa ohjelman suoritusta. JavaScript-ohjelmaan kannattaa sijoittaa tyyppitarkistukset vain ohjelman uloimmalle rajapinnalle, jossa funktioihin syötetään uusia arvoja.Esimerkki tällaisesta ohjelmanpätkästä:</p>
+    <pre>
+<code>
+function compareAndSort(array) {
+  if(!containsOnlyNumbers(array))
+    throw "Taulukossa saa olla vain numeroita!"
 
-      function containsOnlyNumbers(array) {
-        return array.every(elem => typeof(elem) === "number");
-      }
+  var compare = function(a, b) {
+    return b - a
+  }
 
-      function containsOnlyStrings(array) {
-        return array.every(elem => typeof(elem) === "string");
-      }
-    </code>
-  </pre>
+  array.sort(compare)
+  return array
+}
+</code>
+</pre>
+    <p><code>Compare</code> -funktiossa ei enää tarvitse tarkistaa ovatko a ja b lukuja, sillä se on jo tehty ennen sitä <code>if</code> -lausekkeessa.</p>
+    <hr>
+    <p>
+        JavaScript:n tyypittömyyden vuoksi rajapintojen dokumentointi ja näihin liittyvien muuttujien nimeäminen oikein on tärkeää. Alla oleva esimerkki näyttää miten paljon kommentit selkeyttävät funktion toimintaa.
+    </p>
+    <pre>
+<code>
+function count(x, y) {
+...
+}
 
-  <hr>
-
-  <p>
-    Etenkin selainohjelmoinnissa iso osa JavaScriptin käsittelemästä tiedosta on merkkijonomuodossa. Tämän vuoksi tietoa joudutaan usein muuntamaan esimerkiksi merkkijonosta kokonaisluvuksi. Tällöin kannattaa tarkastaa syötteen oikeellisuus esimerkiksi säännöllisiä lausekkeita käyttäen.
-  </p>
-  <pre>
-    <code>
-      function isValidFloat(value) {
-        return /^(\d+\.\d+)$/.test(value);
-      }
-
-      function isValidInteger(value) {
-        return /^(\d+)$/.test(value);
-      }
-    </code>
-  </pre>
-
-  <hr>
-
-  <p>Liiallinen tarkastusten laittaminen koodiin venyttää koodin pituutta ja saattaa hidastaa ohjelman suoritusta. JavaScript-ohjelmaan kannattaa sijoittaa tyyppitarkistukset vain ohjelman uloimmalle rajapinnalle, jossa funktioihin syötetään uusia arvoja.Esimerkki tällaisesta ohjelmanpätkästä:</p>
-  <pre>
-    <code>
-      function compareAndSort(array) {
-        if(!containsOnlyNumbers(array))
-        throw "Taulukossa saa olla vain numeroita!"
-
-        var compare = function(a, b) {
-          return b - a
-        }
-
-        array.sort(compare)
-        return array
-      }
-    </code>
-  </pre>
-  <p><code>Compare</code> -funktiossa ei enää tarvitse tarkistaa ovatko a ja b lukuja, sillä se on jo tehty ennen sitä <code>if</code> -lausekkeessa.</p>
-  <hr>
-
-  <p>
-    JavaScript:n tyypittömyyden vuoksi rajapintojen dokumentointi ja näihin liittyvien muuttujien nimeäminen oikein on tärkeää. Alla oleva esimerkki näyttää miten paljon kommentit selkeyttävät funktion toimintaa.
-  </p>
-  <pre>
-    <code>
-      function count(x, y) {
-        ...
-      }
-
-      /**
-      Counts the occurrences of str in the given list of strings.
-      @param {list} list - The string list to be searched.
-      @param {string} str - The string to find.
-      @returns The count of how many times str occurs in the list.
-      */
-      function count(list, str) {
-        ...
-      }
-    </code>
-  </pre>
-
-  <h2>Taulukot JavaScriptissä</h2>
-  <p>Taulukoiden käyttäytyminen eroaa muutamassa kohdassa "perinteisten" ohjelmointikielien taulukoiden toiminasta. Taulukon luominen toimii seuraavasti.</p>
-  <pre>
-    <code>
-      var t1 = [1, 2, 3]
-      var t2 = new Array(4, 5, 6)
-      var t3 = Array(7, 8, 9)
-    </code>
-  </pre>
-  <p>Käytännössä <code>new Array()</code> ja <code>Array()</code> ovat sama asia. Arvon lisääminen taulukon määrittelemättömään indeksiin dynaamisesti kasvattaa taulukon kokoa. JS:n taulukoille ei siis tarvitse tehdä tilavarausta. Luonnollisesti määrittelemätön kenttä palauttaa <code>undefined</code>.</p>
-  <pre>
-    <code>
-      var taulukko = [1, 2 ,3] // taulukko.length = 3
-      taulukko[7] = 42 // asetetaan indeksiin 7 uusi arvo. taulukko.length = 8;
-      taulukko[5] // undefined
-    </code>
-  </pre>
-  <p>Taulukot voidaan myös indeksoida negatiiviseen suuntaan!</p>
-  <pre>
-    <code>
-      taulukko[-1] = 8
-      taulukko[0] // 1
-      taulukko[-1] // 8
-    </code>
-  </pre>
-  <p>Taulukon koon muuttaminen tapahtuu määrittelemällä taulukon <code>length</code>-arvo. Taulukon uudet tyhjät paikat ovat <code>undefined</code>. Jos taulukon kokoa pienentää, putoavat taulukon loppupään arvot.</p>
-  <p>Taulukoiden käsittelyyn löytyy useita <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">työkaluja</a>. Viimeisimpiä lisäyksiä kalustoon on "Array-conprehension". Sen syntaksi on karkeasti seuraava: <code>var comprehension = [arvo for (arvo of taulukko) if boolean-funktio]</code>. Esimerkiksi:</p>
-  <pre>
-    <code>
-      var taulukko = [1, 2, 3, 4]
-      var tupla = [i * 2 for (i of taulukko)] // [2, 4, 6, 8]
-      var parilliset = [i for (i of taulukko) if (i % 2 === 0)]
-    </code>
-  </pre>
-  <p>Vastaava voitaisiin toteuttaa esimerkiksi taulukoiden <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map">map</a>- tai <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter">filter</a>-funktioilla, mutta ominaisuus on hyvä lisä kalustoon.</p>
-
-  <h2>Poikkeustenkäsittely</h2>
-  <p>JavaScript:ssä poikkeukset tyypillisimmin käsitellään Java:sta tutulla <code>try-catch-finally</code> -tavalla sekä heittämällä komento <code>throw</code>. <code>try-catch-finally</code>  voidaan toteuttaa kolmella eri tapaa:</p>
-  <ol>
-    <li><code>try...catch</code></li>
-    <li><code>try...finally</code></li>
-    <li><code>try..catch...finally</code></li>
-  </ol>
-
-  <p><code>throw</code> -komentoa voi heittää JavaScript:ssä paljon vapaammin, kuin Java:ssa. Tässä esimerkki perus <code>try-catch</code> -lauseessa:</p>
-  <pre>
-    <code>
-      try {
-        throw "Poikkeus"
-      }
-      catch (e) {
-        alert(e.message) // Virheviesti
-      }
-    </code>
-  </pre>
-  <p>
-    Esimerkissä <code>throw</code> ohjaa poikkeuksen suoraan <code>catch</code>:ille. Tämä esimerkki on myös ehdoton <code>try-catch</code> -käsittely, missä <code>catch</code> -lauseita on vain yksi. JavaScript:ssä on myös mahdollisuus tehdä ehdollinen <code>try-catch</code> -käsittely, missä voi olla useampi <code>catch</code> -lause tai -lauseen sisälle voidaan syöttää useampi <code>else if</code> -vaihtoehto poikkeukselle. Tämä ei ole EcmaScript 6:n mukainen menettelytapa ja muutenkin monimutkaistaa sekä pidentää JavaScript- koodia huomattavasti, joten emme suosittele käyttämään ehdollisia <code>try-catch</code> -käsittelyjä.
-  </p>
-
-  <p><code>finally</code> -lausetta voidaan käyttää, jos halutaan poikkeuksen päättyvän kunniakkaasti, esimerkiksi jos on tarve vapauttaa resursseja, joita <code>try-catch</code> -komento on varannut käyttöönsä.</p>
-  <pre>
-    <code>
-      avaaTiedosto() {
-        try {
-          kirjoitaTiedostoon(data)
-        }
-        catch(e) {
-          käsittelePoikkeus(e) // Virheviesti
-        }
-        finally {
-          suljeTiedosto()
-        }
-      }
-    </code>
-  </pre>
-
-  <p>Mitä <code>throw</code>-komentoon tulee, voi sillä vapaasti heitellä erityyppisiä attribuutteja. Yksi vaihtoehto on heittää funktio: </p>
-  <pre>
-    <code>
-      try {
-        throw function() { alert("Nyt meni pieleen") }
-      }
-      catch(e) {
-        e // Nyt meni pieleen
-      }
-    </code>
-  </pre>
-  <p>Paras tapa olisi kuitenkin käyttää <code>Error</code> -konstruktorifunktion luomaa oliota, jolloin sekä heitetyt että JavaScript:n omat poikkeukset toimivat samalla tavalla. Tästä esimerkki: </p>
-  <pre>
-    <code>
-      try {
-        throw new Error("Nyt meni pieleen")
-      }
-      catch(e) {
-        alert(e.message) // Viesti: Nyt meni pieleen
-      }
-    </code>
-  </pre>
-
-  <h2>Sulkeuma</h2>
-
-  <p>
-    Sulkeumalla (eng. closure) tarkoitetaan funktion sisäänsä sulkemaa aluetta ja muuttujia, jota JavaScript:ssä rajataan aaltosulkeilla {}.
-  </p>
-  <p>
-    Yleisesti funktion sisäisessä näkyvyysalueessa luodut muuttujat eivät vaikuta globaaliin näkyvyysalueeseen kuten normaalilta ohjelmointikieleltä voi olettaa. JavaScript:ssa kuitenkin näkyvyysalueiden kapselointi on vähän niin sun näin eikä aina ole niin selvää mikä voi muuttaa mitäkin.
-  </p>
-
-  <pre>
-    <code>
-      function tyhmaFunktio() {
-        var hah = 1;
-        var lol =  function() { hah++; return hah; } // lol voi hiplata tyhmanFunktion muuttujaa
-        lol()
-        lol()
-        return lol()
-      }
-      console.log(tyhmaFunktio())
-    </code>
-  </pre>
-
-  <p>
-    Myöskin funktion sisäinen näkyvyysalue JavaScriptissa säilyy vielä funktion suorituksen jälkeenkin eli jos funktio tallennetaan muuttujaan ja sitä vähän käytellään niin se ei alusta itseään.
-  </p>
-
-  <pre>
-    <code>
-      function asdf() {
-        var x = 0;
-        return function() { x++; return x; };
-      }
-
-      var hei = asdf();
-      hei();
-      hei();
-      console.log(hei());
-    </code>
-  </pre>
-
-  <p>
-    Eli tuossa x:n arvo pysyy muistissa eli kasvaa ja ulos tulostuu 3.
-  </p>
-  <p>
-    Onko tuo nyt niin ihmeellistä, empä tiedä. Funktiot vähän korvaavat luokkia JavaScript:ssa ja on kiva että ne eivät toimi samalla tavalla kuin esim. Java:ssa. Tuo on vähän kuin loisi instanssin <code>asdf</code> -funktiosta jota sitten pyörittelisi kuin luokkaa konsanaan.
-  </p>
-  <p>
-    Suoraan luentokalvoista otettuna:
-  </p>
-
-  <pre>
-    <code>
-      function randomTurhaFunktio(funktioni) {
-        var a=111, b=222;
-        funktioni(); // täällä parametrina saadun sulkeuman suoritus käynnistetään
-        a=1234; b=5678;
-      }
-
-      function g() {
-        var a=10, b=20;
-        randomTurhaFunktio(function() {a=77; b=99;}); // funktioparametri, jossa vapaita muuttujia
-        console.log(a+" "+b);
-      }
-      g();    // tulostus 77 99
-    </code>
-  </pre>
-
-  <p>
-    Ja tuossa siis hienosti nimetyt muuttujat a ja b eivät pääsekään sörkkimään toisiaan kolmannen osapuolen <code>randomTurhaFunktion</code> sisällä. Mikä on hyvä juttu. Jos arvoja haluaisi muuttaa tulisi muuttujien olla yleisessä näkyvyysalueessa tai vain saatavissa parametrina annetusta funktiosta.
-  </p>
-  <p>
-    Tässä vähän yksinkertaisempi ja tyhmempi esimerkki:
-  </p>
-
-  <pre>
-    <code>
-      function taysinEri(lokaaliFunktio) {
-        lokaaliFunktio(); // täällä vain kutsutaan parametrina saatua funktiota jolla on jo oma määrätty näkyvyysalueensa joka ei koske tätä funktiota
-      }
-
-      function outoFunktio() {
-        var sinep = 1;
-        taysinEri(function() { sinep++; }); // eli kun funktio luodaan oudonFunktion sisällä sillä on näkyvyys sen muuttujiin
-        console.log('sinep on kaksi omg ' + sinep);
-      }
-
-      outoFunktio()
-    </code>
-  </pre>
-
-  <p>
-    Mihin sitten tälläistä kieroilua tarvitsee? Kyllä vähän vaikuttaa että kun sulkeumasta puhutaan halutaan vain sekoittaa JavaScript-ohjelmoijan pää ja lannistaa kaikki aloittelijat koko kielestä. Asia ei vaikuta hirveästi normaaliin koodaamiseen ja vähällä koodauksellakin pääsee jo siitä jyvälle. Omituisten termien käyttökään ei ainakaan helpota.
-  </p>
-  <p>
-    Suuremmat murheet näkyvyysalueiden kanssa ovat syntyneet <code>this</code>:in kanssa sähläämisestä asynkronisten funktioiden kanssa. Kun <code>this</code> ei enää olekaan sama kuin funktion alkaessa alkaa päähän sattua.
-  </p>
-
-  <pre>
-    <code>
-      'use strict'
-      var luokka = class test {
-        constructor() {
-          this.jee = 'heivain'
-        }
-        metodi() {
-          console.log('jee on ' + this.jee) // toimii
-          new Promise(function(resolve, reject) {
-            console.log('tulostuuko?');
-            console.log(this.jee) // ei toimi
-          })
-        }
-      }
-      var luokka1 = new luokka();
-      luokka1.metodi()
-    </code>
-  </pre>
-
-  <p>
-    Onneksi on olemassa nopea fiksi eli tallennetaan viittaus näkyvyysalueeseen muuttujan sisälle:
-  </p>
-
-  <pre>
-    <code>
-      'use strict'
-      var luokka = class test {
-        constructor() {
-          this.jee = 'heivain'
-        }
-        metodi() {
-          var context = this;
-          console.log('jee on ' + this.jee) // toimii
-          new Promise(function(resolve, reject) {
-            console.log('tulostuuko?');
-            console.log(context.jee) // toimii
-          })
-        }
-      }
-      var luokka1 = new luokka();
-      luokka1.metodi()
-    </code>
-  </pre>
-
-  <p>
-    Ja omien luokkakyhäilyn luomisen voi lopettaa EcmaScript6:n tullessa paitsi jos on ihan pakko eikä luota niiden tehokkuuteen.
-  </p>
-
-  <h2>Oliot</h2><a name="oliot"></a>
-  <h3>Olioista ja niiden luonnista yleisesti</h3>
-  <p>
-    Olioiden luontiin on JavaScript:ssä kielelle tyypillisesti useita erilaisia tapoja, joista ei suoranaisesti voida sanoa toisen olevan toista parempi.
-    Kaikilla tavoilla on omat vahvuutensa ja heikkoutensa. Tässä käydään läpi muutamia erilaisia tapoja luoda olioita JavaScript:ssä.
-  </p>
-
-  <p>Yksinkertaisin tapa luoda instanssi oliosta on määritellä olioliteraalin kentät suoraan seuraavasti:</p>
-  <pre>
-    <code>
-      var person = <b>{
-        name : "Anssi",
-        getName : function () {
-          return this.name
-        }
-      }</b>
-    </code>
-  </pre>
-  <p>
-    Olioliteraali on tällä tavalla aaltosulkeissa esitetty olio, jonka sisältä löytyy funktioliteraali <code>getName</code>. Yllä oleva koodi luo nimettömästä oliosta instanssin, jolla on yksi julkinen muuttuja <code>name</code> ja yksi julkinen funktiokutsu <code>getName</code>.
-    Olioliteraalit ovat käteviä, kun oliosta tarvitaan vain yksi instanssi. Tälläisiä tapauksia ovat usein esimerkiksi JSON-muotoisten viestien luonti WWW-sovelluksissa.
-  </p>
-  <br>
-  <p>
-    Oliosta josta olioliteraali on luotu ei voi suoraan luoda uusia instansseja, vaan se joudutaan tarvittaessa tekemään kloonaamalla jo luotu instanssi.
-    Kloonaaminen ei kuitenkaan ole suositeltavaa, koska kloonattua instanssia ei voida enää muokata täysin vapaasti.
-    Parempi tapa luoda useita olioita onkin Javasta tuttu konstruktorien käyttö seuraavaan tapaan:
-  </p>
-  <pre>
-    <code>
-      function Person(name) {
-        this.name = name
-        this.getName = function() {
-          return this.name
-        }
-      }
-
-      var person = new Person("Timo")
-      var person = new Person("Matti")
-    </code>
-  </pre>
-  <p>
-    Tässä funktio <code>Person()</code> on konstruktori, joka ottaa parametriksi muuttujan <code>name</code> ja asettaa sen (nykyisen funktiokontekstin) <code>this</code>-olion kentäksi.
-    Samalla tavoin <code>this</code>-oliolle määritetään funktio <code>getName</code>.
-    Kun konstruktoria kutsutaan avainsanan <code>new</code> avulla, tapahtuu kaksi asiaa:<br>
-    1) konstruktorille välitetään implisiittisesti uusi tyhjä olio <code>this</code>-parametrina, jolloin siitä tulee uusi funktiokonteksti.
+/**
+Counts the occurrences of str in the given list of strings.
+@param {list} list - The string list to be searched.
+@param {string} str - The string to find.
+@returns The count of how many times str occurs in the list.
+*/
+function count(list, str) {
+...
+}
+</code>
+</pre>
+    <h2>Oliot</h2>
+    <a name="oliot"></a>
+    <h3>Olioista ja niiden luonnista yleisesti</h3>
+    <p>
+        Olioiden luontiin on JavaScript:ssä kielelle tyypillisesti useita erilaisia tapoja, joista ei suoranaisesti voida sanoa toisen olevan toista parempi. Kaikilla tavoilla on omat vahvuutensa ja heikkoutensa. Tässä käydään läpi muutamia erilaisia tapoja luoda olioita JavaScript:ssä.
+    </p>
+    <p>Yksinkertaisin tapa luoda instanssi oliosta on määritellä olioliteraalin kentät suoraan seuraavasti:</p>
+    <pre>
+<code>
+var person = {
+  name : "Anssi",
+  getName : function () {
+    return this.name
+  }
+}
+</code>
+</pre>
+    <p>Olioliteraali on tällä tavalla aaltosulkeissa esitetty olio, jonka sisältä löytyy funktioliteraali <code>getName</code>. Yllä oleva koodi luo nimettömästä oliosta instanssin, jolla on yksi julkinen muuttuja <code>name</code> ja yksi julkinen funktiokutsu <code>getName</code>. Olioliteraalit ovat käteviä, kun oliosta tarvitaan vain yksi instanssi. Tälläisiä tapauksia ovat usein esimerkiksi JSON-muotoisten viestien luonti WWW-sovelluksissa.</p>
     <br>
-    2) Mikäli konstruktorilla ei ole eksplisiittistä palautusarvoa, palautetaan aiemmin luotu olio.
-  </p>
+    <p>Oliosta josta olioliteraali on luotu ei voi suoraan luoda uusia instansseja, vaan se joudutaan tarvittaessa tekemään kloonaamalla jo luotu instanssi. Kloonaaminen ei kuitenkaan ole suositeltavaa, koska kloonattua instanssia ei voida enää muokata täysin vapaasti. Parempi tapa luoda useita olioita onkin Javasta tuttu konstruktorien käyttö seuraavaan tapaan:</p>
+    <pre>
+<code>
+function Person(name) {
+  this.name = name
+  this.getName = function() {
+    return this.name
+  }
+}
 
-  <br>
-  <p>Entäs sitten ne sekavat prototyypit?</p>
-  <pre>
-    <code>
-      function Person(){};
-      Person.prototype.name = "Anssi";
-    </code>
-  </pre>
-  <p>
-    Tässä esittelemme funktion <code>Person()</code> samalla tavalla kuten aikaisemminkin, mutta jätämme kaikki kentät tyhjiksi!
-    Koska JavaScriptin oliot ja funktiot perivät kaikki kenttänsä Object-funktiolta, niin tyhjänki olion luominen luo meille Object-ominaisuudet täyttävän olion.
-    Voimme lisätä tähän olioon kenttiä prototyyppien avulla. Prototyyppiin lisätty kenttä liitetään kaikkiin tällä konstruktorilla luotaviin/luotuihin olioihin.
-  </p>
-  <br>
-  <p>Protypeä ja javamaista konstruktoria voi tietenkin JavaScript-tyyliin yhdistellä:</p>
-  <pre><code>
-    function Person(name) {
-      this.name = name;
-    }
-
-    Person.prototype.getName = function() {
-      return this.name
-    }
-  </code>
+var person = new Person("Timo")
+var person = new Person("Matti")
+</code>
 </pre>
-<p>
-  Tässä luomme funktion <code>Person()</code> ja annamme sille parametrinä nimen. Lisäämme myöhemmin lennosta jokaiselle oliosta luotavalle instanssille myös funktion <code>getName()</code>.
-  Prototyyppinä esiteltyjen kenttien etu on se, että oliosta luodut instanssit jakavat ne. Konstruktorin sisällä esiteltävät kentät luodaan jokaiselle oliolle erikseen.
-  Prototyypin käyttö on siis tehokkaampaa ja säästää muistia.
-</p>
-<br>
-<p>
-  Tärkeä ero prototyyppi-kenttien ja constructor-kenttien välillä on se, että mikäli toteutusta halutaan myöhemmin muuttaa, joudutaan konstruktorissa esitetyt kentät korvaamaan jokaisesta olion instanssista erikseen. Tätä selvennetään seuraavassa esimerkissä:
-</p>
-<pre>
-  <code>
-    function foobar() {
-      this.foo = "foo";
-    };
-
-    foobar.prototype.bar = "bar";
-
-    var a = new foobar();
-    var b = new foobar();
-    console.log(a.foo); // = "foo"
-    console.log(a.bar); // = "bar"
-
-    a.foo = "notfoo";
-    foobar.prototype.bar = "notbar";
-
-    console.log(a.foo); // = "notfoo"
-    console.log(a.bar); // = "notbar"
-
-    console.log(b.foo); // = "foo"
-    console.log(b.bar); // = "notbar"
-  </code>
+    <p>Tässä funktio <code>Person()</code> on konstruktori, joka ottaa parametriksi muuttujan <code>name</code> ja asettaa sen (nykyisen funktiokontekstin) <code>this</code>-olion kentäksi. Samalla tavoin <code>this</code>-oliolle määritetään funktio <code>getName</code>. Kun konstruktoria kutsutaan avainsanan <code>new</code> avulla, tapahtuu kaksi asiaa:
+    <br> 1) konstruktorille välitetään implisiittisesti uusi tyhjä olio <code>this</code>-parametrina, jolloin siitä tulee uusi funktiokonteksti.
+    <br> 2) Mikäli konstruktorilla ei ole eksplisiittistä palautusarvoa, palautetaan aiemmin luotu olio.</p>
+    <br>
+    <p>Entäs sitten ne sekavat prototyypit?</p>
+    <pre>
+<code>
+function Person(){};
+Person.prototype.name = "Anssi";
+</code>
 </pre>
-<h3>Olioiden attribuuteista</h3>
-<p>
-  Olioiden arvojen muokkaaminen tapahtuu varsin dynaamisesti. Tämä tuo niin uhkia kuin
-  mahdollisuuksia olioiden käsittelyyn. Olioiden arvoja voidaan kutsua yksinkertaisuudessaan pistesyntaksilla.
-</p>
-<pre>
-  <code>
-    olio.name = "Matti" // olio.name = Matti
-    olio.name = "Esko" // olio.name = Esko
-    olio.neim = "Kalle" // olio.name = Esko, olio.neim = "Kalle"
+    <p>Tässä esittelemme funktion <code>Person()</code> samalla tavalla kuten aikaisemminkin, mutta jätämme kaikki kentät tyhjiksi! Koska JavaScriptin oliot ja funktiot perivät kaikki kenttänsä Object-funktiolta, niin tyhjänki olion luominen luo meille Object-ominaisuudet täyttävän olion. Voimme lisätä tähän olioon kenttiä prototyyppien avulla. Prototyyppiin lisätty kenttä liitetään kaikkiin tällä konstruktorilla luotaviin/luotuihin olioihin.</p>
+    <br>
+    <p>Protypeä ja javamaista konstruktoria voi tietenkin JavaScript-tyyliin yhdistellä:</p>
+    <pre><code>
+function Person(name) {
+  this.name = name;
+}
 
-    // Seuraava tapa on pakollinen, mikäli olion kentän nimi sisältää erikoismerkkejä tai kielen varattuja sanoja.
-    olio["name[]"] = "Pekka" // name[] = Pekka
-  </code>
+Person.prototype.getName = function() {
+  return this.name
+}
+</code>
 </pre>
-<p>
-  Jos <code>name</code> -attribuutti on olemassa, muokataan sitä. Muussa tapauksessa luodaan uusi attribuutti oliolle kyseisellä nimellä.
-  Tämä altistaa monille kirjoitusvirheille, sillä ohjelman voi suorittaa vaikka nimeäisitkin antamasi attribuutin väärin.
-</p>
-<p>
-  Tietysti tämän välttämiseksi voi määrittää oliolle <code>get</code>- ja <code>set</code> -metodit. Käytännössä se onnistuu määrittelemällä
-  oliolle kyseiset funktiot, kuten ylemmässä Person-esimerkissä mainittiin. Tällöin voidaan tarkemmin määrittää
-  ehdot esimerkiksi muuttujan muuttamiselle. Kuitenkaan näiden määrittely ei sulje suoraan olion attribuuttien
-  suoraan muuttamista.</p>
-  <p>Oletetaan esimerkissä että setterissämme on tarkastus, että syöte on merkkijono.
-</p>
-<pre>
-  <code>
-    olio.setName("Harri") // name = Harri
-    olio.setName(39) // name = Harri, Syöte ei ole merkkijono!
-    olio.name = 42 // name = 42
-  </code>
+    <p>Tässä luomme funktion <code>Person()</code> ja annamme sille parametrinä nimen. Lisäämme myöhemmin lennosta jokaiselle oliosta luotavalle instanssille myös funktion <code>getName()</code>. Prototyyppinä esiteltyjen kenttien etu on se, että oliosta luodut instanssit jakavat ne. Konstruktorin sisällä esiteltävät kentät luodaan jokaiselle oliolle erikseen. Prototyypin käyttö on siis tehokkaampaa ja säästää muistia.</p>
+    <br>
+    <p>Tärkeä ero prototyyppi-kenttien ja constructor-kenttien välillä on se, että mikäli toteutusta halutaan myöhemmin muuttaa, joudutaan konstruktorissa esitetyt kentät korvaamaan jokaisesta olion instanssista erikseen. Tätä selvennetään seuraavassa esimerkissä:</p>
+    <pre>
+<code>
+function foobar() {
+  this.foo = "foo";
+};
+
+foobar.prototype.bar = "bar";
+
+var a = new foobar();
+var b = new foobar();
+console.log(a.foo); // = "foo"
+console.log(a.bar); // = "bar"
+
+a.foo = "notfoo";
+foobar.prototype.bar = "notbar";
+
+console.log(a.foo); // = "notfoo"
+console.log(a.bar); // = "notbar"
+
+console.log(b.foo); // = "foo"
+console.log(b.bar); // = "notbar"
+</code>
 </pre>
-<p>
-  Osittain tämä voidaan korjata määrittämällä prototyypin tai luokan käyttäytymistä kyseisen attribuutin kohdalla käyttämällä <code>object.defineProperties</code> tai
-  <code>defineProperty</code> -metodia. Esimerkiksi voitaisiin antaa attribuutille ikä ainoastaan positiivisia lukuja funktion avulla.
-</p>
-<pre>
-  <code>
-    <b>
-      Object.defineProperties(olio, {
-        'ikä': {
-          set: asetaPositiivinenLuku(this, x)
-        }</b>
-      });
-      olio.ikä = 51 // ikä on 51
-      olio.ikä = 'kirahvi' //ikä on edelleen 51 tarkastusfunktiomme vuoksi
-      olio.ikä = 52 // ikä on 52
-    </code>
-  </pre>
-   
-   <p> <code>Object.defineProperty</code> -metodilla voidaan muokata useaa eri attribuuttien ominaisuutta. <code>enumerable</code> -arvon muuttaminen false:ksi piilottaa attribuutin <code>for</code> -loopeista, kun kyseistä attribuuttia ei siellä tarvita.
-   Attribuutteja voidaan tarvittaessa määrittää muokkaamattomaksi antamalla samalle metodille <code>writable</code> -arvoksi false, 
-   jos on tärkeää ettei attribuutin arvoa ylikirjoiteta. </p>
-	<pre>      
-      <code>
-        function Person(name, id) {
-          this.id = id;
-          <b>Object.defineProperty(this, 'id', {writable: false});</b>
-          this.name = name
-          this.getName = function() {
-            return this.name
-          }
-        }
-      </code>
-    </pre>
+    <h3>Olioiden attribuuteista</h3>
+    <p>Olioiden arvojen muokkaaminen tapahtuu varsin dynaamisesti. Tämä tuo niin uhkia kuin mahdollisuuksia olioiden käsittelyyn. Olioiden arvoja voidaan kutsua yksinkertaisuudessaan pistesyntaksilla.</p>
+    <pre>
+<code>
+olio.name = "Matti" // olio.name = Matti
+olio.name = "Esko" // olio.name = Esko
+olio.neim = "Kalle" // olio.name = Esko, olio.neim = "Kalle"
+
+// Seuraava tapa on pakollinen, mikäli olion kentän nimi sisältää erikoismerkkejä tai kielen varattuja sanoja.
+olio["name[]"] = "Pekka" // name[] = Pekka
+</code>
+</pre>
+    <p>Jos <code>name</code> -attribuutti on olemassa, muokataan sitä. Muussa tapauksessa luodaan uusi attribuutti oliolle kyseisellä nimellä. Tämä altistaa monille kirjoitusvirheille, sillä ohjelman voi suorittaa vaikka nimeäisitkin antamasi attribuutin väärin.</p>
+    <p>Tietysti tämän välttämiseksi voi määrittää oliolle <code>get</code>- ja <code>set</code> -metodit. Käytännössä se onnistuu määrittelemällä oliolle kyseiset funktiot, kuten ylemmässä Person-esimerkissä mainittiin. Tällöin voidaan tarkemmin määrittää ehdot esimerkiksi muuttujan muuttamiselle. Kuitenkaan näiden määrittely ei sulje suoraan olion attribuuttien suoraan muuttamista.</p>
+    <p>Oletetaan esimerkissä että setterissämme on tarkastus, että syöte on merkkijono.</p>
+    <pre>
+<code>
+olio.setName("Harri") // name = Harri
+olio.setName(39) // name = Harri, Syöte ei ole merkkijono!
+olio.name = 42 // name = 42
+</code>
+</pre>
+    <p>Osittain tämä voidaan korjata määrittämällä prototyypin tai luokan käyttäytymistä kyseisen attribuutin kohdalla käyttämällä <code>object.defineProperties</code> tai <code>defineProperty</code> -metodia. Esimerkiksi voitaisiin antaa attribuutille ikä ainoastaan positiivisia lukuja funktion avulla.</p>
+    <pre>
+<code>
+Object.defineProperties(olio, {
+  'ikä': {
+    set: asetaPositiivinenLuku(this, x)
+  }
+});
+olio.ikä = 51 // ikä on 51
+olio.ikä = 'kirahvi' //ikä on edelleen 51 tarkastusfunktiomme vuoksi
+olio.ikä = 52 // ikä on 52
+</code>
+</pre>
+    <p><code>Object.defineProperty</code> -metodilla voidaan muokata useaa eri attribuuttien ominaisuutta. <code>enumerable</code> -arvon muuttaminen false:ksi piilottaa attribuutin <code>for</code> -loopeista, kun kyseistä attribuuttia ei siellä tarvita. Attribuutteja voidaan tarvittaessa määrittää muokkaamattomaksi antamalla samalle metodille <code>writable</code> -arvoksi false, jos on tärkeää ettei attribuutin arvoa ylikirjoiteta.</p>
+    <pre>
+<code>
+function Person(name, id) {
+  this.id = id;
+  Object.defineProperty(this, 'id', {writable: false});
+  this.name = name
+  this.getName = function() {
+    return this.name
+  }
+}
+</code>
+</pre>
     <p>Nyt attribuutti <code>id</code> on suojattu kirjoittamiselta. Ratkaisuna tämäkin on osittainen, sillä <code>id</code> voidaan määrittää taas muokattavaksi vastaavalla metodilla.</p>
-    <p> 
-    Myös attribuuttien käyttäytymistä voidaan hallita asettamalla <code>configurable</code> -arvoksi false, jolloin ei voi missä tahansa kohtaa määritellä <code>enumerable</code>-, <code>writable</code>- tai jopa itse <code>configurable</code>- arvojen true tai false- arvoja. </p>
+    <p>Myös attribuuttien käyttäytymistä voidaan hallita asettamalla <code>configurable</code> -arvoksi false, jolloin ei voi missä tahansa kohtaa määritellä <code>enumerable</code>-, <code>writable</code>- tai jopa itse <code>configurable</code>- arvojen true tai false- arvoja.</p>
     <p>On myös mahdollista määritellä useampia arvoja kerrallaan</p>
-	<pre>      
-      <code>
-        function Person(name, id) {
-          this.id = id;
-          <b>Object.defineProperty(this, 'id', {
-          writable: false,
-          enumerable: false,
-          configurable: false
-          });</b>
-          this.name = name
-          this.getName = function() {
-            return this.name
-          }
-        }
-      </code>
-    </pre>
-    <p>Ainoa tapa millä <code>configurable</code>- arvon saa muutettua on käyttämällä <code>delete</code>- käskyä poistamaan instanssin.
-    </p>
-      <p> </p>
+    <pre>
+<code>
+function Person(name, id) {
+  this.id = id;
+  Object.defineProperty(this, 'id', {
+    writable: false,
+    enumerable: false,
+    configurable: false
+  });
+  this.name = name
+  this.getName = function() {
+    return this.name
+  }
+}
+</code>
+</pre>
+    <p>Ainoa tapa millä <code>configurable</code>- arvon saa muutettua on käyttämällä <code>delete</code>- käskyä poistamaan instanssin.</p>
     <br>
+    <p>Mitään erillistä sisäänrakennettua tapaa tehdä attribuuteista yksityisiä, esim. lisäämällä private- sana eteen, ei JavaScript:ssä ole. Yksi tapa on lisätä funktion sisällä olevien muuttujien eteen alaviiva, toiselta nimeltään duck-typing.</p>
+    <pre>
+<code>
+function Person(name, id) {
+  this._id = id;
+  this._name = name
+  this.getName = function() {
+    return this._name
+  }
+}
+</code>
+</pre>
+    <p>Kuitenkaan tämä ei ole mitenkään kielessä tuettu ominaisuus vaan pikemminkin nimeämistapa, jolla erotetaan attribuutit toisistaan. Yksityisiin attribuutteihin pääsee silti käsiksi, jos käyttää alaviivaa attribuutin edessä funktion ulkopuolella.</p>
+    <p>Toinen tapa piilottaa attribuutit muilta ulkopuolisilta funktioilta, on lisäämällä funktion attribuutin eteen <code>var</code>. Tällöin niihin pääsee käsiksi vain private- tyyppisillä funktioilla ja priviledge- metodeilla. Piilotetut, yksityiset funktiot määritellään funktion nimessä samalla tavalla laittamalla funktion nimen eteen var. Priviledge- metodit voidaan herättää koodin ulkopuolella, kuten edellisessä esimerkissä <code>this.getName</code> on tällainen.</p>
+    <pre>
+<code>
+function Person(name) {
+  var id = 0;
+  var secret = function () {
+    return 'Olen kala.';
+  };
+
+  this.name = name;
+  this.getName = function () {
+    return this.name;
+  };
+}
+</code>
+</pre>
+    <h2>Funktioiden ja olioiden prototyypit</h2>
+    <p>JavaScriptin prototyypit ja prototyyppiketju ovat kenties eräitä kurssin keskeisimpiä ja samalla myös vaikeimpia asioita ymmärtää kunnolla. Seuraavat esimerkit pyrkivät selventämään prototyyppien ja prototyyppiketjun toimintaa. JavaScriptissä funktiot ovat olioita. Kun JavaScriptissä esitellään funktio, luodaan ympäröivään näkyvyysalueeseen uusi foo-niminen Funktio-olio.</p>
+    <pre>
+<code>
+function foo() {
+  console.log("Foo");
+}
+</code>
+</pre>
+    <p>JavaScriptin perusluokkien luokkarakenteesta tiedetään, että <code>Function</code>-funktion <i>prototyyppiolio</i> on <code>Function.prototype</code>. Täten määritetyn funktion <code>foo</code> prototyyppiolioksi asetetaan <code>Function.prototype</code>.Tämä prototyyppiolio luodaan kutsumalla implisiittisesti Function-rakentajaa. Tämä pätee yleisesti kaikille esiteltäville funktioille. <code>Function</code>-funktion ja <code>Function</code>-prototyypin yhteyttä voidaan havainnollistaa kirjoittamalla ylläoleva koodi hieman eri tavalla.</p>
+    <pre>
+<code>
+foo = new Function('console.log("lol")');
+</code>
+</pre>
+    <p>Koska kaikkien prototyyppiolioiden prototyyppi on <code>Object.prototype</code>, saadaan seuraava prototyyppiketju: <code>foo -> Function.prototype -> Object.prototype</code>. Seuraavaksi tarkastellaan olioiden prototyyppejä. Aloitetaan määrittelemällä uusi olioliteraali <code>foo</code>.</p>
+    <pre>
+<code>
+foo = {}
+</code>
+</pre>
+    <p>Tuloksena saadaan uusi olio <code>foo</code>. Tämä ei juuri kerro mitä verhojen takana tapahtuu, joten kirjoitetaan sama hieman eri tavalla.</p>
+    <pre>
+<code>
+foo = new Object()
+</code>
+</pre>
+    <p>Tämä näyttää jo tutulta. Luodaan siis uusi olio <code>foo</code>, jonka prototyypiksi asetetaan <code>Object</code>-funktion prototyyppiolio <code>Object.prototype</code>.</p>
+    <a name="luokat"></a>
+    <h3>Luokka-luokat</h3>
+    <p>EcmaScript 6:ssa esitellään valmiit 'luokka-luokat'. Ne eivät ole vielä natiivisti tuettuja selaimissa, mutta back-endissä ne saa käyttöön uusimmissa node-versioissa käyttämällä <code>'use strict'</code>-avainsanaa tiedoston alussa. Front:in puolella on käytettävä erillistä kirjastoa, kuten Babelia tai Traceuria koodin muuttamiseen takaisin ES5:ksi.</p>
+    <pre>
+<code>
+'use strict'
+class Luokanperkele {
+  constructor(nimi) {
+    this.nimi = nimi;
+    this.heimo = 'jotainhyvingeneeristä';
+  }
+
+  tassapahienometodi() {
+    console.log('olen ' + nimi + ' ja kuulun heimoon ' + this.heimo);
+  }
+
+  _olenyksityinen() { }
+}
+</code>
+</pre>
+    <p>Ja kuten voi nähdä ne koostuvat normaaleista luokan elementeistä, kuten konstruktorista ja metodeista. Huomioitavaa on että kaikki metodit ovat public:eja ja kaikki muuttujat ja metodit ovat aina käytettävissä luokan ulkopuolelta. Private-metodien tai muuttujien luomiseen on käytettävä duck-typingia eli lisättävä vaikkapa alaviiva _ nimen eteen.</p>
+    <p>Javascript sinänsä on ollut vähän kumma kieli ettei luokkia ole toteuttu aikaisemmin kuin edellä mainituilla hieman 'häx'-tavoilla. Siinä saa aloittelija hieman raapia päätään kun haluaa tehdä luokkia javascriptissa ja jotka ovat maksimaalisen suorituskykyisiä. Valmiit luokat lopettavat tuon ylimääräisen miettimisen ja antavat valmiin aihion, jota voidaan käyttää nykyisten funktio-hässäköiden sijasta. Tämä tuo koheesiota koko javascript koodaukseen, koska käytännöt luokkien luomiseen tuntuvat vaihtelevan jokaisessa projektissa. Koko luokka sinänsä on pelkkää syntactic sugaria ja sisäisesti ne ovat edelleen samaa prototype-funktioiden ja Objectien sotkua jota olemme tottuneet näkemään.</p>
+    <p>Valmiit luokat luovat paljon eriäviä mielipiteitä javascript-yhteisössä ja ne tuovat omat murheensa koodiin. Onkin siis ohjelmoijan itse tiedettävä milloin olisi pitäydyttyvä funktioissa ja milloin taas luokkien käyttö on suotavaa. Mutta kyllä ne ovat ihan jees.</p>
+    <h2>Taulukot JavaScriptissä</h2>
+    <p>Taulukoiden käyttäytyminen eroaa muutamassa kohdassa "perinteisten" ohjelmointikielien taulukoiden toiminasta. Taulukon luominen toimii seuraavasti.</p>
+    <pre>
+<code>
+var t1 = [1, 2, 3]
+var t2 = new Array(4, 5, 6)
+var t3 = Array(7, 8, 9)
+</code>
+</pre>
+    <p>Käytännössä <code>new Array()</code> ja <code>Array()</code> ovat sama asia. Arvon lisääminen taulukon määrittelemättömään indeksiin dynaamisesti kasvattaa taulukon kokoa. JS:n taulukoille ei siis tarvitse tehdä tilavarausta. Luonnollisesti määrittelemätön kenttä palauttaa <code>undefined</code>.</p>
+    <pre>
+<code>
+var taulukko = [1, 2 ,3] // taulukko.length = 3
+taulukko[7] = 42 // asetetaan indeksiin 7 uusi arvo. taulukko.length = 8;
+taulukko[5] // undefined
+</code>
+</pre>
+    <p>Taulukot voidaan myös indeksoida negatiiviseen suuntaan!</p>
+    <pre>
+<code>
+taulukko[-1] = 8
+taulukko[0] // 1
+taulukko[-1] // 8
+</code>
+</pre>
+    <p>Taulukon koon muuttaminen tapahtuu määrittelemällä taulukon <code>length</code>-arvo. Taulukon uudet tyhjät paikat ovat <code>undefined</code>. Jos taulukon kokoa pienentää, putoavat taulukon loppupään arvot.</p>
+    <p>Taulukoiden käsittelyyn löytyy useita <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">työkaluja</a>. Viimeisimpiä lisäyksiä kalustoon on "Array-conprehension". Sen syntaksi on karkeasti seuraava: <code>var comprehension = [arvo for (arvo of taulukko) if boolean-funktio]</code>. Esimerkiksi:</p>
+    <pre>
+<code>
+var taulukko = [1, 2, 3, 4]
+var tupla = [i * 2 for (i of taulukko)] // [2, 4, 6, 8]
+var parilliset = [i for (i of taulukko) if (i % 2 === 0)]
+</code>
+</pre>
+    <p>Vastaava voitaisiin toteuttaa esimerkiksi taulukoiden <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map">map</a>- tai <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter">filter</a>-funktioilla, mutta ominaisuus on hyvä lisä kalustoon.</p>
+    <h2>Poikkeustenkäsittely</h2>
+    <p>JavaScript:ssä poikkeukset tyypillisimmin käsitellään Java:sta tutulla <code>try-catch-finally</code> -tavalla sekä heittämällä komento <code>throw</code>. <code>try-catch-finally</code> voidaan toteuttaa kolmella eri tapaa:</p>
+    <ol>
+        <li><code>try...catch</code></li>
+        <li><code>try...finally</code></li>
+        <li><code>try..catch...finally</code></li>
+    </ol>
+    <p><code>throw</code> -komentoa voi heittää JavaScript:ssä paljon vapaammin, kuin Java:ssa. Tässä esimerkki perus <code>try-catch</code> -lauseessa:</p>
+    <pre>
+<code>
+try {
+  throw "Poikkeus"
+}
+catch (e) {
+  alert(e.message) // Virheviesti
+}
+</code>
+</pre>
+    <p>Esimerkissä <code>throw</code> ohjaa poikkeuksen suoraan <code>catch</code>:ille. Tämä esimerkki on myös ehdoton <code>try-catch</code> -käsittely, missä <code>catch</code> -lauseita on vain yksi. JavaScript:ssä on myös mahdollisuus tehdä ehdollinen <code>try-catch</code> -käsittely, missä voi olla useampi <code>catch</code> -lause tai -lauseen sisälle voidaan syöttää useampi <code>else if</code> -vaihtoehto poikkeukselle. Tämä ei ole EcmaScript 6:n mukainen menettelytapa ja muutenkin monimutkaistaa sekä pidentää JavaScript- koodia huomattavasti, joten emme suosittele käyttämään ehdollisia <code>try-catch</code> -käsittelyjä.</p>
+    <p><code>finally</code> -lausetta voidaan käyttää, jos halutaan poikkeuksen päättyvän kunniakkaasti, esimerkiksi jos on tarve vapauttaa resursseja, joita <code>try-catch</code> -komento on varannut käyttöönsä.</p>
+    <pre>
+<code>
+avaaTiedosto() {
+  try {
+    kirjoitaTiedostoon(data)
+  } catch(e) {
+    käsittelePoikkeus(e) // Virheviesti
+  } finally {
+    suljeTiedosto()
+  }
+}
+</code>
+</pre>
+    <p>Mitä <code>throw</code>-komentoon tulee, voi sillä vapaasti heitellä erityyppisiä attribuutteja. Yksi vaihtoehto on heittää funktio: </p>
+    <pre>
+<code>
+try {
+  throw function() { alert("Nyt meni pieleen") }
+} catch(e) {
+  e // Nyt meni pieleen
+}
+</code>
+</pre>
+    <p>Paras tapa olisi kuitenkin käyttää <code>Error</code> -konstruktorifunktion luomaa oliota, jolloin sekä heitetyt että JavaScript:n omat poikkeukset toimivat samalla tavalla. Tästä esimerkki: </p>
+    <pre>
+<code>
+try {
+  throw new Error("Nyt meni pieleen")
+} catch(e) {
+  alert(e.message) // Viesti: Nyt meni pieleen
+}
+</code>
+</pre>
+    <h2>Sulkeuma</h2>
+    <p>Sulkeumalla (eng. closure) tarkoitetaan funktion sisäänsä sulkemaa aluetta ja muuttujia, jota JavaScript:ssä rajataan aaltosulkeilla {}.</p>
+    <p>Yleisesti funktion sisäisessä näkyvyysalueessa luodut muuttujat eivät vaikuta globaaliin näkyvyysalueeseen kuten normaalilta ohjelmointikieleltä voi olettaa. JavaScript:ssa kuitenkin näkyvyysalueiden kapselointi on vähän niin sun näin eikä aina ole niin selvää mikä voi muuttaa mitäkin.</p>
+    <pre>
+<code>
+function tyhmaFunktio() {
+  var hah = 1;
+  var lol =  function() { hah++; return hah; } // lol voi hiplata tyhmanFunktion muuttujaa
+  lol()
+  lol()
+  return lol()
+}
+console.log(tyhmaFunktio())
+</code>
+</pre>
+    <p>Myöskin funktion sisäinen näkyvyysalue JavaScriptissa säilyy vielä funktion suorituksen jälkeenkin eli jos funktio tallennetaan muuttujaan ja sitä vähän käytellään niin se ei alusta itseään.</p>
+    <pre>
+<code>
+function asdf() {
+  var x = 0;
+  return function() { x++; return x; };
+}
+
+var hei = asdf();
+hei();
+hei();
+console.log(hei());
+</code>
+</pre>
+    <p>Eli tuossa x:n arvo pysyy muistissa eli kasvaa ja ulos tulostuu 3.</p>
+    <p>Onko tuo nyt niin ihmeellistä, empä tiedä. Funktiot vähän korvaavat luokkia JavaScript:ssa ja on kiva että ne eivät toimi samalla tavalla kuin esim. Java:ssa. Tuo on vähän kuin loisi instanssin <code>asdf</code> -funktiosta jota sitten pyörittelisi kuin luokkaa konsanaan.</p>
+    <p>Suoraan luentokalvoista otettuna:</p>
+    <pre>
+<code>
+function randomTurhaFunktio(funktioni) {
+  var a=111, b=222;
+  funktioni(); // täällä parametrina saadun sulkeuman suoritus käynnistetään
+  a=1234; b=5678;
+}
+
+function g() {
+  var a=10, b=20;
+  randomTurhaFunktio(function() {a=77; b=99;}); // funktioparametri, jossa vapaita muuttujia
+  console.log(a+" "+b);
+}
+g();    // tulostus 77 99
+</code>
+</pre>
+    <p>Ja tuossa siis hienosti nimetyt muuttujat a ja b eivät pääsekään sörkkimään toisiaan kolmannen osapuolen <code>randomTurhaFunktion</code> sisällä. Mikä on hyvä juttu. Jos arvoja haluaisi muuttaa tulisi muuttujien olla yleisessä näkyvyysalueessa tai vain saatavissa parametrina annetusta funktiosta.</p>
+    <p>Tässä vähän yksinkertaisempi ja tyhmempi esimerkki:</p>
+    <pre>
+<code>
+function taysinEri(lokaaliFunktio) {
+  lokaaliFunktio(); // täällä vain kutsutaan parametrina saatua funktiota jolla on jo oma määrätty näkyvyysalueensa joka ei koske tätä funktiota
+}
+
+function outoFunktio() {
+  var sinep = 1;
+  taysinEri(function() { sinep++; }); // eli kun funktio luodaan oudonFunktion sisällä sillä on näkyvyys sen muuttujiin
+  console.log('sinep on kaksi omg ' + sinep);
+}
+
+outoFunktio()
+</code>
+</pre>
     <p>
-      Mitään erillistä sisäänrakennettua tapaa tehdä attribuuteista yksityisiä, esim. lisäämällä private- sana eteen, ei JavaScript:ssä ole. Yksi tapa on lisätä funktion sisällä
-       olevien muuttujien eteen alaviiva, toiselta nimeltään duck-typing.
-      </p>
-      <pre>
-      <code>
-        function Person(name, id) {
-          this._id = id;
-          this._name = name
-          this.getName = function() {
-            return this._name
-          }
-        }
-      </code>
-    </pre>
-    
-    <p>Kuitenkaan tämä ei ole mitenkään kielessä tuettu ominaisuus vaan pikemminkin nimeämistapa, jolla erotetaan attribuutit toisistaan.
-    Yksityisiin attribuutteihin pääsee silti käsiksi, jos käyttää alaviivaa attribuutin edessä funktion ulkopuolella.</p>
-      
-      <p>Toinen tapa piilottaa attribuutit muilta ulkopuolisilta funktioilta, on lisäämällä funktion attribuutin eteen <code>var</code>. Tällöin niihin pääsee käsiksi vain private- tyyppisillä funktioilla ja priviledge- metodeilla.
-      Piilotetut, yksityiset funktiot määritellään funktion nimessä samalla tavalla laittamalla funktion nimen eteen var. Priviledge- metodit voidaan herättää koodin ulkopuolella, kuten edellisessä esimerkissä <code>this.getName</code> on tällainen.
+        Mihin sitten tälläistä kieroilua tarvitsee? Kyllä vähän vaikuttaa että kun sulkeumasta puhutaan halutaan vain sekoittaa JavaScript-ohjelmoijan pää ja lannistaa kaikki aloittelijat koko kielestä. Asia ei vaikuta hirveästi normaaliin koodaamiseen ja vähällä koodauksellakin pääsee jo siitä jyvälle. Omituisten termien käyttökään ei ainakaan helpota.
+    </p>
+    <p>
+        Suuremmat murheet näkyvyysalueiden kanssa ovat syntyneet <code>this</code>:in kanssa sähläämisestä asynkronisten funktioiden kanssa. Kun <code>this</code> ei enää olekaan sama kuin funktion alkaessa alkaa päähän sattua.
     </p>
     <pre>
-      <code>
-        function Person(name) {
-          var id = 0;
-          var secret = function () {
-            return 'Olen kala.';
-          };
-
-          this.name = name;
-          this.getName = function () {
-            return this.name;
-          };
-        }
-      </code>
-    </pre>
-
-    <a name="luokat"></a><h3>Luokka-luokat</h3>
+<code>
+'use strict'
+var luokka = class test {
+  constructor() {
+    this.jee = 'heivain'
+  }
+  metodi() {
+    console.log('jee on ' + this.jee) // toimii
+    new Promise(function(resolve, reject) {
+      console.log('tulostuuko?');
+      console.log(this.jee) // ei toimi
+    })
+  }
+}
+var luokka1 = new luokka();
+luokka1.metodi()
+</code>
+</pre>
     <p>
-      EcmaScript 6:ssa esitellään valmiit 'luokka-luokat'. Ne eivät ole vielä natiivisti tuettuja selaimissa, mutta back-endissä ne saa käyttöön uusimmissa node-versioissa käyttämällä <code>'use strict'</code>-avainsanaa tiedoston alussa. Front:in puolella on käytettävä erillistä kirjastoa, kuten Babelia tai Traceuria koodin muuttamiseen takaisin ES5:ksi.
+        Onneksi on olemassa nopea fiksi eli tallennetaan viittaus näkyvyysalueeseen muuttujan sisälle:
     </p>
-
     <pre>
-      <code>
-        'use strict'
-        class Luokanperkele {
-          constructor(nimi) {
-            this.nimi = nimi;
-            this.heimo = 'jotainhyvingeneeristä';
-          }
+<code>
+'use strict'
+var luokka = class test {
+  constructor() {
+    this.jee = 'heivain'
+  }
 
-          tassapahienometodi() {
-            console.log('olen ' + nimi + ' ja kuulun heimoon ' + this.heimo);
-          }
-
-          _olenyksityinen() { }
-        }
-      </code>
-    </pre>
-
+  metodi() {
+    var context = this;
+    console.log('jee on ' + this.jee) // toimii
+    new Promise(function(resolve, reject) {
+      console.log('tulostuuko?');
+      console.log(context.jee) // toimii
+    });
+  }
+}
+var luokka1 = new luokka();
+luokka1.metodi()
+</code>
+</pre>
     <p>
-      Ja kuten voi nähdä ne koostuvat normaaleista luokan elementeistä, kuten konstruktorista ja metodeista. Huomioitavaa on että kaikki metodit ovat public:eja ja kaikki muuttujat ja metodit ovat aina käytettävissä luokan ulkopuolelta. Private-metodien tai muuttujien luomiseen on käytettävä duck-typingia eli lisättävä vaikkapa alaviiva _ nimen eteen.
+        Ja omien luokkakyhäilyn luomisen voi lopettaa EcmaScript6:n tullessa paitsi jos on ihan pakko eikä luota niiden tehokkuuteen.
     </p>
-
-    <p>
-      Javascript sinänsä on ollut vähän kumma kieli ettei luokkia ole toteuttu aikaisemmin kuin edellä mainituilla hieman 'häx'-tavoilla. Siinä saa aloittelija hieman raapia päätään kun haluaa tehdä luokkia javascriptissa ja jotka ovat maksimaalisen suorituskykyisiä. Valmiit luokat lopettavat tuon ylimääräisen miettimisen ja antavat valmiin aihion, jota voidaan käyttää nykyisten funktio-hässäköiden sijasta. Tämä tuo koheesiota koko javascript koodaukseen, koska käytännöt luokkien luomiseen tuntuvat vaihtelevan jokaisessa projektissa. Koko luokka sinänsä on pelkkää syntactic sugaria ja sisäisesti ne ovat edelleen samaa prototype-funktioiden ja Objectien sotkua jota olemme tottuneet näkemään.
-    </p>
-
-    <p>
-      Valmiit luokat luovat paljon eriäviä mielipiteitä javascript-yhteisössä ja ne tuovat omat murheensa koodiin. Onkin siis ohjelmoijan itse tiedettävä milloin olisi pitäydyttyvä funktioissa ja milloin taas luokkien käyttö on suotavaa. Mutta kyllä ne ovat ihan jees.
-    </p>
-    
     <section>
         <a name="moduulit"></a>
         <h2>Moduulit</h2>
         <p>Perusfaktat: moduuleista ohjelmoinnissa puhuttaessa tarkoitetaan erillisiä ohjelman osia, jotka toteuttavat tarkasti määritellyn yhden asian. Modularisaatio tarkoittaa ohjelman rakennetta, joka koostuu näistä itsenäisistä moduuleista, jotka voidaan irroittaa tarvittaessa ja vaihtaa toisiin.</p>
         <p>Javascriptissa moduulit useimmiten toteutaan anonyymeina funktioina eli funktioilla sulkujen sisällä:</p>
         <pre>
-            <code>
+<code>
 (function() { console.log('hei'); )
-            </code>
-        </pre>
-        
+</code>
+</pre>
         <p>Näillä anonyymeilla funktioilla on oma itsenäinen näkyvyysalue, joka on täysin suljettu muusta eli funktion ulkopuoliset eivät pääse siihen käsiksi oli parametrit sidottuna this:llä tai ei.</p>
         <p>Saadakseen anonyymit funktiot muualla käytettäväksi on ne sijoitettava johonkin muuttujaan:</p>
         <pre>
-            <code>
+<code>
 var moduuli = (function () {
-	this.hei = function() {
-		console.log('hei');
-	}
+  this.hei = function() {
+    console.log('hei');
+  }
 })
-            </code>
-        </pre>
-        
+</code>
+</pre>
         <p>Useimmiten vielä haluamme, että moduuli kutsuu itseään eli moduulin sisältämä koodi ajetaan heti suorituksen yhteydessä, jolloin kaikki moduulin vaatima alustus tapahtuu eli lisätään sulut sen loppuun:</p>
         <pre>
-            <code>
+<code>
 var moduuli = (function () {
-	this.hei = function() {
-		console.log('hei');
-	}
-})()            
-            </code>
-        </pre>
-        
+  this.hei = function() {
+    console.log('hei');
+  }
+})()
+</code>
+</pre>
         <p>Nytkin moduulissamme on pieni ongelma: emme pääse käsiksi funktioon hei. Kuten sanottua kaikki moduulin sisältämät funktiot ovat yksityisiä jos emme erikseen aukaise niitä ulospäin 'revealing-module-patternilla':</p>
         <pre>
-            <code>
+<code>
 var moduuli = (function () {
-	this.hei = function() {
-		console.log('hei');
-	}
-	return {
-		julkinenMetodi: hei
-	}
-})()            
-            </code>
-        </pre>
-        
+  this.hei = function() {
+    console.log('hei');
+  }
+
+  return {
+    julkinenMetodi: hei
+  }
+})()
+</code>
+</pre>
         <p>Näin saimme tiukasti rajatun ja toimivan olion, jonka yksityiset muuttujat ovat turvallisesti toisten olioiden näppien ulottumattomissa. Voimme myös antaa moduulille parametrina riippuvuuksia eli siis injektoida ne dependency injection -mallin mukaisesti:</p>
         <pre>
-            <code>
+<code>
 var moduuli = (function (olenJquery) {
-	this.hei = function() {
-		console.log('hei');
-	}
-	return {
-		julkinenMetodi: hei
-	}
-})(jQuery)            
-            </code>
-        </pre>
-        
+  this.hei = function() {
+    console.log('hei');
+  };
+
+  return {
+    julkinenMetodi: hei
+  }
+})(jQuery)
+</code>
+</pre>
         <p>Nyt voimme käyttää moduulin sisällä jQueryä ja riippuvuus siitä on suhteellisen näkyvillä. Eli viimeisellä rivillä me kutsumme anonyymiä funktiota parametrina jQuery ja itse funktion sisällä sitten voimme käyttää parametrien niminä mitä huvittaa.</p>
         <p>Node.js kehitysympäristö keskittyy vahvasti juuri moduuleihin (muistanet node_modules) ja niiden lataamiseen npm:llä ja käyttämiseen require-funktiolla ja tuomiseen module.exports -avainsanalla.</p>
         <pre>
-            <code>
+<code>
 // tiedosto moduuli.js
 var muuttuja = 'olen yksityinen';
 module.exports.jokinModuulinOsa = function() {
-	return muuttuja;
+  return muuttuja;
 }
 // aukaistaan tiedosto jossain muualla ja käytetään funktiota
 var moduulini = require('./moduuli');
-console.log(moduulini.jokinModuulinOsa());            
-            </code>
-        </pre>
-        
+console.log(moduulini.jokinModuulinOsa());
+</code>
+</pre>
         <p>Mutta jos palataan takaisin anonyymi funktio -hässäkkään, miten se sitten eroaa prototyyppi olioista? Ei välttämättä juuri mitenkään, moduuleissa vain näkyvyysalue on tarkemmin suojeltu ja sen pitäisi estää (toivottavasti) suurempien mogailujen tekemisen. Onko sitä sitten pakko käyttää? Riippuen minkälaista sovellusta on rakentamassa eivät anonyymi funktioilla toimivat moduulit tietenkään ole välttämättömiä. Alussa varsinkin on hyvä pitää rakenne avoinna mahdollisia isoja muutoksia varten. Myöhemmin moduulit saattavat parantaa ylläpidettävyyttä ja kaunistaa koodia. Ja modularisaatiota voi tehdä ihan ilman tuota anonyymiä funktiota. Pitää vain ohjelman yhden toiminnallisuuden toteuttavissa osissa ja järjestyksessä niin sen pitäisi riittää.</p>
     </section>
     <a name="muuta"></a>
     <h2>Algoritmien kirjoittaminen JavaScriptillä</h2>
-
     <p>
-      Algoritmien kirjoittaminen Javascriptillä ei ole oikeastaan sen kummempaa kuin muullakaan ohjelmointikielellä, mutta JS:n dynaaminen tyypitys voi tuottaa ongelmia aloittelijoille. JavaScriptin tyyppiturvallisuuden alhainen taso lisää virhemahdollisuuksia ja tekee etenkin monimutkaisemman algoritmin toteuttamisesta vaikeampaa. Mikäli algoritmi vaatii tiettyä datatyyppiä tai tiettyä muotoa on tärkeää validoida syöte ennen sen ajamista algoritmin läpi. Tämä toki lisää ylimääräistä boilerplate koodia ohjelmaan. Myös dynaamisesti tyypitetyn kielen tyyppioperaatiot voivat laskutoimituksia tehdessä aiheuttaa ylimääräistä vaivaa. JavaScriptissa '5 + 1' voi olla tulkintatavasta liittyen joko '51' tai 6.
+        Algoritmien kirjoittaminen Javascriptillä ei ole oikeastaan sen kummempaa kuin muullakaan ohjelmointikielellä, mutta JS:n dynaaminen tyypitys voi tuottaa ongelmia aloittelijoille. JavaScriptin tyyppiturvallisuuden alhainen taso lisää virhemahdollisuuksia ja tekee etenkin monimutkaisemman algoritmin toteuttamisesta vaikeampaa. Mikäli algoritmi vaatii tiettyä datatyyppiä tai tiettyä muotoa on tärkeää validoida syöte ennen sen ajamista algoritmin läpi. Tämä toki lisää ylimääräistä boilerplate koodia ohjelmaan. Myös dynaamisesti tyypitetyn kielen tyyppioperaatiot voivat laskutoimituksia tehdessä aiheuttaa ylimääräistä vaivaa. JavaScriptissa '5 + 1' voi olla tulkintatavasta liittyen joko '51' tai 6.
     </p>
-
     <p>
-      Tyyppittömyydellä on tietysti myös hyötynsä. Tämä mahdollistaa esimerkiksi vertailufunktion toteuttamisen allaolevalla tavalla.
+        Tyyppittömyydellä on tietysti myös hyötynsä. Tämä mahdollistaa esimerkiksi vertailufunktion toteuttamisen allaolevalla tavalla.
     </p>
-
     <pre>
-      <code>
-        function compareNumbers(a, b) {
-          return a - b;
-        }
-      </code>
-    </pre>
+<code>
+function compareNumbers(a, b) {
+  return a - b;
+}
+</code>
+</pre>
     <p>Tämä vertailee sekä numerotaulukot, että merkkijonomuotoisia numeroita sisältävät taulukot.</p>
-
     <pre>
-      <code>
-        var numberArray = [40, 1, 5, 200];
-        Sorted without a compare function: 1, 200, 40, 5
-        Sorted with compareNumbers: 1, 5, 40, 200
+<code>
+var numberArray = [40, 1, 5, 200];
+Sorted without a compare function: 1, 200, 40, 5
+Sorted with compareNumbers: 1, 5, 40, 200
 
-        var numericStringArray = ['80', '9', '700'];
-        Sorted without a compare function: 700, 80, 9
-        Sorted with compareNumbers: 9, 80, 700
+var numericStringArray = ['80', '9', '700'];
+Sorted without a compare function: 700, 80, 9
+Sorted with compareNumbers: 9, 80, 700
 
-        var mixedNumericArray = ['80', '9', '700', 40, 1, 5, 200];
-        Sorted without a compare function: 1, 200, 40, 5, 700, 80, 9
-        Sorted with compareNumbers: 1, 5, 9, 40, 80, 200, 700
-      </code>
-    </pre>
+var mixedNumericArray = ['80', '9', '700', 40, 1, 5, 200];
+Sorted without a compare function: 1, 200, 40, 5, 700, 80, 9
+Sorted with compareNumbers: 1, 5, 9, 40, 80, 200, 700
+</code>
+</pre>
     <p>Kuten ylhäällä huomataan, ei JavaScriptin <code>Array.sort()</code> toimi täysin intuitiivisella tavalla. Kyseinen funktio järjestää merkkijonotaulukoiden lisäksi kaikki taulukot leksikografiseen järjestykseen, jolloin esimerkiksi luku 200 tulee ennen lukua 5. Vertailufunktioita käytettäessä, muuntaa JavaScript -merkkijonomuotoisen luvun implisiittisesti numeeriseksi.</p>
-
     <p>JavaScriptin dynaaminen tyypitys sallii olioiden monimuotoisuuden ilman staattisesti tyypitettyjen kielien template/generics syntaksia tai perintähierarkiaa. Esimerkiksi seuraava koodi vaakuttaa sekä ankkoja, ihmisiä tai koiria mikäli ne osaavat vaakkua. Vastaava toteutettaisi Javassa esimerkiksi toteuttamalla ankalle Vaakkuva-rajapinta.</p>
     <pre>
-      <code>
-        // Yrittää kutsua olion o quack()-metodia riippumatta siitä onko oliolla kyseinen metodi.
-        function callQuack(o) {
-          o.quack()
-        }
-      </code>
-    </pre>
-
+<code>
+// Yrittää kutsua olion o quack()-metodia riippumatta siitä onko oliolla kyseinen metodi.
+function callQuack(o) {
+  o.quack()
+}
+</code>
+</pre>
     <p>Hybridiparadigmansa puolesta JavaScript sopii hyvin erilaisten algoritmien toteuttamiseen. JavaScriptin funktionaalinen tuki toimii hyvin esimerkiksi rekursiivisten algoritmien kirjoittamiseen, mutta esimerkiksi Clojuresta poiketen JavaScript tarjoaa myös "oikean" for-loopin, mikä helpottaa iteratiivisten algoritmien luontevaa toteuttamista.</p>
-
     <p>JavaScript kuitenkin sisältää suuria ongelmia algoritmien kirjoituksessa, joista ilmeisimpiä ovat hidas suoritusnopeus, hidas IO sekä huono kirjastotuki. Kieltä käytetään usein tulkattuna, jolloin algoritmien ajoaika voi olla jopa satakertainen natiivikoodiksi kääntyvään toteutukseen verrattuna. JavaScriptiä ei ole suunniteltu algoritmien toteuttamiseen (tai edes yleiskäyttöiseksi ohjelmointikieleksi), minkä vuoksi kieli ei tarjoa standardikirjastossa esimerkiksi IO-ominaisuuksia tai tietorakenteita. Myös esimerkiksi muistiosoitukset tai manuaalinen muistinhallinta puuttuvat.</p>
-
     <h2>Imperatiivinen- ja funktionaalinen ohjelmointi JavaScriptissä</h2>
     <p>Aloittelevat JavaScript ohjelmoijat useimmiten tukeutuvat imperatiiviseen ohjelmointiin. Imperatiivinen ohjelmointi on varsin toimiva sellaisenaan, mutta saa oivia lisätyökaluja funktionaalisesta ohjelmoinnista. Esimerkkinä imperatiivisesta ohjelmointikielestä ovat esimerkiksi Java, C sekä Python. Funktionaalisia edustavat esimerkiksi Scala tai Clojure.</p>
     <p>JavaScriptillä on valmiina monia funktioita ja työkaluja. Esimerkkinä:</p>
-
     <pre>
-      <code>
-        eval("koodia");
-        isFinite(arvo) ;
-        parseInt("tekstiä");
-      </code>
-    </pre>
-
-    <p>
-      Funktioita, niin valmiita kuin omiakin, voi halutessaan muokata esimerkiksi <code>bind</code> -metodilla. Tätä kutsutaan funktion osittain soveltamiseksi. Funktioita voi lennosta asettaa, muokata ja kopioida eri muuttujiin varsin lennokkaasti ilman suuria muutoksia koodiin. Esimerkiksi:
-    </p>
+<code>
+eval("koodia");
+isFinite(arvo) ;
+parseInt("tekstiä");
+</code>
+</pre>
+    <p>Funktioita, niin valmiita kuin omiakin, voi halutessaan muokata esimerkiksi <code>bind</code> -metodilla. Tätä kutsutaan funktion osittain soveltamiseksi. Funktioita voi lennosta asettaa, muokata ja kopioida eri muuttujiin varsin lennokkaasti ilman suuria muutoksia koodiin. Esimerkiksi:</p>
     <pre>
-      <code>
-        var summa = function (a,b) {return a + b};
-        var summa_5 = summa.bind(null, 5);
-      </code>
-    </pre>
-
-    <p>
-      Funktionaalinen ohjelmointi perustuu suurimmilta osin rekursioon joka lyhentää koodia. Viimeisimpiä uudistuksia on myös lamda-syntaksi. Näiden kautta funktionaalinen ohjelmointi on lyhyempää, tuoden vähemmän rivejä testattavaksi.
-    </p>
-
-    <p>
-      Funktioilla pystyy osan JavaScriptin muuttujen ja näkyvyys ongelmista poistaa. Se ei ole riippuvainen sen ulkoisista muuttujista, enintään parametreistaan. Imperatiivinen ohjelmointi voi huolimattomuudessaan muuttaa joitakin olennaisia muuttujia ylikirjoittamalla, esimerkiksi saman nimisiä muuttujia. Ilmiötä kutsutaan sivuvaikutuksiksi (side effects). Funktiolla ei samaa ongelmaa ole sillä sen näkyvyysaluetta, funktion sisäpuolella olevia muuttujia eivät muut ylikirjoita jollei niihin implisiittisesti viitata funktion kutsuvaiheessa. Tämäkin vaikutus on vain kyseiselle yksittäiselle funktion kutsukerralle. Esimerkiksi:
-    </p>
+<code>
+var summa = function (a,b) {return a + b};
+var summa_5 = summa.bind(null, 5);
+</code>
+</pre>
+    <p>Funktionaalinen ohjelmointi perustuu suurimmilta osin rekursioon joka lyhentää koodia. Viimeisimpiä uudistuksia on myös lamda-syntaksi. Näiden kautta funktionaalinen ohjelmointi on lyhyempää, tuoden vähemmän rivejä testattavaksi.</p>
+    <p>Funktioilla pystyy osan JavaScriptin muuttujen ja näkyvyys ongelmista poistaa. Se ei ole riippuvainen sen ulkoisista muuttujista, enintään parametreistaan. Imperatiivinen ohjelmointi voi huolimattomuudessaan muuttaa joitakin olennaisia muuttujia ylikirjoittamalla, esimerkiksi saman nimisiä muuttujia. Ilmiötä kutsutaan sivuvaikutuksiksi (side effects). Funktiolla ei samaa ongelmaa ole sillä sen näkyvyysaluetta, funktion sisäpuolella olevia muuttujia eivät muut ylikirjoita jollei niihin implisiittisesti viitata funktion kutsuvaiheessa. Tämäkin vaikutus on vain kyseiselle yksittäiselle funktion kutsukerralle. Esimerkiksi:</p>
     <pre>
-      <code>
-        var a = 9002;
-        write(a); //tulostaa 9002
+<code>
+var a = 9002;
+write(a); //tulostaa 9002
 
-        function puolita(x) {
-          var a = x/2;
-          write(a);
-        };
+function puolita(x) {
+  var a = x/2;
+  write(a);
+};
 
-        puolita(a); //4501
-        write(a); //9002
-      </code>
-    </pre>
-
-    <p>
-      Lopuksi:<br>
-      Funktionaalisella ohjelmoinnilla on käyttönsä ja hyötynsä koodin rakenteen parantamiseksi. Imperatiivinen ohjelmointi on kuitenkin monelle intuitiivisempaa ja usein luettavampaa. Tämän ja edellä mainituista syistä imperatiivinen ohjelmointi jossa hyödynnetään JavaScript:n funktionaalisia ominaisuuksia, lienee JS:n parhaimpia käyttötapoja.
-    </p>
-
-  </div>
-  <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-  <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+puolita(a); //4501
+write(a); //9002
+</code>
+</pre>
+    <p>Lopuksi:<br> Funktionaalisella ohjelmoinnilla on käyttönsä ja hyötynsä koodin rakenteen parantamiseksi. Imperatiivinen ohjelmointi on kuitenkin monelle intuitiivisempaa ja usein luettavampaa. Tämän ja edellä mainituista syistä imperatiivinen ohjelmointi jossa hyödynnetään JavaScript:n funktionaalisia ominaisuuksia, lienee JS:n parhaimpia käyttötapoja.</p>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 </body>
+
 </html>
