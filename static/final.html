@@ -612,6 +612,45 @@ console.log(moduulini.jokinModuulinOsa());
         <p>Mutta jos palataan takaisin anonyymi funktio -hässäkkään, miten se sitten eroaa prototyyppi olioista? Ei välttämättä juuri mitenkään, moduuleissa vain näkyvyysalue on tarkemmin suojeltu ja sen pitäisi estää (toivottavasti) suurempien mogailujen tekemisen. Onko sitä sitten pakko käyttää?  Riippuen minkälaista sovellusta on rakentamassa eivät anonyymi funktioilla toimivat moduulit tietenkään ole välttämättömiä. Alussa varsinkin on hyvä pitää rakenne avoinna mahdollisia isoja muutoksia varten. <a name="muuta"></a> Myöhemmin moduulit saattavat parantaa ylläpidettävyyttä ja kaunistaa koodia. Ja modularisaatiota voi tehdä ihan ilman tuota anonyymiä funktiota. Pitää vain ohjelman yhden toiminnallisuuden toteuttavissa osissa ja järjestyksessä niin sen pitäisi riittää.</p>
     </section>
 
+<div>
+<h2>Hyviä ohjelmointikäytänteitä</h2>
+
+<h3>Hipsujen käytöstä</h3>
+<p>
+Yhtenä hyvänä käytänteenä on käyttää "tuplahipsuja" html-koodissa, ja JavaScript-koodissa 'yksinkertaisia' hipsuja koodin selkeyttämiseksi.
+Toisena koulukuntana on jättää yksinkertaiset hipsut mahdollisimman paljon käyttämättä, jotta hipsut varmasti erottuvat koodista.
+Kumman tahansa valitsee, on <b>erittäin</b> tärkeä pysyä hipsutus-tyylissään.
+</p>
+
+<h3>Koodin uudelleenkäytettävyydestä</h3>
+<p>
+Koodin uudelleenkäytettävyyttä auttaa erilaiset, kuten edellä mainittu moduuli, suunnittelumallit.
+Vaikka koodia on hyvä käyttää uudelleen, katsotaan hyväksi käytänteeksi ettei JS:n valmiita työkaluja (esimerkiksi niiden prototyyppejä tai toimintaa) lähdetä muuttamaan. Työkalut ovat valmiiksi optimoituja, ja voivat vaikuttaa dramaattisesti JS:n suorituskykyyn.
+</p>
+
+<h3>New vs literaalit</h3>
+<p>
+Objektien alustamista suositellaan tehtävän literaalien avulla. Esimerkiksi Array-objektin kohdalla. Lainaus <a href="http://www.w3schools.com/js/js_arrays.asp">W3schools</a>:sta käyttäen <code>new</code>-avainsanaa.
+<pre>
+<code>
+var points = new Array(40, 100);  // Creates an array with two elements (40 and 100)
+var points = new Array(40);       // Creates an array with 40 undefined elements !!!!!
+</code>
+</pre>
+Syntaksiltaan esimerkit ovat lähes identtisiä, mutta funktioltaan täysin erilaisia. Literaalit ovat huomattavasti turvallisempi vaihtoehto.
+</p>
+
+<h3>Moduuleista</h3>
+<p>
+Moduulit selkeyttävät huomattavasti koodia. Ohjelmoija näkee aina mitä on moduuliin injektoitu, näin ollen sisältö ei pulpahda tyhjästä. Moduulien julkiset metodit on helppo määrittää return-lausekkeella. Tämän seurauksena moduulin yksityisiä metodeja ei pääse vahingossakaan sorkkimaan.
+</p>
+
+<h3>Perinnästä</h3>
+<p>
+Nykyisin JS:n perintä tapahtuu prototyyppejä "laajentamalla". Jos perityillä olioilla on yhteisiä ominaisuuksia, on turha kirjoittaa samaa koodinpätkää uudestaan. Näin periminen lyhentää ja selkiyttää koodia. Huomautuksena kuitenkin, varmista että tiedät mitä teet. Vältä monimutkaisia funktioiden prototyyppien ketjutuksia.
+</p>
+</1div>
+
 <!-- Algot -->
 
     <h2>Algoritmien kirjoittaminen JavaScriptillä</h2>
@@ -693,6 +732,8 @@ write(a); //9002
 </code>
 </pre>
     <p>Lopuksi:<br> Funktionaalisella ohjelmoinnilla on käyttönsä ja hyötynsä koodin rakenteen parantamiseksi. Imperatiivinen ohjelmointi on kuitenkin monelle intuitiivisempaa ja usein luettavampaa. Tämän ja edellä mainituista syistä imperatiivinen ohjelmointi jossa hyödynnetään JavaScript:n funktionaalisia ominaisuuksia, lienee JS:n parhaimpia käyttötapoja.</p>
+
+
 
     <!-- Poikkeukset -->
 
